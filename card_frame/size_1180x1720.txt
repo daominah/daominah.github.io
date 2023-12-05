@@ -1,0 +1,2 @@
+yugioh-card.com card size: 59mm x 86mm
+1180 = 59*20, 1720 = 86*20

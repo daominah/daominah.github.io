@@ -1,0 +1,4 @@
+# coding app's project files
+.idea
+.vscode
+.DS_Store

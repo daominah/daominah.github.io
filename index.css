@@ -1,0 +1,219 @@
+:root {
+  /*--lineHeightCardEffect: 0.92*/
+  --lineHeightCardEffect: 1.00
+  /*--lineHeightCardEffect: 1.05*/
+}
+
+/* the following fonts are copied from Master Duel */
+@font-face {
+  font-family: fontCardName;
+  src: url(font/YGOSmallCaps.ttf);
+}
+@font-face {
+  font-family: fontCardEffect;
+  src: url(font/YGO_Card_NA.ttf);
+}
+@font-face {
+  font-family: fontLink;
+  src: url(font/FOT-KafuTechnoStd-H.otf);
+}
+@font-face {
+  font-family: fontCardType;
+  src: url(font/StoneSerifSmallCapsBold.ttf);
+}
+@font-face {
+  font-family: fontATKValue;
+  src: url(font/MatrixRegular.ttf);
+}
+
+/* this app assumes display resolution are 3840x2160 */
+body {
+  font-size: 32px;
+  font-family: serif;
+  margin: 0;
+  background-color: #fdf6e3;
+}
+
+.smallNote {font-size: 24px}
+.mono {font-family: monospace, monospace}
+.monoBig {font-family: monospace, monospace; font-size: 64px}
+
+.pageContainerColumns {
+  display: flex;
+  justify-content: space-between;
+  height: 1720px;
+}
+/* padding: top right bot left, default 0 */
+.colLeft {flex: 1 0 1180px}
+.colMid {flex: 1 0 1180px}
+.colRight {flex: 1 0 1180px; padding: 0 268px 0 32px}
+
+
+.colLeft {line-height: 46px}
+.CardFieldsCommon {background-color: #eee8d5; padding: 16px 16px 8px 48px}
+.fieldsMonster {padding: 8px 16px 0 48px}
+.CardFieldsCommon > div {margin-bottom: 16px}
+.fieldsMonster > div {margin-bottom: 16px}
+.disabledElement {pointer-events: none; opacity: 0.5}
+.indent {padding-left: 64px}
+h3, h4 {display: inline; font-family: monospace, monospace}
+option {font-size: 20px}
+textarea {font-size: 28px; line-height: 1}
+input {font-size: 32px; text-align: center}
+input[type="checkbox"] {width: 32px; height: 32px}
+input[type="radio"] {width: 32px; height: 32px}
+
+
+.colRight {text-align: left}
+.colRight div {margin: 8px 0 8px 0}
+.bigBtn {height: 64px; font-size: 32px; margin-top: 16px}
+.smallBtn {height: 48px; font-size: 32px}
+.sameWidthWrap {display: inline-block; width: 1180px}
+.sameWidthElement {display: block; width: 100%}
+.mainButton {background-color: royalblue; color: white}
+hr {margin: 64px}
+input[readonly] {background-color: lightgray;}
+.colRight input {text-align: left; padding-left: 1ch}
+.colRight a {text-decoration: none}
+.colRight hr {margin: 32px}
+
+
+.colMid {text-align: center}
+.cRenderCard {
+  margin: auto; /* combine with parent "text-align: center" */
+  text-align: left;
+  width: 1180px;
+  height: 1720px;
+  z-index: -1;
+  position: relative;
+  font-family: fontCardEffect;
+}
+
+/* ___________________________________________ */
+/* border inside element for debug card regions*/
+.db {
+  /*border: 2px solid OrangeRed;*/
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}
+
+/* cTestText fontFamily, fontWeight will be assigned by JS;
+lineHeight will be equal to lineHeight of card effect (CSS var) */
+.cTestText {visibility: hidden;
+  position: absolute; top: 0; left: 0;
+  border: 0; padding: 0; margin: 0;
+  line-height: var(--lineHeightCardEffect);
+}
+
+/* ___________________________________________ */
+
+.cRenderCardName {position: absolute; white-space: nowrap;
+  font-family: fontCardName;
+  left: 88px; top: 96px; width: 880px; height: 76px}
+.cRenderCardAttribute {position: absolute;
+  left: 974px; top: 78px; width: 122px; height: 122px}
+
+.cRenderCardType {position: absolute; text-align: right;
+  font-size: 54px; font-family: fontCardType;
+  right: 110px; top: 210px; width: 480px; height: 80px}
+.cRenderCardSubtype {position: absolute;
+  right: 136px; top: 210px; width: 72px; height: 72px}
+.cRenderMonsterLevel {position: absolute;
+  left: 100px; top: 210px; width: 988px; height: 80px}
+.cRenderMonsterRank13 {position: absolute; visibility: hidden;
+  left: 60px; top: 210px; width: 1060px; height: 80px}
+
+.cRenderLinkArrowUpLeft {position: absolute;
+  left: 106px; top: 278px; width: 80px; height: 80px}
+.cRenderLinkArrowUp {position: absolute;
+  left: 500px; top: 256px; width: 180px; height: 70px}
+.cRenderLinkArrowUpRight {position: absolute;
+  right: 102px; top: 278px; width: 80px; height: 80px}
+.cRenderLinkArrowLeft {position: absolute;
+  left: 80px; top: 672px; width: 70px; height: 180px}
+.cRenderLinkArrowRight {position: absolute;
+  right: 76px; top: 672px; width: 70px; height: 180px}
+.cRenderLinkArrowDownLeft {position: absolute;
+  left: 106px; top: 1168px; width: 80px; height: 80px}
+.cRenderLinkArrowDown {position: absolute;
+  left: 500px; top: 1200px; width: 180px; height: 70px}
+.cRenderLinkArrowDownRight {position: absolute;
+  right: 102px; top: 1168px; width: 80px; height: 80px}
+
+.cRenderCardArt {position: absolute;
+  left: 146px; top: 318px; width: 890px; height: 890px}
+.cRenderCardArtPendulum {position: absolute; overflow: hidden;
+  left: 82px; top: 310px; width: 1018px; height: 762px}
+
+/* stretchImg scales image size to CardArt box */
+.stretchImg {width: 100%; height: 100%}
+/* fitImgPendulum maintains W:H ratio and crops overflowed height */
+.fitImgPendulum {width: 100%}
+
+
+.cRenderPScaleLeft {position: absolute;
+  text-align: center; font-family: sans-serif;
+  left: 98px; bottom: 470px; width: 56px; height: 48px}
+.cRenderPScaleRight {position: absolute;
+  text-align: center; font-family: sans-serif;
+  right: 98px; bottom: 470px; width: 56px; height: 48px}
+
+.cRenderMonsterAbilities {position: absolute;
+  font-weight: bold; white-space: nowrap; font-family: fontCardType;
+  left: 100px; top: 1292px; width: 980px; height: 42px}
+.cRenderMonsterAbilitiesSmall {position: absolute;
+  font-weight: bold; white-space: nowrap; font-family: fontCardType;
+  left: 100px; top: 1292px; width: 980px; height: 32px}
+
+/* sizes of card effect box can be changed depend on card type is
+Spell, Trap, Monster, Pendulum, card effect is long or short */
+
+.cRenderPendulumEffect {position: absolute;
+  font-weight: bold; line-height: var(--lineHeightCardEffect);
+  left: 184px; top: 1086px; width: 816px; height: 188px}
+
+.cRenderSpellTrapEffect {position: absolute;
+  font-weight: bold; line-height: var(--lineHeightCardEffect);
+  left: 92px; bottom: 112px; width: 1000px; height: 310px}
+
+.cRenderMonsterEffect {position: absolute;
+  font-weight: bold; line-height: var(--lineHeightCardEffect);
+  left: 92px; bottom: 158px; width: 1000px; height: 218px}
+.cRenderMonsterEffectSmall {position: absolute;
+  font-weight: bold; line-height: var(--lineHeightCardEffect);
+  left: 92px; bottom: 154px; width: 1000px; height: 234px}
+
+.cRenderMonsterSplitLine {position: absolute;
+  border: 2px solid black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
+  left: 92px; bottom: 152px; width: 996px; height: 4px}
+
+.cRenderMonsterATKLabel {position: absolute;
+  font-family: fontCardName;
+  left: 572px; top: 1570px; width: 118px; height: 44px}
+.cRenderMonsterATK {position: absolute;
+  font-family: fontATKValue; text-align: right; font-weight: normal;
+  right: 364px; top: 1570px; width: 118px; height: 44px}
+.cRenderMonsterDEFLabel {position: absolute;
+  font-family: fontCardName;
+  left: 840px; top: 1570px; width: 110px; height: 44px}
+.cRenderMonsterDEF {position: absolute;
+  font-family: fontATKValue; text-align: right; font-weight: normal;
+  right: 102px; top: 1570px; width: 118px; height: 44px}
+.cRenderMonsterLinkLabel {position: absolute;
+  font-family: fontLink;
+  left: 840px; top: 1566px; width: 188px; height: 44px}
+.cRenderMonsterLinkRating {position: absolute;
+  font-family: fontLink; font-weight: bold;
+  right: 102px; top: 1566px; width: 44px; height: 44px}
+
+.cRenderKonamiSet {position: absolute; text-align: right;
+  right: 120px; top: 1236px; width: 210px; height: 24px}
+.cRenderKonamiSetLink {position: absolute; text-align: right;
+  right: 210px; top: 1236px; width: 210px; height: 24px}
+.cRenderKonamiSetPendulum {position: absolute; text-align: left;
+  left: 100px; bottom: 110px; width: 210px; height: 24px}
+.cRenderKonamiCardID {position: absolute;
+  left: 70px; top: 1640px; width: 500px; height: 24px}
+.cRenderYearCreator {position: absolute; text-align: right;
+  right: 70px; top: 1640px; width: 500px; height: 24px}

@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+
+
+<head>
+  <title>Card editor Yu-Gi-Oh!</title>
+  <meta charset="utf-8">
+
+  <!-- screenshot HTML element -->
+  <script type="text/javascript" src="external_lib/html2canvas.js"></script>
+  <script type="text/javascript" src="external_lib/dom-to-image.js"></script>
+  <script type="text/javascript" src="external_lib/rasterizeHTML.allinone.js"></script>
+
+  <!-- full text search -->
+  <!--  <script src="https://unpkg.com/lunr/lunr.js"></script>-->
+  <script src="external_lib/lunr.js"></script>
+
+  <!-- main -->
+  <script type="text/javascript" src="konami_data/konami_db_en.js"></script>
+  <script type="text/javascript" src="index.js"></script>
+
+  <!--
+  How do I include a JavaScript file in another JavaScript file?
+  https://stackoverflow.com/questions/950087/how-do-i-include-a-javascript-file-in-another-javascript-file
+  Answer: Above URL: section ECMAScript modules in browsers.
+  TLDR: <script type="module" src="index.js"></script>
+  Note: type="module" causes you cannot access top level variables or functions in
+  `index.js` from browser console. So, method 1 includes both script in
+  `index.html` seems more convenient.
+
+  What is "export default" in JavaScript?
+  https://stackoverflow.com/questions/21117160/what-is-export-default-in-javascript
+  TLDR: you import the default export function by omitting the curly braces
+  -->
+  <!--  <script type="module" src="index.js"></script>-->
+
+  <link rel="stylesheet" href="index.css">
+</head>
+
+
+<body>
+
+<div class="pageContainerColumns">
+  <div class="colLeft mono" id="colLeft">
+    <div id="CardFieldsCommon" class="CardFieldsCommon">
+      <div id="cardNameWrap">
+        <h3><label for="CardName">Name: </label></h3>
+        <input id="CardName" size="46">
+      </div>
+
+      <div id="CardTypeWrap">
+        <h3>Type: </h3>
+        <input type="radio" name="CardType" id="Monster"/>
+        <label for="Monster">Monster   </label>
+        <input type="radio" name="CardType" id="Spell"/>
+        <label for="Spell">Spell     </label>
+        <input type="radio" name="CardType" id="Trap"/>
+        <label for="Trap">Trap      </label>
+      </div>
+
+      <div id="CardSubtypeWrap">
+        <h3>Subtype:</h3>
+        <div class="indent">
+          <div id="CardSubtypeMonster">
+            <input name="CardSubtype" id="MonsterNormal" type="radio"/>
+            <label for="MonsterNormal">Normal    </label>
+            <input name="CardSubtype" id="MonsterEffect" type="radio"/>
+            <label for="MonsterEffect">Effect    </label>
+            <input name="CardSubtype" id="MonsterRitual" type="radio"/>
+            <label for="MonsterRitual">Ritual    </label>
+            <br>
+            <input name="CardSubtype" id="MonsterFusion" type="radio"/>
+            <label for="MonsterFusion">Fusion    </label>
+            <input name="CardSubtype" id="MonsterSynchro" type="radio"/>
+            <label for="MonsterSynchro">Synchro   </label>
+            <input name="CardSubtype" id="MonsterXyz" type="radio"/>
+            <label for="MonsterXyz">Xyz       </label>
+            <input name="CardSubtype" id="MonsterLink" type="radio"/>
+            <label for="MonsterLink">Link</label>
+          </div>
+          <div id="CardSubtypeSpell">
+            <input name="CardSubtype" id="SpellNormal" type="radio"/>
+            <label for="SpellNormal">Normal    </label>
+            <input name="CardSubtype" id="SpellContinuous" type="radio"/>
+            <label for="SpellContinuous">Continuous</label>
+            <input name="CardSubtype" id="SpellQuickPlay" type="radio"/>
+            <label for="SpellQuickPlay">Quick-Play</label>
+            <br>
+            <input name="CardSubtype" id="SpellField" type="radio"/>
+            <label for="SpellField">Field     </label>
+            <input name="CardSubtype" id="SpellEquip" type="radio"/>
+            <label for="SpellEquip">Equip     </label>
+            <input name="CardSubtype" id="SpellRitual" type="radio"/>
+            <label for="SpellRitual">Ritual    </label>
+          </div>
+          <div id="CardSubtypeTrap">
+            <input name="CardSubtype" id="TrapNormal" type="radio"/>
+            <label for="TrapNormal">Normal    </label>
+            <input name="CardSubtype" id="TrapContinuous" type="radio"/>
+            <label for="TrapContinuous">Continuous</label>
+            <input name="CardSubtype" id="TrapCounter" type="radio"/>
+            <label for="TrapCounter">Counter   </label>
+            <br>
+            <br>
+          </div>
+        </div>
+      </div>
+
+      <div id="CardEffectWrap">
+        <h3><label for="CardEffect">Effect: </label></h3>
+        <span class="smallNote">(many effects should be separated by <b style="font-size: 40px">① ② ③ ④ ⑤ ●</b>)</span>
+        <textarea id="CardEffect" rows="10" cols="64"></textarea>
+      </div>
+
+      <div>
+        <h3>Art: </h3>
+        <input id="CardArt" type="file" accept="image/*">
+      </div>
+
+      <div>
+        <table>
+          <tr>
+            <td>
+              <label for="SetNumber">SetNumber:</label>
+              <input id="SetNumber" size=12>
+            </td>
+            <td>
+              <label for="CardID">    CardID: </label>
+              <input id="CardID" size=12>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <label for="Year">Year:     </label>
+              <input id="Year" size=12>
+            </td>
+            <td>
+              <label for="Creator">    Creator:</label>
+              <input id="Creator" size=12>
+            </td>
+          </tr>
+        </table>
+      </div>
+    </div>
+
+    <div id="MonsterDetail" class="fieldsMonster">
+      <div id="GroupTitleWrap">
+        <h3>Monster detail</h3>
+      </div>
+
+      <div id="MonsterAttributeWrap">
+        <h4>Attribute:</h4>
+        <div class="indent">
+          <input type="radio" name="MonsterAttribute" id="DARK" checked/>
+          <label for="DARK">DARK   </label>
+          <input type="radio" name="MonsterAttribute" id="EARTH"/>
+          <label for="EARTH">EARTH  </label>
+          <input type="radio" name="MonsterAttribute" id="FIRE"/>
+          <label for="FIRE">FIRE   </label>
+          <br>
+          <input type="radio" name="MonsterAttribute" id="LIGHT"/>
+          <label for="LIGHT">LIGHT  </label>
+          <input type="radio" name="MonsterAttribute" id="WATER"/>
+          <label for="WATER">WATER  </label>
+          <input type="radio" name="MonsterAttribute" id="WIND"/>
+          <label for="WIND">WIND   </label>
+          <input type="radio" name="MonsterAttribute" id="DIVINE"/>
+          <label for="DIVINE">DIVINE </label>
+        </div>
+      </div>
+
+      <div>
+        <h4><label for="MonsterATK">ATK: </label></h4>
+        <input id="MonsterATK" size="4">
+         
+        <h4><label for="MonsterDEF">DEF: </label></h4>
+        <input id="MonsterDEF" size="4">
+         
+        <h4><label for="MonsterLevelRankLink">Level/Rank/Link:</label></h4>
+        <input id="MonsterLevelRankLink" size="4" maxlength="2">
+      </div>
+
+      <div id="MonsterTypeWrap">
+        <h4><label for="MonsterType">Type:</label></h4>
+        <select id="MonsterType"
+                style="width: 408px; font-size: 32px; text-align: center">
+          <!-- options will be generated by JS onload -->
+        </select>
+      </div>
+
+      <div id="MonsterAbilitiesWrap">
+        <h4>Abilities:  </h4>
+        <input type="checkbox" name="MonsterAbilities" id="Flip">
+        <label for="Flip">Flip   </label>
+        <input type="checkbox" name="MonsterAbilities" id="Gemini">
+        <label for="Gemini">Gemini </label>
+        <input type="checkbox" name="MonsterAbilities" id="Spirit">
+        <label for="Spirit">Spirit </label>
+        <br>            
+        <input type="checkbox" name="MonsterAbilities" id="Toon">
+        <label for="Toon">Toon   </label>
+        <input type="checkbox" name="MonsterAbilities" id="Tuner">
+        <label for="Tuner">Tuner  </label>
+        <input type="checkbox" name="MonsterAbilities" id="Union">
+        <label for="Union">Union  </label>
+      </div>
+
+      <div id="MonsterLinkArrows" style="line-height: 36px">
+        <h4>Link arrows:    </h4>
+        <input type="checkbox" id="UpLeft" name="MonsterLinkArrows">
+        <label class="monoBig" for="UpLeft">↖ </label>
+        <input type="checkbox" id="Up" name="MonsterLinkArrows">
+        <label class="monoBig" for="Up">↑ </label>
+        <label class="monoBig" for="UpRight"> ↗</label>
+        <input type="checkbox" id="UpRight" name="MonsterLinkArrows">
+        <br>
+        <label class="monoBig">        </label>
+        <input type="checkbox" id="Left" name="MonsterLinkArrows">
+        <label class="monoBig" for="Left">← </label>
+        <input id="padLinkArrow" type="checkbox" style="visibility: hidden">
+        <label for="padLinkArrow" style="display: none"></label>
+        <label class="monoBig">  </label>
+        <label class="monoBig" for="Right"> →</label>
+        <input type="checkbox" id="Right" name="MonsterLinkArrows">
+        <br>
+        <label class="monoBig">        </label>
+        <input type="checkbox" id="DownLeft" name="MonsterLinkArrows">
+        <label class="monoBig" for="DownLeft">↙ </label>
+        <input type="checkbox" id="Down" name="MonsterLinkArrows">
+        <label class="monoBig" for="Down">↓ </label>
+        <label class="monoBig" for="DownRight"> ↘</label>
+        <input type="checkbox" id="DownRight" name="MonsterLinkArrows">
+      </div>
+
+      <div id="PendulumWrap">
+        <h4><label for="IsPendulum">Pendulum</label></h4>
+        <input type="checkbox" id="IsPendulum">
+        <div id="PendulumDetail" class="indent">
+          <label for="PendulumScale">Pendulum scale: </label>
+          <input id="PendulumScale" size="2" maxlength="2">
+          <br>
+          <label for="PendulumEffect">Pendulum effect:</label>
+          <textarea id="PendulumEffect" rows="4" cols="48" style="font-size: 24px"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="colMid" id="colMid">
+    <div id="RenderCard" class="cRenderCard db">
+      <div id="RenderCardName" class="cRenderCardName db"></div>
+      <div id="RenderCardAttribute" class="cRenderCardAttribute db">
+        <img id="ImgRenderCardAttribute" alt="Attribute" src="" class="stretchImg">
+      </div>
+
+      <div id="RenderCardType" class="cRenderCardType db"></div>
+      <div id="RenderCardSubtype" class="cRenderCardSubtype db">
+        <img id="ImgRenderCardSubtype" alt="SubT" src="" class="stretchImg">
+      </div>
+      <div id="RenderMonsterLevel" class="cRenderMonsterLevel db">
+        <!-- children will be generated by JS onload -->
+        <!-- IDs: StarWrap1, StarWrap2, ..., StarWrap12 -->
+      </div>
+      <div id="RenderMonsterRank" class="cRenderMonsterLevel db">
+        <!-- children will be generated by JS onload -->
+        <!-- IDs: BlackStarWrap1, BlackStarWrap2, ..., BlackStarWrap12 -->
+      </div>
+      <div id="RenderMonsterRank13" class="cRenderMonsterRank13 db">
+        <!-- children will be generated by JS onload -->
+      </div>
+
+      <div class="cRenderLinkArrowUpLeft db"><img id="RenderLinkArrowUpLeft" alt="UL" src="icon/L_UL.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowUp db"><img id="RenderLinkArrowUp" alt="U" src="icon/L_U.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowUpRight db"><img id="RenderLinkArrowUpRight" alt="UR" src="icon/L_UR.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowLeft db"><img id="RenderLinkArrowLeft" alt="L" src="icon/L_L.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowRight db"><img id="RenderLinkArrowRight" alt="R" src="icon/L_R.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowDownLeft db"><img id="RenderLinkArrowDownLeft" alt="DL" src="icon/L_DL.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowDown db"><img id="RenderLinkArrowDown" alt="D" src="icon/L_D.png" class="stretchImg"></div>
+      <div class="cRenderLinkArrowDownRight db"><img id="RenderLinkArrowDownRight" alt="DR" src="icon/L_DR.png" class="stretchImg"></div>
+
+      <div id="RenderCardArt" class="cRenderCardArt db">
+        <img id="ImgRenderCardArt" alt="CardArt" src="" class="stretchImg"/>
+      </div>
+      <div id="RenderCardArtPendulum" class="cRenderCardArtPendulum db" style="display: none">
+        <img id="ImgRenderCardArtPendulum" alt="CardArtPendulum" src="" class="fitImgPendulum"/>
+      </div>
+      <div id="RenderPendulumEffect" class="cRenderPendulumEffect db"></div>
+      <div id="RenderPScaleLeft" class="cRenderPScaleLeft db"></div>
+      <div id="RenderPScaleRight" class="cRenderPScaleRight db"></div>
+
+      <div id="RenderKonamiSet" class="cRenderKonamiSet mono db"></div>
+      <div id="RenderKonamiSetLink" class="cRenderKonamiSetLink mono db"></div>
+      <div id="RenderKonamiSetPendulum" class="cRenderKonamiSetPendulum mono db"></div>
+
+      <div id="RenderMonsterAbilities" class="cRenderMonsterAbilities db" style="display: none"></div>
+      <div id="RenderMonsterEffect" class="cRenderMonsterEffect db" style="display: none"></div>
+      <div id="RenderMonsterAbilitiesSmall" class="cRenderMonsterAbilitiesSmall db" style="display: none"></div>
+      <div id="RenderMonsterEffectSmall" class="cRenderMonsterEffectSmall db" style="display: none"></div>
+      <div id="RenderSpellTrapEffect" class="cRenderSpellTrapEffect db" style="display: none"></div>
+
+      <div id="RenderMonsterSplitLine" class="cRenderMonsterSplitLine"></div>
+      <div id="RenderMonsterATKLabel" class="cRenderMonsterATKLabel db"></div>
+      <div id="RenderMonsterATK" class="cRenderMonsterATK db"></div>
+      <div id="RenderMonsterDEFLabel" class="cRenderMonsterDEFLabel db"></div>
+      <div id="RenderMonsterDEF" class="cRenderMonsterDEF db"></div>
+      <div id="RenderMonsterLinkLabel" class="cRenderMonsterLinkLabel db" style="display: none"></div>
+      <div id="RenderMonsterLinkRating" class="cRenderMonsterLinkRating db" style="display: none"></div>
+
+      <div id="RenderKonamiCardID" class="cRenderKonamiCardID mono db"></div>
+      <div id="RenderYearCreator" class="cRenderYearCreator mono db"></div>
+
+      <div id="testTextWidth" class="cTestText"></div>
+      <div id="testTextHeight" class="cTestText">
+      </div>
+    </div>
+  </div>
+
+  <div class="colRight">
+    <div class="sameWidthWrap">
+
+      <div style="display: flex; gap: 5%">
+        <div style="flex: 1 1 55%">
+          <h3>Card effect font</h3><br>
+          <div class="indent">
+            <h4>Auto font size:</h4>
+            <input id="AutoFont" disabled size="3">
+            <button class="smallBtn" onclick="twitchFontCopyAuto()">Copy</button>
+            <input id="ChosenEffectElementID" disabled style="display: none">
+            <br>
+            <h4>Your font size:</h4>
+            <input id="TwitchFont" onchange="twitchFontCardEffect()"
+                   type="number" min="1" max="64" step="0.2" size="3">
+            <br>
+            <h4>Your scaleY:   </h4>
+            <input id="TwitchFontScaleY" onchange="twitchFontCardEffect()"
+                   type="number" min="0.5" max="2.0" step="0.02" size="3">
+          </div>
+          <hr>
+
+          <div style="margin-top: 32px">
+            <button id="ExportCardJSON" class="sameWidthElement bigBtn"
+                    onclick="exportCardJSON()">
+              Export card as JSON (without art)
+            </button>
+            <button class="sameWidthElement bigBtn">
+              <label for="ImportCardJSONFile">Import card JSON</label>
+            </button>
+            <input id="ImportCardJSONFile" type="file" accept=".json" hidden/>
+          </div>
+          <hr>
+
+          <div style="margin-top: 32px">
+            <button id="ExportCardPNG" class="sameWidthElement bigBtn"
+                    onclick="exportCardPNG()" disabled>
+              Export card as PNG
+            </button>
+            <span
+              class="smallNote">(not implemented, please open browser <b>Inspect Element</b> to <b>Screenshot Node</b>)</span>
+          </div>
+        </div>
+
+
+        <div class="mono" style="flex: 1 1 40%; border-left: 2px solid black; padding-left: 5%">
+          <h3>Scale page width</h3><br>
+          <!-- Python helper
+          import math
+          t = 1.25  # text-scaling-factor
+          def S(z): return (1.0/t) / (z*z)
+          def Z(s): return math.sqrt((1.0/t) /s)
+          def W(z): return 3840.0 / z
+          -->
+          <label class="smallNote">can be combined with Firefox zoom to change card resolution</label><br>
+          <input type="radio" id="ScalePage02" name="PageScale" onclick="HandleClickScalePage(0.2)">
+          <label for="ScalePage02"> 768px (0.2)</label><br>        <!-- t=1.25 z=2.0 -->
+          <input type="radio" id="ScalePage025" name="PageScale" onclick="HandleClickScalePage(0.25)">
+          <label for="ScalePage025"> 960px (0.25)</label><br>      <!-- t=1.00 z=2.0 -->
+          <input type="radio" id="ScalePage03125" name="PageScale" onclick="HandleClickScalePage(0.3125)">
+          <label for="ScalePage03125">1200px (0.3125)</label><br>     <!-- t=1.25 z=1.6 -->
+          <input type="radio" id="ScalePage05" name="PageScale" onclick="HandleClickScalePage(0.5)">
+          <label for="ScalePage05">1920px (0.5)</label><br>           <!-- t=2.00 z=1.0 -->
+          <input type="radio" id="ScalePage08" name="PageScale" onclick="HandleClickScalePage(0.8)">
+          <label for="ScalePage08">3072px (0.8)</label><br>           <!-- t=1.25 z=1.0 -->
+          <input type="radio" id="ScalePage1" name="PageScale" onclick="HandleClickScalePage(1.0)">
+          <label for="ScalePage1">3840px (1.0)</label><br>
+        </div>
+      </div>
+      <hr>
+
+
+      <div class="sameWidthElement">
+        <h3><label for="SearchCardQuery">Card database</label></h3><br>
+
+        <div style="display: flex">
+          <input id="SearchCardQuery"
+                 style="width: 80%; box-sizing: border-box">
+          <button id="SearchCardDatabase" onclick="SearchCardDatabase()"
+                  class="smallBtn" style="flex-grow: 1">Search
+          </button>
+        </div>
+        <div class="smallNote">(search in card name)</div>
+        <div id="SearchCardResult" style="font-size: 28px"></div>
+      </div>
+
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+
+
+</html>
