@@ -327,13 +327,6 @@ const MapLinkMarker = {
 const StorageKeyScale = "StorageKeyScale"
 
 
-//  AllowChars are lowercase alphanumeric, good for file name cross-platform
-const AllowChars = {}
-for (let char of "abcdefghijklmnopqrstuvwxyz_0123456789.".split("")) {
-	AllowChars[char] = true
-}
-
-
 // declared in file `konami_data/konami_db_en.js`
 // const CardDatabase = []
 console.log(`len CardDatabase: ${CardDatabase.length}`)
@@ -768,6 +761,18 @@ function renderCard(card) {
 	let [chosenEffectElement, autoFontSize] = renderCardEffect(card)
 	byId("AutoFont").value = autoFontSize
 	byId("ChosenEffectElementID").value = chosenEffectElement.id
+
+	if (card.CardName !== "" || card.MiscKonamiCardID !== "") {
+		let cardID = card.MiscKonamiCardID  // example "4095 errata<2014"
+		cardID = cardID.replace("<", "_before_")
+		cardID = cardID.replace(">", "_after_")
+		let normalizedName = normalizeFileName(`${(card.CardName)}_${cardID}`)
+		if (normalizedName !== "") {
+			document.getElementById("ExportCardJSONName").textContent = normalizedName
+		} else {
+			document.getElementById("ExportCardJSONName").textContent = " "
+		}
+	}
 }
 
 function renderCardFrame(card) {
@@ -1321,6 +1326,13 @@ function downloadAsImage(dataURL) {
 
 function fmtSec(ms) {return `${ms / 1000}s`}
 
+
+//  AllowChars are lowercase alphanumeric, good for file name cross-platform
+const AllowChars = {}
+for (let char of "abcdefghijklmnopqrstuvwxyz_.0123456789".split("")) {
+	AllowChars[char] = true
+}
+
 function normalizeFileName(str) {
 	let ret = []
 	for (let char of str.toLowerCase().split("")) {
@@ -1393,7 +1405,7 @@ function konamiDatabaseURL(cardID, language = "ja") {
 function SearchCardDatabase() {
 	let searchQuery = document.getElementById("SearchCardQuery").value
 	let searchResult = [] // []Card
-	let limit = 10, offset = 0  // TODO: paginate search result
+	let limit = 16, offset = 0  // TODO: paginate search result
 	// search: https://github.com/olivernn/lunr.js
 	let matches = IndexCardDatabase.search(searchQuery)
 	if (matches === undefined || matches === null || matches.length === 0) {
@@ -1432,7 +1444,7 @@ function SearchCardDatabase() {
 			let konamiURL = document.createElement("a")
 			konamiURL.href = konamiDatabaseURL(card.MiscKonamiCardID, language)
 			konamiURL.target = "_blank"
-			konamiURL.textContent = ` ${language}   `
+			konamiURL.textContent = ` ${language}       `
 			row.appendChild(konamiURL)
 		}
 		let summary = document.createElement("span")
