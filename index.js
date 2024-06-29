@@ -5,7 +5,7 @@ function byId(e) { return document.getElementById(e) }
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
-// CONSTANTS begin
+// begin CONSTANTS list
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -341,7 +341,7 @@ for (let v of CardDatabase) {
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
-// GLOBAL VARIABLES begin (CONSTANTS end)
+// begin GLOBAL VARIABLES list (end CONSTANTS list)
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -369,11 +369,18 @@ let IndexCardDatabase
 // after func `window.onload` returned.
 let PerfNav
 
+// OperatingSystem is user's operating system (win__, mac__, linux__)
+let OperatingSystem = "linux x86_64"
+// IsNotLinuxOS is calculated once from OperatingSystem in func "window.onload"
+let IsNotLinuxOS = false
+// IsWindowsOS is calculated once from OperatingSystem in func "window.onload"
+let IsWindowsOS = false
+
 
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
-// End of CONSTANTS and GLOBAL VARIABLES
+// end GLOBAL VARIABLES list
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -511,10 +518,16 @@ function fitTextOneLine(text, element, scaleFont = 1.0,
 	if (window.getComputedStyle(element).textAlign === "right") {
 		child.style.transformOrigin = "bottom right"
 	}
+
+	// How to position text that its baseline is aligned with the bottom of its CSS box?
+	// https://stackoverflow.com/a/26304590/4097963 (method using an extra .strut element).
+	// The following method does not work on Windows:
+
 	let magicBaseline = document.createElement("div")
 	magicBaseline.style.height = element.offsetHeight.toString() + "px"
 	magicBaseline.style.display = "inline-block"
 	child.appendChild(magicBaseline)
+
 	element.appendChild(child)
 }
 
@@ -1135,14 +1148,22 @@ function renderMonsterAtkDefLink(card) {
 	labelATK.style.display = ""
 	valueATK.style.display = ""
 	fitTextOneLine("ATK/", labelATK, 1.5, 1.15, 1.15)
-	fitTextOneLine(card.MonsterATK, valueATK, 1.5, 1.15, 1.2)
+	if (!IsWindowsOS) {
+		fitTextOneLine(card.MonsterATK, valueATK, 1.5, 1.15, 1.2)
+	} else {
+		fitTextOneLine(card.MonsterATK, valueATK, 1.35, 1.35, 1.35)
+	}
 
 	labelDEF.style.display = ""
 	valueDEF.style.display = ""
 	labelLINK.style.display = "none"
 	valueLINK.style.display = "none"
 	fitTextOneLine("DEF/", labelDEF, 1.5, 1.15, 1.15)
-	fitTextOneLine(card.MonsterDEF, valueDEF, 1.5, 1.15, 1.2)
+	if (!IsWindowsOS) {
+		fitTextOneLine(card.MonsterDEF, valueDEF, 1.5, 1.15, 1.2)
+	} else {
+		fitTextOneLine(card.MonsterDEF, valueDEF, 1.35, 1.35, 1.35)
+	}
 
 	// card.CardSubtype = CardSubtype.MonsterLink  // for testing
 	if (card.CardSubtype === CardSubtype.MonsterLink) {
@@ -1190,10 +1211,9 @@ function renderMisc(card) {
 	fitTextOneLine(card.MiscKonamiSet, kSetP)
 	fitTextOneLine(card.MiscKonamiCardID, kCid)
 	let copyleft = `🄯`
-	if (window.navigator.platform.toLowerCase().includes("mac")) {
-		// workaround MacOS cannot show CopyLeft symbol in browsers :v
-		copyleft = `⍟`
-		// copyleft = `©`
+	if (IsNotLinuxOS) {
+		// workaround Windows and MacOS cannot show CopyLeft symbol in browsers
+		copyleft = `Ⓨ`
 	}
 	fitTextOneLine(`${copyleft}${card.MiscYear} ${card.MiscCreator}`, year)
 }
@@ -1507,7 +1527,7 @@ function scalePage() {
 		scale = Number(manualScale)
 		if (scale < 0.1 || scale > 5.0) {scale = 1.0}  // should be unreachable
 	}
-	console.log(`${time} doc: ${docW}x${docH}, view: ${vpW}x${vpH}, StorageKeyScale: ${manualScale}, scale: ${scale}`)
+	console.log(`${time} documentWH: ${docW}x${docH}, view: ${vpW}x${vpH}, StorageKeyScale: ${manualScale}, scale: ${scale}`)
 	switch (scale.toString()) {
 		case "0.2":
 			document.getElementById("ScalePage02").checked = true
@@ -1644,6 +1664,21 @@ window.onload = () => {
 		inputs[i].onclick = handleClick
 	}
 
+	if (window.navigator.platform) {
+		OperatingSystem = window.navigator.platform
+	} else if (navigator.userAgentData) {
+		// https://stackoverflow.com/a/70361732/4097963
+		OperatingSystem = navigator.userAgentData.platform
+	}
+	if (OperatingSystem.toLowerCase().includes("mac") ||
+		OperatingSystem.toLowerCase().includes("win")) {
+		IsNotLinuxOS = true
+		if (OperatingSystem.toLowerCase().includes("win")) {
+			IsWindowsOS = true
+		}
+	}
+	console.log(`operating system: ${OperatingSystem}\nuser agent: ${window.navigator.userAgent}`)
+
 	updateCardState()
 	if (Boolean(window.chrome)) {
 		// workaround Chromium based browsers calculate wrong font width
@@ -1666,6 +1701,7 @@ window.onload = () => {
 			buildIndexCardDatabase()
 		}
 	}
+	byId("SearchCardDatabase").click()
 
 
 	setTimeout(function () {

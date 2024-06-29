@@ -1,8 +1,10 @@
 :root {
-  /*--lineHeightCardEffect: 0.92*/
   --lineHeightCardEffect: 1.00
-  /*--lineHeightCardEffect: 1.05*/
 }
+/*--lineHeightCardEffect: 0.92*/
+/*--lineHeightCardEffect: 1.00*/
+/*--lineHeightCardEffect: 1.05*/
+
 
 /* the following fonts are copied from Master Duel */
 @font-face {
@@ -194,13 +196,15 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
   font-family: fontCardName;
   left: 572px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterATK {position: absolute;
-  font-family: fontATKValue; text-align: right; font-weight: normal;
+  font-family: fontATKValue;
+  text-align: right; font-weight: normal;
   right: 364px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterDEFLabel {position: absolute;
   font-family: fontCardName;
   left: 840px; top: 1570px; width: 110px; height: 44px}
 .cRenderMonsterDEF {position: absolute;
-  font-family: fontATKValue; text-align: right; font-weight: normal;
+  font-family: fontATKValue;
+  text-align: right; font-weight: normal;
   right: 102px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterLinkLabel {position: absolute;
   font-family: fontLink;

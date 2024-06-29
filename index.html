@@ -323,17 +323,19 @@
           <h3>Card effect font</h3><br>
           <div class="indent">
             <h4>Auto font size:</h4>
-            <input id="AutoFont" disabled size="3">
+            <input id="AutoFont" disabled size="5" class="mono">
             <button class="smallBtn" onclick="twitchFontCopyAuto()">Copy</button>
-            <input id="ChosenEffectElementID" disabled style="display: none">
+            <!-- ChosenEffectElementID works as a global variable on the page,
+            value can be RenderSpellTrapEffect, RenderMonsterEffect or RenderMonsterEffectSmall -->
+            <input id="ChosenEffectElementID" style="display: none" disabled>
             <br>
             <h4>Your font size:</h4>
             <input id="TwitchFont" onchange="twitchFontCardEffect()"
-                   type="number" min="1" max="64" step="0.2" size="3">
+                   type="number" min="1" max="64" step="0.2" size="5" class="mono">
             <br>
             <h4>Your scaleY:   </h4>
             <input id="TwitchFontScaleY" onchange="twitchFontCardEffect()"
-                   type="number" min="0.5" max="2.0" step="0.02" size="3">
+                   type="number" min="0.5" max="2.0" step="0.02" size="5" class="mono">
           </div>
           <hr>
 
@@ -356,7 +358,8 @@
               Export card as PNG
             </button>
             <span
-              class="smallNote">(not implemented, please open browser <b>Inspect Element</b> to <b>Screenshot Node</b>)</span>
+              class="smallNote">(not implemented, please right-click on the card, choose <b>Inspect</b>,
+              then right-click on the element code to <b>Capture node screenshot</b>)</span>
           </div>
         </div>
 
@@ -370,7 +373,7 @@
           def Z(s): return math.sqrt((1.0/t) /s)
           def W(z): return 3840.0 / z
           -->
-          <label class="smallNote">can be combined with Firefox zoom to change card resolution</label><br>
+          <label class="smallNote">choose your monitor width (work best with a 4K monitor, output card will be 1180x1720)</label><br>
           <input type="radio" id="ScalePage02" name="PageScale" onclick="HandleClickScalePage(0.2)">
           <label for="ScalePage02"> 768px (0.2)</label><br>        <!-- t=1.25 z=2.0 -->
           <input type="radio" id="ScalePage025" name="PageScale" onclick="HandleClickScalePage(0.25)">
@@ -398,7 +401,7 @@
                   class="smallBtn" style="flex-grow: 1">Search
           </button>
         </div>
-        <div class="smallNote">(search in card name)</div>
+        <div class="smallNote">(search full word in card name)</div>
         <div id="SearchCardResult" class="searchCardResult"></div>
       </div>
 
