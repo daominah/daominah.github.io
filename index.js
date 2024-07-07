@@ -1427,10 +1427,17 @@ function SearchCardDatabase() {
 	let searchResult = [] // []Card
 	let limit = 16, offset = 0  // TODO: paginate search result
 	// search: https://github.com/olivernn/lunr.js
-	let matches = IndexCardDatabase.search(searchQuery)
+	let matches, err = null
+	try {
+		matches = IndexCardDatabase.search(searchQuery)
+	} catch (exception) {
+		err = exception
+		console.log(`debug searchQuery ${searchQuery} causes exception IndexCardDatabase.search: ${err}, ${err === null}`)
+	}
 	if (matches === undefined || matches === null || matches.length === 0) {
 		// slow search string contain
 		for (let card of CardDatabase) {
+			// console.log(`debug SearchCardDatabase: ${card.CardName}`)
 			if (card.CardName.toLowerCase().includes(searchQuery.toLowerCase())) {
 				searchResult.push(card)
 			}
