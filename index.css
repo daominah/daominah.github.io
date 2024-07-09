@@ -194,22 +194,43 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
 
 .cRenderMonsterATKLabel {position: absolute;
   font-family: fontCardName;
-  left: 572px; top: 1566px; width: 118px; height: 44px}
+  left: 572px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterATK {position: absolute;
   font-family: fontATKValue;
   text-align: right; font-weight: normal;
-  right: 364px; top: 1566px; width: 118px; height: 44px}
+  right: 364px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterDEFLabel {position: absolute;
   font-family: fontCardName;
-  left: 840px; top: 1566px; width: 110px; height: 44px}
+  left: 840px; top: 1570px; width: 110px; height: 44px}
 .cRenderMonsterDEF {position: absolute;
   font-family: fontATKValue;
   text-align: right; font-weight: normal;
-  right: 102px; top: 1566px; width: 118px; height: 44px}
+  right: 102px; top: 1570px; width: 118px; height: 44px}
 .cRenderMonsterLinkLabel {position: absolute;
   font-family: fontLink;
-  left: 840px; top: 1562px; width: 188px; height: 44px}
+  left: 840px; top: 1566px; width: 188px; height: 44px}
 .cRenderMonsterLinkRating {position: absolute;
+  font-family: fontLink; font-weight: bold;
+  right: 102px; top: 1566px; width: 44px; height: 44px}
+
+.cRenderMonsterATKLabelWindows {position: absolute;
+  font-family: fontCardName;
+  left: 572px; top: 1566px; width: 118px; height: 44px}
+.cRenderMonsterATKWindows {position: absolute;
+  font-family: fontATKValue;
+  text-align: right; font-weight: normal;
+  right: 364px; top: 1566px; width: 118px; height: 44px}
+.cRenderMonsterDEFLabelWindows {position: absolute;
+  font-family: fontCardName;
+  left: 840px; top: 1566px; width: 110px; height: 44px}
+.cRenderMonsterDEFWindows {position: absolute;
+  font-family: fontATKValue;
+  text-align: right; font-weight: normal;
+  right: 102px; top: 1566px; width: 118px; height: 44px}
+.cRenderMonsterLinkLabelWindows {position: absolute;
+  font-family: fontLink;
+  left: 840px; top: 1562px; width: 188px; height: 44px}
+.cRenderMonsterLinkRatingWindows {position: absolute;
   font-family: fontLink; font-weight: bold;
   right: 102px; top: 1566px; width: 44px; height: 44px}
 

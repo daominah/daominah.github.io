@@ -371,7 +371,7 @@ let PerfNav
 
 // OperatingSystem is user's operating system (win__, mac__, linux__)
 let OperatingSystem = "linux x86_64"
-// IsNotLinuxOS is calculated once from OperatingSystem in func "window.onload"
+// IsNotLinuxOS (Windows or Mac) is calculated once from OperatingSystem in func "window.onload"
 let IsNotLinuxOS = false
 // IsWindowsOS is calculated once from OperatingSystem in func "window.onload"
 let IsWindowsOS = false
@@ -1685,6 +1685,33 @@ window.onload = () => {
 		}
 	}
 	console.log(`operating system: ${OperatingSystem}\nuser agent: ${window.navigator.userAgent}`)
+
+	if (IsWindowsOS) {
+		let needCSSWindows = [
+			document.getElementById("RenderMonsterATKLabel"),
+			document.getElementById("RenderMonsterATK"),
+			document.getElementById("RenderMonsterDEFLabel"),
+			document.getElementById("RenderMonsterDEF"),
+			document.getElementById("RenderMonsterLinkLabel"),
+			document.getElementById("RenderMonsterLinkRating"),
+		]
+		let replaceClasses = []  // to avoid changing the array while looping
+		for (let i = 0; i < needCSSWindows.length; i++) {
+			for (let k = 0; k < needCSSWindows[i].classList.length; k++) {
+				let oldClass = needCSSWindows[i].classList[k]
+				if (oldClass !== "db") {  // "db" means debug
+					replaceClasses.push(oldClass)
+				}
+			}
+		}
+		for (let i = 0; i < replaceClasses.length; i++) {
+			let oldClass = replaceClasses[i]
+			let newClass = oldClass + "Windows"
+			needCSSWindows[i].classList.remove(oldClass)
+			needCSSWindows[i].classList.add(newClass)
+			console.log(`replace class ${oldClass} with ${newClass}`)
+		}
+	}
 
 	updateCardState()
 	if (Boolean(window.chrome)) {
