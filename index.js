@@ -702,6 +702,11 @@ function loadCardToHTML(c) {
 	if (c.CardArt) {
 		byId("ImgRenderCardArtPendulum").src = c.CardArt
 		byId("ImgRenderCardArt").src = c.CardArt
+	} else {
+		// Cloudflared sg1
+		let daominahImagesHost = `https://mdygo.daominah.uk/${c.MiscKonamiCardID}.png`
+		byId("ImgRenderCardArtPendulum").src = daominahImagesHost
+		byId("ImgRenderCardArt").src = daominahImagesHost
 	}
 	byId("CardEffect").value = c.CardEffect
 	if (byId(c.MonsterAttribute)) {
