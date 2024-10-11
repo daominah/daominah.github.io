@@ -374,18 +374,25 @@
           def W(z): return 3840.0 / z
           -->
           <label class="smallNote">choose your monitor width (work best with a 4K monitor, output card will be 1180x1720)</label><br>
-          <input type="radio" id="ScalePage02" name="PageScale" onclick="HandleClickScalePage(0.2)">
-          <label for="ScalePage02"> 768px (0.2)</label><br>        <!-- t=1.25 z=2.0 -->
-          <input type="radio" id="ScalePage025" name="PageScale" onclick="HandleClickScalePage(0.25)">
-          <label for="ScalePage025"> 960px (0.25)</label><br>      <!-- t=1.00 z=2.0 -->
-          <input type="radio" id="ScalePage03125" name="PageScale" onclick="HandleClickScalePage(0.3125)">
-          <label for="ScalePage03125">1200px (0.3125)</label><br>     <!-- t=1.25 z=1.6 -->
-          <input type="radio" id="ScalePage05" name="PageScale" onclick="HandleClickScalePage(0.5)">
-          <label for="ScalePage05">1920px (0.5)</label><br>           <!-- t=2.00 z=1.0 -->
-          <input type="radio" id="ScalePage08" name="PageScale" onclick="HandleClickScalePage(0.8)">
-          <label for="ScalePage08">3072px (0.8)</label><br>           <!-- t=1.25 z=1.0 -->
-          <input type="radio" id="ScalePage1" name="PageScale" onclick="HandleClickScalePage(1.0)">
-          <label for="ScalePage1">3840px (1.0)</label><br>
+          <input type="radio" id="ScalePage02" name="PageScale" onclick="HandleClickScalePage('0.2')">
+          <label for="ScalePage02"> 768px</label><br>        <!-- t=1.25 z=2.0 -->
+          <input type="radio" id="ScalePage025" name="PageScale" onclick="HandleClickScalePage('0.25')">
+          <label for="ScalePage025"> 960px</label><br>      <!-- t=1.00 z=2.0 -->
+          <input type="radio" id="ScalePage03125" name="PageScale" onclick="HandleClickScalePage('0.3125')">
+          <label for="ScalePage03125">1200px</label><br>     <!-- t=1.25 z=1.6 -->
+          <input type="radio" id="ScalePage05" name="PageScale" onclick="HandleClickScalePage('0.5')">
+          <label for="ScalePage05">1920px</label><br>           <!-- t=2.00 z=1.0 -->
+          <input type="radio" id="ScalePage08" name="PageScale" onclick="HandleClickScalePage('0.8')">
+          <label for="ScalePage08">3072px</label><br>           <!-- t=1.25 z=1.0 -->
+          <input type="radio" id="ScalePage1" name="PageScale" onclick="HandleClickScalePage('1')">
+          <label for="ScalePage1">3840px</label><br>
+
+          <hr>
+          <h3>Card art resolution</h3>
+          <input type="radio" id="ArtResolution512" name="ArtResolution" onclick="HandleClickArtResolution('512')">
+          <label for="ArtResolution512">512px</label><br>
+          <input type="radio" id="ArtResolution2048" name="ArtResolution" onclick="HandleClickArtResolution('2048')">
+          <label for="ArtResolution2048">2048px (slow)</label><br>
         </div>
       </div>
       <hr>

@@ -325,6 +325,7 @@ const MapLinkMarker = {
 
 
 const StorageKeyScale = "StorageKeyScale"
+const StorageKeyArtResolution = "StorageKeyArtResolution"
 
 
 // declared in file `konami_data/konami_db_en.js`
@@ -675,7 +676,7 @@ function readCardFromHTML() {
 	return c
 }
 
-// loadCardToHTML uses the input card object to fill HTML "colLeft" elements
+// loadCardToHTML uses the input card object to fill HTML elements on "colLeft"
 function loadCardToHTML(c) {
 	byId("CardName").value = c.CardName
 	byId(c.CardType).checked = true
@@ -704,12 +705,7 @@ function loadCardToHTML(c) {
 		byId("ImgRenderCardArtPendulum").src = c.CardArt
 		byId("ImgRenderCardArt").src = c.CardArt
 	} else {
-		// Cloudflared sg1
-		// let daominahImagesHost = `https://mdygo.daominah.uk/${c.MiscKonamiCardID}.png`
-		let daominahImagesHost = `https://mdygo2048.daominah.uk/${c.MiscKonamiCardID}.png`
-		byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
-		byId("ImgRenderCardArtPendulum").src = daominahImagesHost
-		byId("ImgRenderCardArt").src = daominahImagesHost
+		setCardArtSrcWithURL(c.MiscKonamiCardID)
 	}
 	byId("CardEffect").value = c.CardEffect
 	if (byId(c.MonsterAttribute)) {
@@ -971,10 +967,14 @@ function renderCardTypeLevelRank(card) {
 		if (card.CardSubtype !== CardSubtype.MonsterXyz) {
 			level.style.display = ""
 			for (let i = 1; i <= 12; i++) {
+				let e = byId(`StarWrap${i}`)
+				if (!e) {
+					continue
+				}
 				if (i <= card.MonsterLevelRankLink) {
-					byId(`StarWrap${i}`).style.visibility = "visible"
+					e.style.visibility = "visible"
 				} else {
-					byId(`StarWrap${i}`).style.visibility = "hidden"
+					e.style.visibility = "hidden"
 				}
 			}
 		} else if (card.MonsterLevelRankLink <= 12) {
@@ -1523,27 +1523,20 @@ function SearchCardDatabase() {
 }
 
 
-function HandleClickScalePage(scale) {
-	localStorage.setItem(StorageKeyScale, scale.toString())
-	scalePage()
-}
-
-function scalePage() {
-	let vpW = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
+function HandleClickScalePage(scaleStr) {
+	let viewWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 	let vpH = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-	let docW = document.body.scrollWidth;
+	let documentWidth = document.body.scrollWidth;
 	let docH = document.body.scrollHeight;
-	let manualScale = localStorage.getItem(StorageKeyScale)
-	let time = (new Date()).toISOString()
-	let scale = 1.0
-	if (manualScale === null) {
-		if (docW / vpW >= 1.5) {scale = 0.5}
-	} else { // automatic scale base on view port width
-		scale = Number(manualScale)
-		if (scale < 0.1 || scale > 5.0) {scale = 1.0}  // should be unreachable
+	console.log(`${(new Date()).toISOString()} document: ${documentWidth}x${docH}, view: ${viewWidth}x${vpH}`)
+
+	if (!scaleStr) {
+		if (documentWidth / viewWidth >= 1.5) {
+			scaleStr = "0.5"
+		}
 	}
-	console.log(`${time} documentWH: ${docW}x${docH}, view: ${vpW}x${vpH}, StorageKeyScale: ${manualScale}, scale: ${scale}`)
-	switch (scale.toString()) {
+
+	switch (scaleStr) {
 		case "0.2":
 			document.getElementById("ScalePage02").checked = true
 			break
@@ -1559,12 +1552,15 @@ function scalePage() {
 		case "0.8":
 			document.getElementById("ScalePage08").checked = true
 			break
-		case "1":
+		default:
+			scaleStr = "1"
 			document.getElementById("ScalePage1").checked = true
 			break
 	}
-	if (scale !== 1.0) {
-		document.body.style.transform = `scale(${scale})`
+	localStorage.setItem(StorageKeyScale, scaleStr)
+	console.log(`StorageKeyScale: ${localStorage.getItem(StorageKeyScale)}`)
+	if (Number(scaleStr) !== "1") {
+		document.body.style.transform = `scale(${scaleStr})`
 		document.body.style.transformOrigin = "top left"
 	} else {
 		document.body.style.transform = ""
@@ -1572,8 +1568,44 @@ function scalePage() {
 }
 
 
+function HandleClickArtResolution(pxStr) {
+	switch (pxStr) {
+		case "2048":
+			localStorage.setItem(StorageKeyArtResolution, "2048")
+			document.getElementById("ArtResolution2048").checked = true
+
+			break
+		default:
+			localStorage.setItem(StorageKeyArtResolution, "512")
+			document.getElementById("ArtResolution512").checked = true
+			break
+	}
+	console.log(`StorageKeyArtResolution: ${localStorage.getItem(StorageKeyArtResolution)}, host: ${getArtHost()}`)
+	if (!GlobalCard.CardArt) {
+		setCardArtSrcWithURL(GlobalCard.MiscKonamiCardID)
+	}
+	renderCard(GlobalCard)
+}
+
+function getArtHost() {
+	// Cloudflared on SG1
+	if (localStorage.getItem(StorageKeyArtResolution) === "2048") {
+		return "https://mdygo2048.daominah.uk"
+	}
+	return "https://mdygo.daominah.uk"
+}
+
+function setCardArtSrcWithURL(cardID) {
+	let daominahArtURL = `${getArtHost()}/${cardID}.png`
+	byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
+	byId("ImgRenderCardArtPendulum").src = daominahArtURL
+	byId("ImgRenderCardArt").src = daominahArtURL
+}
+
+
 window.onload = () => {
-	scalePage()
+	HandleClickScalePage(localStorage.getItem(StorageKeyScale))
+	HandleClickArtResolution(localStorage.getItem(StorageKeyArtResolution))
 
 	loadMonsterTypeElements()
 	loadMonsterLevelRankElements()
@@ -1717,7 +1749,7 @@ window.onload = () => {
 			let newClass = oldClass + "Windows"
 			needCSSWindows[i].classList.remove(oldClass)
 			needCSSWindows[i].classList.add(newClass)
-			console.log(`replace class ${oldClass} with ${newClass}`)
+			// console.log(`replace class ${oldClass} with ${newClass}`)
 		}
 	}
 
