@@ -154,6 +154,7 @@ lineHeight will be equal to lineHeight of card effect (CSS var) */
 .stretchImg {width: 100%; height: 100%}
 /* fitImgPendulum maintains W:H ratio and crops overflowed height */
 .fitImgPendulum {width: 100%}
+.fitImgPendulumLong {width: 100%; height: 200%}
 
 
 .cRenderPScaleLeft {position: absolute;

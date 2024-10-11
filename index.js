@@ -700,11 +700,14 @@ function loadCardToHTML(c) {
 	}
 	byId(c.CardSubtype).checked = true
 	if (c.CardArt) {
+		byId("ImgRenderCardArtPendulum").className = "fitImgPendulum"
 		byId("ImgRenderCardArtPendulum").src = c.CardArt
 		byId("ImgRenderCardArt").src = c.CardArt
 	} else {
 		// Cloudflared sg1
-		let daominahImagesHost = `https://mdygo.daominah.uk/${c.MiscKonamiCardID}.png`
+		// let daominahImagesHost = `https://mdygo.daominah.uk/${c.MiscKonamiCardID}.png`
+		let daominahImagesHost = `https://mdygo2048.daominah.uk/${c.MiscKonamiCardID}.png`
+		byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
 		byId("ImgRenderCardArtPendulum").src = daominahImagesHost
 		byId("ImgRenderCardArt").src = daominahImagesHost
 	}
