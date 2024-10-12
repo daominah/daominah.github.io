@@ -61,6 +61,8 @@
       <div id="CardSubtypeWrap">
         <h3>Subtype:</h3>
         <div class="indent">
+          <!-- NBSP are here for alignment, all subtypes have length 10 -->
+          <!-- subtypes order follow Konami deck view order -->
           <div id="CardSubtypeMonster">
             <input name="CardSubtype" id="MonsterNormal" type="radio"/>
             <label for="MonsterNormal">Normal    </label>
@@ -81,25 +83,25 @@
           <div id="CardSubtypeSpell">
             <input name="CardSubtype" id="SpellNormal" type="radio"/>
             <label for="SpellNormal">Normal    </label>
+            <input name="CardSubtype" id="SpellEquip" type="radio"/>
+            <label for="SpellEquip">Equip     </label>
+            <input name="CardSubtype" id="SpellField" type="radio"/>
+            <label for="SpellField">Field     </label>
+            <br>
+            <input name="CardSubtype" id="SpellRitual" type="radio"/>
+            <label for="SpellRitual">Ritual    </label>
             <input name="CardSubtype" id="SpellContinuous" type="radio"/>
             <label for="SpellContinuous">Continuous</label>
             <input name="CardSubtype" id="SpellQuickPlay" type="radio"/>
             <label for="SpellQuickPlay">Quick-Play</label>
-            <br>
-            <input name="CardSubtype" id="SpellField" type="radio"/>
-            <label for="SpellField">Field     </label>
-            <input name="CardSubtype" id="SpellEquip" type="radio"/>
-            <label for="SpellEquip">Equip     </label>
-            <input name="CardSubtype" id="SpellRitual" type="radio"/>
-            <label for="SpellRitual">Ritual    </label>
           </div>
           <div id="CardSubtypeTrap">
             <input name="CardSubtype" id="TrapNormal" type="radio"/>
             <label for="TrapNormal">Normal    </label>
-            <input name="CardSubtype" id="TrapContinuous" type="radio"/>
-            <label for="TrapContinuous">Continuous</label>
             <input name="CardSubtype" id="TrapCounter" type="radio"/>
             <label for="TrapCounter">Counter   </label>
+            <input name="CardSubtype" id="TrapContinuous" type="radio"/>
+            <label for="TrapContinuous">Continuous</label>
             <br>
             <br>
           </div>
