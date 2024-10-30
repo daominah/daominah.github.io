@@ -168,7 +168,7 @@ let DefaultCard = {
 	MiscKonamiSet: "",
 	MiscKonamiCardID: "",
 	MiscYear: (new Date()).getFullYear(),
-	MiscCreator: "daominah",
+	MiscCreator: "daominah.github.io",
 }
 
 let DefaultCardZeus = {
@@ -194,7 +194,6 @@ let DefaultCardZeus = {
 	MiscKonamiSet: "PHRA-EN045",
 	MiscKonamiCardID: "15524",
 	MiscYear: "2020",
-	MiscCreator: "daominah",
 }
 
 let DefaultCardBlueEyes = {
@@ -246,7 +245,6 @@ let DefaultCardJet = {
 	MiscKonamiSet: "BACH-EN004",
 	MiscKonamiCardID: "16809",
 	MiscYear: "2022",
-	MiscCreator: "daominah",
 }
 
 const DefaultCardRelinquished = {
@@ -272,7 +270,6 @@ const DefaultCardRelinquished = {
 	MiscKonamiSet: "DUOV-EN053",
 	MiscKonamiCardID: "13841",
 	MiscYear: "2020",
-	MiscCreator: "daominah",
 }
 
 
