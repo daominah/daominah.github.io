@@ -166,110 +166,14 @@ let DefaultCard = {
 	PendulumEffect: "",
 
 	MiscKonamiSet: "",
+	// e.g. "4007", "4960 errata>2017"
 	MiscKonamiCardID: "",
+	// e.g. "89631139"
+	MiscCardPassword: "",
+	// e.g. "89631139 #4007", depends on Password and CardID
+	DisplayPasswordAndCardID: "",
 	MiscYear: (new Date()).getFullYear(),
 	MiscCreator: "daominah.github.io",
-}
-
-let DefaultCardZeus = {
-// DefaultCard = {
-	CardName: testCNameL36,
-	CardType: CardType.Monster,
-	CardSubtype: CardSubtype.MonsterXyz,
-	CardEffect: testCEffectL514ME,
-	CardArt: "example/card_art/divine_zeus_15524.jpg",
-
-	MonsterAttribute: MonsterAttribute.LIGHT,
-	MonsterType: MonsterType.Machine,
-	MonsterLevelRankLink: 12,
-	MonsterATK: 3000,
-	MonsterDEF: 3000,
-	MonsterAbilities: [],  // Ability.Tuner, Ability.Flip, ...
-	MonsterLinkArrows: [],  // LinkArrow.Up, LinkArrow.UpRight, ...
-
-	IsPendulum: false,
-	PendulumScale: 0,
-	PendulumEffect: "",
-
-	MiscKonamiSet: "PHRA-EN045",
-	MiscKonamiCardID: "15524",
-	MiscYear: "2020",
-}
-
-let DefaultCardBlueEyes = {
-// DefaultCard = {
-	CardName: "Blue-Eyes White Dragon",
-	CardType: "Monster",
-	CardSubtype: "MonsterNormal",
-	CardEffect: "This legendary dragon is a powerful engine of destruction. Virtually invincible, very few have faced this awesome creature and lived to tell the tale.",
-	CardArt: "example/card_art/blue_eyes_4007.jpg",
-	MonsterAttribute: "LIGHT",
-	MonsterType: "Dragon",
-	MonsterLevelRankLink: 8,
-	MonsterATK: 3000,
-	MonsterATKStr: "3000",
-	MonsterDEF: 2500,
-	MonsterDEFStr: "2500",
-	MonsterAbilities: null,
-	MonsterLinkArrows: null,
-	IsNonEffectMonster: true,
-	IsPendulum: false,
-	PendulumScale: 0,
-	PendulumEffect: "",
-	MiscKonamiSet: "LOB-001",
-	MiscKonamiCardID: "4007",
-	MiscYear: "2002",
-	MiscCreator: ""
-}
-
-let DefaultCardJet = {
-// DefaultCard = {
-	CardName: "Blue-Eyes Jet Dragon",
-	CardType: CardType.Monster,
-	CardSubtype: CardSubtype.MonsterEffect,
-	CardEffect: testCEffectL571MM,
-	CardArt: "example/card_art/blue_eyes_jet_16809.jpg",
-
-	MonsterAttribute: MonsterAttribute.LIGHT,
-	MonsterType: MonsterType.Dragon,
-	MonsterLevelRankLink: 8,
-	MonsterATK: 3000,
-	MonsterDEF: 0,
-	MonsterAbilities: [],  // Ability.Tuner, Ability.Flip, ...
-	MonsterLinkArrows: [],  // LinkArrow.Up, LinkArrow.UpRight, ...
-
-	IsPendulum: false,
-	PendulumScale: 0,
-	PendulumEffect: "",
-
-	MiscKonamiSet: "BACH-EN004",
-	MiscKonamiCardID: "16809",
-	MiscYear: "2022",
-}
-
-const DefaultCardRelinquished = {
-// DefaultCard = {
-	CardName: "Relinquished Anima",
-	CardType: CardType.Monster,
-	CardSubtype: CardSubtype.MonsterLink,
-	CardEffect: testCEffectL264ME,
-	CardArt: "example/card_art/relinquished_anima_13841.jpg",
-
-	MonsterAttribute: MonsterAttribute.DARK,
-	MonsterType: MonsterType.Spellcaster,
-	MonsterLevelRankLink: 1,
-	MonsterATK: 0,
-	MonsterDEF: 0,
-	MonsterAbilities: [],  // Ability.Tuner, Ability.Flip, ...
-	MonsterLinkArrows: [LinkArrow.Up],  // LinkArrow.Up, LinkArrow.UpRight, ...
-
-	IsPendulum: false,
-	PendulumScale: 0,
-	PendulumEffect: "",
-
-	MiscKonamiSet: "DUOV-EN053",
-	MiscKonamiCardID: "13841",
-	MiscYear: "2020",
 }
 
 
@@ -325,14 +229,47 @@ const StorageKeyScale = "StorageKeyScale"
 const StorageKeyArtResolution = "StorageKeyArtResolution"
 
 
+function toDisplayPasswordAndCardID(cardPassword, cardID) {
+	if (!cardID || cardID === "") {
+		return cardPassword
+	}
+	if (cardPassword && cardPassword.trim().length > 0) {
+		return `${cardPassword} #${cardID}`
+	}
+	return `#${cardID}`
+}
+
+// fromDisplayPasswordAndCardID always returns a list of 2 elements,
+// cardPassword and cardID, either of them can be empty string.
+function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
+	let cardPassword = ""
+	let cardID = ""
+	let parts = displayPasswordAndCardID.split("#")
+	if (parts.length === 1) {
+		tmp = parts[0].trim()
+		if (tmp.length === 8) {  // probably a card password
+			cardPassword = tmp
+		} else {
+			cardID = tmp  // in this repo old card, only cardID is displayed and exported
+		}
+	}
+	if (parts.length >= 2) {
+		cardPassword = parts[0].trim()
+		cardID = parts[1].trim()
+	}
+	return [cardPassword, cardID]
+}
+
+
 // declared in file `konami_data/konami_db_en.js`
 // const CardDatabase = []
 console.log(`len CardDatabase: ${CardDatabase.length}`)
 
 // MapCardDatabase helps to access CardDatabase by cardID
 const MapCardDatabase = {}
-for (let v of CardDatabase) {
-	MapCardDatabase[v.MiscKonamiCardID] = v
+for (let card of CardDatabase) {
+	card.DisplayPasswordAndCardID = toDisplayPasswordAndCardID(card.MiscCardPassword, card.MiscKonamiCardID)
+	MapCardDatabase[card.MiscKonamiCardID] = card
 }
 
 
@@ -666,7 +603,9 @@ function readCardFromHTML() {
 	}
 
 	c.MiscKonamiSet = byId("SetNumber").value
-	c.MiscKonamiCardID = byId("CardID").value
+	let arr = fromDisplayPasswordAndCardID(byId("CardID").value)
+	c.MiscCardPassword = arr[0]
+	c.MiscKonamiCardID = arr[1]
 	c.MiscYear = byId("Year").value
 	c.MiscCreator = byId("Creator").value
 
@@ -752,7 +691,11 @@ function loadCardToHTML(c) {
 	}
 
 	byId("SetNumber").value = c.MiscKonamiSet
-	byId("CardID").value = c.MiscKonamiCardID
+	if (c.DisplayPasswordAndCardID && c.DisplayPasswordAndCardID.length > 0) {
+		byId("CardID").value = c.DisplayPasswordAndCardID
+	} else {
+		byId("CardID").value = toDisplayPasswordAndCardID(c.MiscCardPassword, c.MiscKonamiCardID)
+	}
 	byId("Year").value = c.MiscYear
 	if (c.MiscCreator) {  // keep "Creator"
 		byId("Creator").value = c.MiscCreator
@@ -1215,9 +1158,9 @@ function renderMisc(card) {
 	fitTextOneLine(card.MiscKonamiSet, kSet, scaleFont, scaleH, 1.1)
 	fitTextOneLine(card.MiscKonamiSet, kSetL, scaleFont, scaleH, 1.1)
 	fitTextOneLine(card.MiscKonamiSet, kSetP, scaleFont, scaleH, 1.1)
-	cardPasswordAndID = card.MiscKonamiCardID
-	if (card.MiscCardPassword && card.MiscCardPassword.trim().length > 0) {
-		cardPasswordAndID = `${card.MiscCardPassword} #${card.MiscKonamiCardID}`
+	let cardPasswordAndID = card.DisplayPasswordAndCardID
+	if (!cardPasswordAndID) {
+		cardPasswordAndID = toDisplayPasswordAndCardID(card.MiscCardPassword, card.MiscKonamiCardID)
 	}
 	fitTextOneLine(cardPasswordAndID, kCid, scaleFont, scaleH, 1.1)
 	let copyleft = `🄯`
@@ -1404,6 +1347,16 @@ function importCardJSON(jsonDataURI) {
 	let binStringUnicode = Uint8Array.from(jsonStr, (m) => m.codePointAt(0))
 	let jsonStrUnicode = new TextDecoder().decode(binStringUnicode)
 	GlobalCard = JSON.parse(jsonStrUnicode)
+	if (GlobalCard.MiscKonamiCardID && GlobalCard.MiscKonamiCardID.length > 0) {
+		if (!GlobalCard.MiscCardPassword) {
+			// automatically fill card password from card ID
+			let cardInDB = MapCardDatabase[GlobalCard.MiscKonamiCardID]
+			console.log(`cardInDB: ${JSON.stringify(cardInDB)}`)
+			if (cardInDB && cardInDB.hasOwnProperty("MiscCardPassword")) {
+				GlobalCard.MiscCardPassword = cardInDB["MiscCardPassword"]
+			}
+		}
+	}
 	loadCardToHTML(GlobalCard)
 	renderCard(GlobalCard)
 }
