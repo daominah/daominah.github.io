@@ -496,7 +496,7 @@ function calcTextWidth(text, styleFont) {
 // the text width will be scaled automatically if overflowed,
 // magic value scaleFont=1.5 and scaleH=1.15 helps to fit card name
 function fitTextOneLine(text, element, scaleFont = 1.0,
-						scaleH = 1.15, scaleW = 1.0) {
+                        scaleH = 1.15, scaleW = 1.0) {
 	if (!element) {
 		console.log(`error fitTextOneLine element: ${element}, should be unreachable`)
 		return
@@ -1205,16 +1205,21 @@ function renderMisc(card) {
 		for (let v of all) {v.style.color = "black"}
 	} else {
 		if (card.CardSubtype === CardSubtype.MonsterXyz) {
-			for (let v of all) {v.style.color = "Silver"}
+			for (let v of all) {v.style.color = "rgb(224,224,224)"}
 		} else {
 			for (let v of all) {v.style.color = "black"}
 		}
 	}
 
-	fitTextOneLine(card.MiscKonamiSet, kSet)
-	fitTextOneLine(card.MiscKonamiSet, kSetL)
-	fitTextOneLine(card.MiscKonamiSet, kSetP)
-	fitTextOneLine(card.MiscKonamiCardID, kCid)
+	let scaleFont = 1.0, scaleH = 1.15, scaleW = 1.0
+	fitTextOneLine(card.MiscKonamiSet, kSet, scaleFont, scaleH, 1.1)
+	fitTextOneLine(card.MiscKonamiSet, kSetL, scaleFont, scaleH, 1.1)
+	fitTextOneLine(card.MiscKonamiSet, kSetP, scaleFont, scaleH, 1.1)
+	cardPasswordAndID = card.MiscKonamiCardID
+	if (card.MiscCardPassword && card.MiscCardPassword.trim().length > 0) {
+		cardPasswordAndID = `${card.MiscCardPassword} #${card.MiscKonamiCardID}`
+	}
+	fitTextOneLine(cardPasswordAndID, kCid, scaleFont, scaleH, 1.1)
 	let copyleft = `🄯`
 	if (IsNotLinuxOS) {
 		// workaround Windows and MacOS cannot show CopyLeft symbol in browsers

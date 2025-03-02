@@ -154,15 +154,15 @@ lineHeight will be equal to lineHeight of card effect (CSS var) */
 .stretchImg {width: 100%; height: 100%}
 /* fitImgPendulum maintains W:H ratio and crops overflowed height */
 .fitImgPendulum {width: 100%}
-.fitImgPendulumLong {width: 100%; height: 200%}
+.fitImgPendulumLong {width: 100%; height: 170%}
 
 
 .cRenderPScaleLeft {position: absolute;
-  text-align: center; font-family: sans-serif;
-  left: 98px; bottom: 470px; width: 56px; height: 48px}
+  text-align: center; font-family: fontATKValue;
+  left: 98px; bottom: 480px; width: 56px; height: 72px}
 .cRenderPScaleRight {position: absolute;
-  text-align: center; font-family: sans-serif;
-  right: 98px; bottom: 470px; width: 56px; height: 48px}
+  text-align: center; font-family: fontATKValue;
+  right: 98px; bottom: 480px; width: 56px; height: 72px}
 
 .cRenderMonsterAbilities {position: absolute;
   font-weight: bold; white-space: nowrap; font-family: fontCardType;
@@ -236,12 +236,12 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
   right: 102px; top: 1566px; width: 44px; height: 44px}
 
 .cRenderKonamiSet {position: absolute; text-align: right;
-  right: 120px; top: 1236px; width: 210px; height: 24px}
+  right: 120px; top: 1236px; width: 220px; height: 28px}
 .cRenderKonamiSetLink {position: absolute; text-align: right;
-  right: 210px; top: 1236px; width: 210px; height: 24px}
+  right: 210px; top: 1236px; width: 220px; height: 28px}
 .cRenderKonamiSetPendulum {position: absolute; text-align: left;
-  left: 100px; bottom: 110px; width: 210px; height: 24px}
+  left: 100px; bottom: 110px; width: 220px; height: 28px}
 .cRenderKonamiCardID {position: absolute;
-  left: 70px; top: 1640px; width: 500px; height: 24px}
+  left: 70px; top: 1640px; width: 500px; height: 26px}
 .cRenderYearCreator {position: absolute; text-align: right;
-  right: 70px; top: 1640px; width: 500px; height: 24px}
+  right: 70px; top: 1640px; width: 500px; height: 26px}
