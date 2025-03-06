@@ -157,7 +157,9 @@ let DefaultCard = {
 	MonsterType: MonsterType.Warrior,
 	MonsterLevelRankLink: 0,
 	MonsterATK: 0,
+	MonsterATKStr: "",  // sometimes ATK can be "?" instead of 0
 	MonsterDEF: 0,
+	MonsterDEFStr: "-",  // sometimes DEF can be "?" instead of 0
 	MonsterAbilities: [],  // Ability.Tuner, Ability.Flip, ...
 	MonsterLinkArrows: [],  // LinkArrow.Up, LinkArrow.UpRight, ...
 
@@ -549,18 +551,10 @@ function readCardFromHTML() {
 	} else {
 		c.MonsterLevelRankLink = DefaultCard.MonsterLevelRankLink
 	}
-	c.MonsterATK = byId("MonsterATK").value
-	if (c.MonsterATK) {
-		c.MonsterATK = Math.floor(c.MonsterATK)
-	} else {
-		c.MonsterATK = DefaultCard.MonsterATK
-	}
-	c.MonsterDEF = byId("MonsterDEF").value
-	if (c.MonsterDEF) {
-		c.MonsterDEF = Math.floor(c.MonsterDEF)
-	} else {
-		c.MonsterDEF = DefaultCard.MonsterDEF
-	}
+	c.MonsterATKStr = byId("MonsterATK").value
+	c.MonsterATK = parseInt(c.MonsterATKStr) | DefaultCard.MonsterATK
+	c.MonsterDEFStr = byId("MonsterDEF").value
+	c.MonsterDEF = parseInt(c.MonsterDEFStr) | DefaultCard.MonsterDEF
 
 	c.MonsterAbilities = []
 	let abilitiesInputs = document.getElementsByName("MonsterAbilities")
@@ -614,6 +608,7 @@ function readCardFromHTML() {
 
 // loadCardToHTML uses the input card object to fill HTML elements on "colLeft"
 function loadCardToHTML(c) {
+	console.log("loadCardToHTML", c)
 	byId("CardName").value = c.CardName
 	byId(c.CardType).checked = true
 	let em = byId("CardSubtypeMonster")
@@ -649,8 +644,17 @@ function loadCardToHTML(c) {
 	}
 	byId("MonsterType").value = c.MonsterType
 	byId("MonsterLevelRankLink").value = c.MonsterLevelRankLink
-	byId("MonsterATK").value = c.MonsterATK
-	byId("MonsterDEF").value = c.MonsterDEF
+
+	if (!c.hasOwnProperty("MonsterATKStr")) {
+		byId("MonsterATK").value = c.MonsterATK.toString()
+	} else {
+		byId("MonsterATK").value = c.MonsterATKStr
+	}
+	if (!c.hasOwnProperty("MonsterDEFStr")) {
+		byId("MonsterDEF").value = c.MonsterDEF.toString()
+	} else {
+		byId("MonsterDEF").value = c.MonsterDEFStr
+	}
 
 	for (let k in Ability) {
 		let checkbox = byId(k)
@@ -1096,21 +1100,51 @@ function renderMonsterAtkDefLink(card) {
 	labelATK.style.display = ""
 	valueATK.style.display = ""
 	fitTextOneLine("ATK/", labelATK, 1.5, 1.15, 1.15)
-	if (!IsWindowsOS) {
-		fitTextOneLine(card.MonsterATK, valueATK, 1.5, 1.15, 1.2)
+	let displayStrATK = ""
+	if (card.hasOwnProperty("MonsterATKStr") && card.MonsterATKStr !== "" && card.MonsterATKStr !== "-") {
+		displayStrATK = card.MonsterATKStr
 	} else {
-		fitTextOneLine(card.MonsterATK, valueATK, 1.35, 1.35, 1.35)
+		displayStrATK = card.MonsterATK.toString()
+	}
+
+	const scaleStrQuestionMark = 1.2
+	if (!IsWindowsOS) {
+		let scaleH = 1.15
+		if (displayStrATK === "?") {
+			scaleH = scaleH * scaleStrQuestionMark
+		}
+		fitTextOneLine(displayStrATK, valueATK, 1.5, scaleH, 1.2)
+	} else {
+		let scaleH = 1.35
+		if (displayStrATK === "?") {
+			scaleH = scaleH * scaleStrQuestionMark
+		}
+		fitTextOneLine(displayStrATK, valueATK, 1.35, scaleH, 1.35)
 	}
 
 	labelDEF.style.display = ""
 	valueDEF.style.display = ""
 	labelLINK.style.display = "none"
 	valueLINK.style.display = "none"
+	let displayStrDEF = ""
+	if (card.hasOwnProperty("MonsterDEFStr") && card.MonsterDEFStr !== "" && card.MonsterDEFStr !== "-") {
+		displayStrDEF = card.MonsterDEFStr
+	} else {
+		displayStrDEF = card.MonsterDEF.toString()
+	}
 	fitTextOneLine("DEF/", labelDEF, 1.5, 1.15, 1.15)
 	if (!IsWindowsOS) {
-		fitTextOneLine(card.MonsterDEF, valueDEF, 1.5, 1.15, 1.2)
+		let scaleH = 1.15
+		if (displayStrDEF === "?") {
+			scaleH = scaleH * scaleStrQuestionMark
+		}
+		fitTextOneLine(displayStrDEF, valueDEF, 1.5, scaleH, 1.2)
 	} else {
-		fitTextOneLine(card.MonsterDEF, valueDEF, 1.35, 1.35, 1.35)
+		let scaleH = 1.35
+		if (displayStrDEF === "?") {
+			scaleH = scaleH * scaleStrQuestionMark
+		}
+		fitTextOneLine(displayStrDEF, valueDEF, 1.35, scaleH, 1.35)
 	}
 
 	// card.CardSubtype = CardSubtype.MonsterLink  // for testing
