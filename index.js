@@ -291,6 +291,8 @@ let GlobalCard = NewCard();
 
 // LastUpdateCardState throttles func `updateCardState`
 let LastUpdateCardState = new Date(0)
+// LastCardName helps to only send log in renderCard when CardName changed
+let LastCardName = ""
 
 
 // IndexCardDatabase will be initialized in func `buildIndexCardDatabase`,
@@ -711,6 +713,16 @@ function loadCardToHTML(c) {
 
 // renderCard draw the card image by updating HTML "colMid"
 function renderCard(card) {
+	if (card.CardName !== LastCardName && card.CardName !== "") {
+		let cardNameNoSpace = card.CardName.replace(/ /g, "_");
+		logURLQuery = `?func=renderCard&cardName=${cardNameNoSpace}`;
+		console.log(logURLQuery);
+		fetch(`https://log.daominah.uk/log${logURLQuery}`, {method: 'GET'})
+			.then(response => console.log('log sent successfully'))
+			.catch(error => console.error('error sending log:', error));
+	}
+	LastCardName = card.CardName
+
 	renderCardFrame(card)
 	renderCardName(card)
 	renderCardAttribute(card)
@@ -1421,6 +1433,15 @@ function konamiDatabaseURL(cardID, language = "ja") {
 
 function SearchCardDatabase() {
 	let searchQuery = document.getElementById("SearchCardQuery").value
+
+	if (searchQuery) {
+		logURLQuery = `?func=SearchCardDatabase&searchQuery=${searchQuery}`;
+		console.log(logURLQuery);
+		fetch(`https://log.daominah.uk/log${logURLQuery}`, {method: 'GET'})
+			.then(response => console.log('log sent successfully'))
+			.catch(error => console.error('error sending log:', error));
+	}
+
 	let searchResult = [] // []Card
 	let limit = 16, offset = 0  // TODO: paginate search result
 	// search: https://github.com/olivernn/lunr.js
