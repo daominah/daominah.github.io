@@ -249,8 +249,10 @@ function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
 	let parts = displayPasswordAndCardID.split("#")
 	if (parts.length === 1) {
 		tmp = parts[0].trim()
-		if (tmp.length === 8) {  // probably a card password
-			cardPassword = tmp
+		if (6 <= tmp.length && tmp.length <= 8) {
+			// cardID only has 5 digits, so probably this is a card password,
+			// card password has exactly 8 digits, but can be mistaken missing prefix zeroes
+			cardPassword = tmp.padStart(8, "0")
 		} else {
 			cardID = tmp  // in this repo old card, only cardID is displayed and exported
 		}
