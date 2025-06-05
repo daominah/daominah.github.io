@@ -1395,9 +1395,10 @@ function importCardJSON(jsonDataURI) {
 	let binStringUnicode = Uint8Array.from(jsonStr, (m) => m.codePointAt(0))
 	let jsonStrUnicode = new TextDecoder().decode(binStringUnicode)
 	GlobalCard = JSON.parse(jsonStrUnicode)
+
 	if (GlobalCard.MiscKonamiCardID && GlobalCard.MiscKonamiCardID.length > 0) {
 		if (!GlobalCard.MiscCardPassword) {
-			// automatically fill card password from card ID
+			// automatically fill card password from card ID (data from konami_data/konami_db_en.js)
 			let cardInDB = MapCardDatabase[GlobalCard.MiscKonamiCardID]
 			console.log(`cardInDB: ${JSON.stringify(cardInDB)}`)
 			if (cardInDB && cardInDB.hasOwnProperty("MiscCardPassword")) {
@@ -1405,6 +1406,10 @@ function importCardJSON(jsonDataURI) {
 			}
 		}
 	}
+	if (GlobalCard.MiscCardPassword && GlobalCard.MiscCardPassword.length < 8) {
+		GlobalCard.MiscCardPassword = GlobalCard.MiscCardPassword.padStart(8, "0");
+	}
+
 	loadCardToHTML(GlobalCard)
 	renderCard(GlobalCard)
 }
