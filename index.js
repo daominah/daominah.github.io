@@ -838,19 +838,24 @@ function renderCardAttribute(card) {
 
 
 function loadMonsterLevelRankElements() {
+	let levelsElement = byId("RenderMonsterLevel")
+	let ranksElement = byId("RenderMonsterRank")
+	levelsElement.style.visibility = "visible"
+	ranksElement.style.visibility = "visible"
+	let levelsRanksWidth = Math.max(levelsElement.clientWidth, ranksElement.clientWidth)
+	let starWidth = Math.floor(levelsRanksWidth / 12 - 2) + "px"
+	console.log(`levelsRanksWidth: ${levelsRanksWidth}, starWidth: ${starWidth}`)
 	{ // red star elements to represent monster level
-		let mainElem = byId("RenderMonsterLevel")
-		let nStars = 12
 		let wrapStarStyle = function (style) {
 			style.visibility = "hidden"
 			style.display = "inline-block"
-			style.width = Math.floor((mainElem.clientWidth) / nStars - 2) + "px"
-			style.height = window.getComputedStyle(mainElem).height
+			style.width = starWidth
+			style.height = window.getComputedStyle(levelsElement).height
 			style.paddingLeft = "2px"
 		}
 		// star elements ID are StarWrap1, StarWrap2, ..., StarWrap12
 		// they will be used in func renderCardTypeLevelRank
-		for (let i = nStars; i >= 1; i--) {
+		for (let i = 12; i >= 1; i--) {
 			let starWrap = document.createElement("div")
 			starWrap.id = `StarWrap${i}`
 			wrapStarStyle(starWrap.style)
@@ -859,22 +864,21 @@ function loadMonsterLevelRankElements() {
 			star.style.width = "100%"
 			starWrap.innerHTML = ''
 			starWrap.appendChild(star)
-			mainElem.appendChild(starWrap)
+			levelsElement.appendChild(starWrap)
 		}
 	}
 	{ // black star elements to represent monster rank (upto rank 12)
-		let mainElem = byId("RenderMonsterRank")
-		let nStars = 12
+		ranksElement.style.visibility = "visible"
 		let wrapStarStyle = function (style) {
 			style.visibility = "hidden"
 			style.display = "inline-block"
-			style.width = Math.floor((mainElem.clientWidth) / nStars - 2) + "px"
-			style.height = window.getComputedStyle(mainElem).height
+			style.width = starWidth
+			style.height = window.getComputedStyle(ranksElement).height
 			style.paddingRight = "2px"
 		}
 		// star elements ID are BlackStarWrap1, BlackStarWrap2, ..., BlackStarWrap12
 		// they will be used in func renderCardTypeLevelRank
-		for (let i = 1; i <= nStars; i++) {
+		for (let i = 1; i <= 12; i++) {
 			let starWrap = document.createElement("div")
 			starWrap.id = `BlackStarWrap${i}`
 			wrapStarStyle(starWrap.style)
@@ -883,21 +887,21 @@ function loadMonsterLevelRankElements() {
 			star.style.width = "100%"
 			starWrap.innerHTML = ''
 			starWrap.appendChild(star)
-			mainElem.appendChild(starWrap)
+			ranksElement.appendChild(starWrap)
 		}
 	}
 	{ // now YuGiOh only has 2 monsters that have rank 13:
 		// * Raidraptor - Rising Rebellion Falcon
 		// * Number iC1000: Numerounius Numerounia
 		let mainElem = byId("RenderMonsterRank13")
-		let nStars = 13
+		mainElem.style.visibility = "visible"
 		let wrapStarStyle = function (style) {
 			style.display = "inline-block"
-			style.width = Math.floor((mainElem.clientWidth) / nStars - 1) + "px"
+			style.width = starWidth
 			style.height = window.getComputedStyle(mainElem).height
 			style.paddingRight = "1px"
 		}
-		for (let i = 1; i <= nStars; i++) {
+		for (let i = 1; i <= 13; i++) {
 			let starWrap = document.createElement("div")
 			wrapStarStyle(starWrap.style)
 			let staticStar = document.createElement("img")
@@ -925,6 +929,7 @@ function renderCardTypeLevelRank(card) {
 		}
 		if (card.CardSubtype !== CardSubtype.MonsterXyz) {
 			level.style.display = ""
+			level.style.visibility = "visible";
 			for (let i = 1; i <= 12; i++) {
 				let e = byId(`StarWrap${i}`)
 				if (!e) {
@@ -938,6 +943,7 @@ function renderCardTypeLevelRank(card) {
 			}
 		} else if (card.MonsterLevelRankLink <= 12) {
 			rank.style.display = ""
+			rank.style.visibility = "visible";
 			for (let i = 1; i <= 12; i++) {
 				if (i <= card.MonsterLevelRankLink) {
 					byId(`BlackStarWrap${i}`).style.visibility = "visible"
@@ -947,6 +953,7 @@ function renderCardTypeLevelRank(card) {
 			}
 		} else {
 			rank13.style.display = ""
+			rank13.style.visibility = "visible";
 		}
 	} else { // Spell or Trap
 		cardType.style.display = ""
@@ -1614,6 +1621,13 @@ function getArtHost() {
 }
 
 function setCardArtSrcWithURL(cardID) {
+	if (!cardID || cardID.length === 0) {
+		// prevent browser try "daominah.uk/.png" when cardID is empty,
+		// which will show a red 404 error in console
+		byId("ImgRenderCardArtPendulum").src = ""
+		byId("ImgRenderCardArt").src = ""
+		return
+	}
 	let daominahArtURL = `${getArtHost()}/${cardID}.png`
 	byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
 	byId("ImgRenderCardArtPendulum").src = daominahArtURL
