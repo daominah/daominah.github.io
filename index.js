@@ -199,7 +199,8 @@ const MapImg = {
 	SpellQuickPlay: "icon/GUI_T_Icon1_Icon05.png",
 	SpellRitual: "icon/GUI_T_Icon1_Icon06.png",
 
-	Level: "icon/GUI_T_Icon1_Other_Level.png",
+	// Level: "icon/GUI_T_Icon1_Other_Level.png",
+	Level: "icon/GUI_T_Icon1_Other_Level_Yugipedia64.png",
 	Rank: "icon/GUI_T_Icon1_Other_Rank.png",
 }
 
