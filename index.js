@@ -14,6 +14,7 @@ const CardType = {
 	Monster: "Monster",
 	Spell: "Spell",
 	Trap: "Trap",
+	Token: "Token"  // rendered similar to Monster
 }
 
 const CardSubtype = {
@@ -239,6 +240,10 @@ function toDisplayPasswordAndCardID(cardPassword, cardID) {
 	if (cardPassword && cardPassword.trim().length > 0) {
 		return `${cardPassword} #${cardID}`
 	}
+	// if cardID starts with not a digit, then it is flavor text, keep it as is
+	if (!/^[0-9]/.test(cardID)) {
+		return cardID
+	}
 	return `#${cardID}`
 }
 
@@ -355,6 +360,7 @@ function handleClickCardType(cardType) {
 	let et = byId("CardSubtypeTrap")
 	let show = em
 	switch (cardType) {
+		case CardType.Token:  // JS switch case will fallthrough (if no "break")
 		case CardType.Monster:
 			em.style.display = ""
 			es.style.display = "none"
@@ -373,7 +379,7 @@ function handleClickCardType(cardType) {
 			show = et
 	}
 	show.getElementsByTagName("input")[0].checked = true
-	if (cardType === CardType.Monster) {
+	if (cardType === CardType.Monster || cardType === CardType.Token) {
 		byId("MonsterDetail").classList.remove("disabledElement")
 	} else {
 		byId("MonsterDetail").classList.add("disabledElement")
@@ -731,7 +737,7 @@ function renderCard(card) {
 	renderCardAttribute(card)
 	renderCardTypeLevelRank(card)
 	renderLinkArrow(card)
-	renderMisc(card)
+	renderMiscFooter(card)
 	renderPendulum(card)
 
 	let [chosenEffectElement, autoFontSize] = renderCardEffect(card)
@@ -757,6 +763,8 @@ function renderCardFrame(card) {
 		s.backgroundImage = "url(card_frame/spell.png)"
 	} else if (card.CardType === CardType.Trap) {
 		s.backgroundImage = "url(card_frame/trap.png)"
+	} else if (card.CardType === CardType.Token) {
+		s.backgroundImage = "url(card_frame/monster_token.png)"
 	} else {  // CardType.Monster
 		if (!card.IsPendulum) {
 			switch (card.CardSubtype) {
@@ -923,7 +931,7 @@ function renderCardTypeLevelRank(card) {
 	for (let v of [level, rank, rank13, cardType, subType]) {
 		v.style.display = "none"
 	}
-	if (card.CardType === CardType.Monster) {
+	if (card.CardType === CardType.Monster || card.CardType === CardType.Token) {
 		if (card.CardSubtype === CardSubtype.MonsterLink) {
 			return
 		}
@@ -1180,7 +1188,7 @@ function renderMonsterAtkDefLink(card) {
 	}
 }
 
-function renderMisc(card) {
+function renderMiscFooter(card) {
 	let kSet = byId("RenderKonamiSet")
 	let kSetL = byId("RenderKonamiSetLink")
 	let kSetP = byId("RenderKonamiSetPendulum")
@@ -1404,9 +1412,10 @@ function importCardJSON(jsonDataURI) {
 	let jsonStrUnicode = new TextDecoder().decode(binStringUnicode)
 	GlobalCard = JSON.parse(jsonStrUnicode)
 
+	// automatically fill cardPassword from cardID in imported card JSON
+	// (if cardID exists in cards database konami_data/konami_db_en.js)
 	if (GlobalCard.MiscKonamiCardID && GlobalCard.MiscKonamiCardID.length > 0) {
 		if (!GlobalCard.MiscCardPassword) {
-			// automatically fill card password from card ID (data from konami_data/konami_db_en.js)
 			let cardInDB = MapCardDatabase[GlobalCard.MiscKonamiCardID]
 			console.log(`cardInDB: ${JSON.stringify(cardInDB)}`)
 			if (cardInDB && cardInDB.hasOwnProperty("MiscCardPassword")) {
@@ -1416,6 +1425,12 @@ function importCardJSON(jsonDataURI) {
 	}
 	if (GlobalCard.MiscCardPassword && GlobalCard.MiscCardPassword.length < 8) {
 		GlobalCard.MiscCardPassword = GlobalCard.MiscCardPassword.padStart(8, "0");
+	}
+
+	// automatically change Creator "daominah" to "daominah.github.io"
+	// so people know where to find this card editor
+	if (GlobalCard.MiscCreator === "daominah") {
+		GlobalCard.MiscCreator = "daominah.github.io"
 	}
 
 	loadCardToHTML(GlobalCard)
