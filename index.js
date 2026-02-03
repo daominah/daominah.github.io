@@ -1786,7 +1786,7 @@ function loadHTMLAltArtSelector(cardID, preferredArtID) {
 		if (isChecked) {
 			defaultArtChecked = false // uncheck default if alt art matches
 		}
-		createAltArtRadio(`AltArt${i + 1}`, altID, isChecked)
+		createAltArtRadio(`AltArt${altID}`, altID, isChecked)
 	}
 	createAltArtRadio("DefaultArt", cardID, defaultArtChecked)
 }
