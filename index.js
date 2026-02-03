@@ -177,6 +177,9 @@ let DefaultCard = {
 	DisplayPasswordAndCardID: "",
 	MiscYear: (new Date()).getFullYear(),
 	MiscCreator: "daominah.github.io",
+	// AltArtID: selected alt art ID (example "3801" for Blue-Eyes White Dragon),
+	// this is an empty string "" if no alt art or default art selected
+	AltArtID: "",
 }
 
 
@@ -249,6 +252,7 @@ function toDisplayPasswordAndCardID(cardPassword, cardID) {
 
 // fromDisplayPasswordAndCardID always returns a list of 2 elements,
 // cardPassword and cardID, either of them can be empty string.
+// example input arg: "89631139 #4007", output: ["89631139", "4007"]
 function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
 	let cardPassword = ""
 	let cardID = ""
@@ -260,7 +264,7 @@ function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
 			// card password has exactly 8 digits, but can be mistaken missing prefix zeroes
 			cardPassword = tmp.padStart(8, "0")
 		} else {
-			cardID = tmp  // in this repo old card, only cardID is displayed and exported
+			cardID = tmp  // fallback for this repo old code, only cardID was displayed and exported
 		}
 	}
 	if (parts.length >= 2) {
@@ -281,6 +285,18 @@ for (let card of CardDatabase) {
 	card.DisplayPasswordAndCardID = toDisplayPasswordAndCardID(card.MiscCardPassword, card.MiscKonamiCardID)
 	MapCardDatabase[card.MiscKonamiCardID] = card
 }
+
+// MapAltArts maps OriginalCardID to AltArtIDs array
+// declared in file `konami_data/alt_arts.js`
+const MapAltArts = {}
+if (typeof AltArts !== 'undefined' && AltArts) {
+	for (let entry of AltArts) {
+		if (entry.OriginalCardID && entry.AltArtIDs && entry.AltArtIDs.length > 0) {
+			MapAltArts[entry.OriginalCardID] = entry.AltArtIDs
+		}
+	}
+}
+console.log(`len MapAltArts: ${Object.keys(MapAltArts).length}`)
 
 
 // _____________________________________________________________________________
@@ -345,8 +361,16 @@ function updateCardState() {
 	}
 	LastUpdateCardState = now
 	// console.log(`${now.toISOString()} updateCardState, sinceLast: ${sinceLast} ms`)
-	GlobalCard = readCardFromHTML();
 
+
+	// init alt art selector elements based on "CardID" element which has value "password #cardID",
+	// OR if the alt art radios already here, do nothing (so respect selected alt art)
+	let [_, cardID] = fromDisplayPasswordAndCardID(byId("CardID").value)
+	loadHTMLAltArtSelector(cardID)
+
+
+	// collect user inputs from "colLeft" into GlobalCard then render to "colMid"
+	GlobalCard = readCardFromHTML();
 	renderCard(GlobalCard)
 
 	// console.log(`updateCardState dur: ${fmtSec(new Date() - now)}`)
@@ -408,6 +432,86 @@ function loadMonsterTypeElements() {
 		option.value = MonsterType[monsterTypes[i]]
 		option.innerHTML = MonsterType[monsterTypes[i]]
 		select.appendChild(option)
+	}
+}
+
+
+// loadMonsterLevelRankElements inits all the stars elements for monster level display
+// (but hidden by default, will be shown depending on the card level)
+function loadMonsterLevelRankElements() {
+	let levelsElement = byId("RenderMonsterLevel")
+	let ranksElement = byId("RenderMonsterRank")
+	levelsElement.style.visibility = "visible"
+	ranksElement.style.visibility = "visible"
+	let levelsRanksWidth = Math.max(levelsElement.clientWidth, ranksElement.clientWidth)
+	let starWidth = Math.floor(levelsRanksWidth / 12 - 2) + "px"
+	console.log(`levelsRanksWidth: ${levelsRanksWidth}, starWidth: ${starWidth}`)
+	{ // red star elements to represent monster level
+		let wrapStarStyle = function (style) {
+			style.visibility = "hidden"
+			style.display = "inline-block"
+			style.width = starWidth
+			style.height = window.getComputedStyle(levelsElement).height
+			style.paddingLeft = "2px"
+		}
+		// star elements ID are StarWrap1, StarWrap2, ..., StarWrap12
+		// they will be used in func renderCardTypeLevelRank
+		for (let i = 12; i >= 1; i--) {
+			let starWrap = document.createElement("div")
+			starWrap.id = `StarWrap${i}`
+			wrapStarStyle(starWrap.style)
+			let star = document.createElement("img")
+			star.src = MapImg.Level
+			star.style.width = "100%"
+			starWrap.innerHTML = ''
+			starWrap.appendChild(star)
+			levelsElement.appendChild(starWrap)
+		}
+	}
+	{ // black star elements to represent monster rank (upto rank 12)
+		ranksElement.style.visibility = "visible"
+		let wrapStarStyle = function (style) {
+			style.visibility = "hidden"
+			style.display = "inline-block"
+			style.width = starWidth
+			style.height = window.getComputedStyle(ranksElement).height
+			style.paddingRight = "2px"
+		}
+		// star elements ID are BlackStarWrap1, BlackStarWrap2, ..., BlackStarWrap12
+		// they will be used in func renderCardTypeLevelRank
+		for (let i = 1; i <= 12; i++) {
+			let starWrap = document.createElement("div")
+			starWrap.id = `BlackStarWrap${i}`
+			wrapStarStyle(starWrap.style)
+			let star = document.createElement("img")
+			star.src = MapImg.Rank
+			star.style.width = "100%"
+			starWrap.innerHTML = ''
+			starWrap.appendChild(star)
+			ranksElement.appendChild(starWrap)
+		}
+	}
+	{ // now YuGiOh only has 2 monsters that have rank 13:
+		// * Raidraptor - Rising Rebellion Falcon
+		// * Number iC1000: Numerounius Numerounia
+		let mainElem = byId("RenderMonsterRank13")
+		mainElem.style.visibility = "visible"
+		let wrapStarStyle = function (style) {
+			style.display = "inline-block"
+			style.width = starWidth
+			style.height = window.getComputedStyle(mainElem).height
+			style.paddingRight = "1px"
+		}
+		for (let i = 1; i <= 13; i++) {
+			let starWrap = document.createElement("div")
+			wrapStarStyle(starWrap.style)
+			let staticStar = document.createElement("img")
+			staticStar.src = MapImg.Rank
+			staticStar.style.width = "100%"
+			starWrap.innerHTML = ''
+			starWrap.appendChild(staticStar)
+			mainElem.appendChild(starWrap)
+		}
 	}
 }
 
@@ -516,10 +620,18 @@ function CloneCard(card) {
 	return JSON.parse(JSON.stringify(card))
 }
 
+// ensureCardHasAltArtID ensures the card object has AltArtID field (empty string if missing)
+function ensureCardHasAltArtID(card) {
+	if (!card.hasOwnProperty("AltArtID") || card.AltArtID === undefined || card.AltArtID === null) {
+		card.AltArtID = ""
+	}
+	return card
+}
+
 
 // readCardFromHTML returns a card object with all fields value read from
 // current page HTML "colLeft", if a field is undefined or null, this function
-// will set the field value equals to DefaultCard
+// will set the field value equals to DefaultCard's corresponding field
 function readCardFromHTML() {
 	let c = NewCard()
 	c.CardName = byId("CardName").value
@@ -601,23 +713,54 @@ function readCardFromHTML() {
 			c.PendulumEffect = DefaultCard.PendulumEffect
 		}
 	}
+	// Only set CardArt if it was manually set (file upload), not auto-generated
 	if (c.IsPendulum) {
-		c.CardArt = byId("ImgRenderCardArtPendulum").src
+		let img = byId("ImgRenderCardArtPendulum")
+		if (img.dataset.artSource === "manual") {
+			c.CardArt = img.src
+		} else {
+			c.CardArt = ""
+		}
 	} else {
-		c.CardArt = byId("ImgRenderCardArt").src
+		let img = byId("ImgRenderCardArt")
+		if (img.dataset.artSource === "manual") {
+			c.CardArt = img.src
+		} else {
+			c.CardArt = ""
+		}
 	}
 
 	c.MiscKonamiSet = byId("SetNumber").value
 	let arr = fromDisplayPasswordAndCardID(byId("CardID").value)
 	c.MiscCardPassword = arr[0]
-	c.MiscKonamiCardID = arr[1]
+	let newCardID = arr[1]
+
+	// Read selected alt art ID (DefaultArt uses cardID as value, AltArt uses altID)
+	ensureCardHasAltArtID(c) // Ensure AltArtID field exists
+	let altArtIDs = MapAltArts[newCardID]
+	if (altArtIDs && altArtIDs.length > 0) {
+		let selectedArtID = getSelectedAltArtID()
+		// If selectedArtID equals cardID, it means DefaultArt is selected (empty string)
+		// Otherwise, it's an alt art ID
+		if (selectedArtID === newCardID) {
+			c.AltArtID = ""
+		} else {
+			c.AltArtID = selectedArtID
+		}
+	} else {
+		c.AltArtID = ""
+	}
+
+	c.MiscKonamiCardID = newCardID
+
 	c.MiscYear = byId("Year").value
 	c.MiscCreator = byId("Creator").value
 
 	return c
 }
 
-// loadCardToHTML uses the input card object to fill HTML elements on "colLeft"
+// loadCardToHTML uses the input card object to fill HTML elements on "colLeft",
+// usually used to load a card from search result
 function loadCardToHTML(c) {
 	console.log("loadCardToHTML", c)
 	byId("CardName").value = c.CardName
@@ -642,13 +785,11 @@ function loadCardToHTML(c) {
 			et.style.display = ""
 	}
 	byId(c.CardSubtype).checked = true
-	if (c.CardArt) {
-		byId("ImgRenderCardArtPendulum").className = "fitImgPendulum"
-		byId("ImgRenderCardArtPendulum").src = c.CardArt
-		byId("ImgRenderCardArt").src = c.CardArt
-	} else {
-		setCardArtSrcWithURL(c.MiscKonamiCardID)
-	}
+
+	// Update alt art selector based on cardID
+	// loadHTMLAltArtSelector will respect c.AltArtID when creating radio buttons
+	loadHTMLAltArtSelector(c.MiscKonamiCardID, c.AltArtID)
+
 	byId("CardEffect").value = c.CardEffect
 	if (byId(c.MonsterAttribute)) {
 		byId(c.MonsterAttribute).checked = true
@@ -739,6 +880,17 @@ function renderCard(card) {
 	renderLinkArrow(card)
 	renderMiscFooter(card)
 	renderPendulum(card)
+	// renderPendulum already does show/hide the art based on card.IsPendulum,
+	// the following set value for both art elements but only one is visible
+	if (card.CardArt) {
+		byId("ImgRenderCardArtPendulum").className = "fitImgPendulum"
+		byId("ImgRenderCardArtPendulum").src = card.CardArt
+		byId("ImgRenderCardArtPendulum").dataset.artSource = "manual"
+		byId("ImgRenderCardArt").src = card.CardArt
+		byId("ImgRenderCardArt").dataset.artSource = "manual"
+	} else {
+		renderCardArtImgSrcByCardID(card)
+	}
 
 	let [chosenEffectElement, autoFontSize] = renderCardEffect(card)
 	byId("AutoFont").value = autoFontSize
@@ -844,84 +996,6 @@ function renderCardAttribute(card) {
 	}
 }
 
-
-function loadMonsterLevelRankElements() {
-	let levelsElement = byId("RenderMonsterLevel")
-	let ranksElement = byId("RenderMonsterRank")
-	levelsElement.style.visibility = "visible"
-	ranksElement.style.visibility = "visible"
-	let levelsRanksWidth = Math.max(levelsElement.clientWidth, ranksElement.clientWidth)
-	let starWidth = Math.floor(levelsRanksWidth / 12 - 2) + "px"
-	console.log(`levelsRanksWidth: ${levelsRanksWidth}, starWidth: ${starWidth}`)
-	{ // red star elements to represent monster level
-		let wrapStarStyle = function (style) {
-			style.visibility = "hidden"
-			style.display = "inline-block"
-			style.width = starWidth
-			style.height = window.getComputedStyle(levelsElement).height
-			style.paddingLeft = "2px"
-		}
-		// star elements ID are StarWrap1, StarWrap2, ..., StarWrap12
-		// they will be used in func renderCardTypeLevelRank
-		for (let i = 12; i >= 1; i--) {
-			let starWrap = document.createElement("div")
-			starWrap.id = `StarWrap${i}`
-			wrapStarStyle(starWrap.style)
-			let star = document.createElement("img")
-			star.src = MapImg.Level
-			star.style.width = "100%"
-			starWrap.innerHTML = ''
-			starWrap.appendChild(star)
-			levelsElement.appendChild(starWrap)
-		}
-	}
-	{ // black star elements to represent monster rank (upto rank 12)
-		ranksElement.style.visibility = "visible"
-		let wrapStarStyle = function (style) {
-			style.visibility = "hidden"
-			style.display = "inline-block"
-			style.width = starWidth
-			style.height = window.getComputedStyle(ranksElement).height
-			style.paddingRight = "2px"
-		}
-		// star elements ID are BlackStarWrap1, BlackStarWrap2, ..., BlackStarWrap12
-		// they will be used in func renderCardTypeLevelRank
-		for (let i = 1; i <= 12; i++) {
-			let starWrap = document.createElement("div")
-			starWrap.id = `BlackStarWrap${i}`
-			wrapStarStyle(starWrap.style)
-			let star = document.createElement("img")
-			star.src = MapImg.Rank
-			star.style.width = "100%"
-			starWrap.innerHTML = ''
-			starWrap.appendChild(star)
-			ranksElement.appendChild(starWrap)
-		}
-	}
-	{ // now YuGiOh only has 2 monsters that have rank 13:
-		// * Raidraptor - Rising Rebellion Falcon
-		// * Number iC1000: Numerounius Numerounia
-		let mainElem = byId("RenderMonsterRank13")
-		mainElem.style.visibility = "visible"
-		let wrapStarStyle = function (style) {
-			style.display = "inline-block"
-			style.width = starWidth
-			style.height = window.getComputedStyle(mainElem).height
-			style.paddingRight = "1px"
-		}
-		for (let i = 1; i <= 13; i++) {
-			let starWrap = document.createElement("div")
-			wrapStarStyle(starWrap.style)
-			let staticStar = document.createElement("img")
-			staticStar.src = MapImg.Rank
-			staticStar.style.width = "100%"
-			starWrap.innerHTML = ''
-			starWrap.appendChild(staticStar)
-			mainElem.appendChild(starWrap)
-		}
-	}
-}
-
 function renderCardTypeLevelRank(card) {
 	let level = byId("RenderMonsterLevel")
 	let rank = byId("RenderMonsterRank")
@@ -997,7 +1071,7 @@ function renderLinkArrow(card) {
 	}
 	for (let v of card.MonsterLinkArrows) {
 		let tmp = byId(MapLinkMarker[v])
-		if (tmp) {tmp.style.visibility = "visible"}
+		if (tmp) { tmp.style.visibility = "visible" }
 	}
 }
 
@@ -1209,12 +1283,12 @@ function renderMiscFooter(card) {
 		kSetP.style.display = "none"
 	}
 	if (card.IsPendulum) {
-		for (let v of all) {v.style.color = "black"}
+		for (let v of all) { v.style.color = "black" }
 	} else {
 		if (card.CardSubtype === CardSubtype.MonsterXyz) {
-			for (let v of all) {v.style.color = "rgb(224,224,224)"}
+			for (let v of all) { v.style.color = "rgb(224,224,224)" }
 		} else {
-			for (let v of all) {v.style.color = "black"}
+			for (let v of all) { v.style.color = "black" }
 		}
 	}
 
@@ -1361,7 +1435,7 @@ function downloadAsImage(dataURL) {
 }
 
 
-function fmtSec(ms) {return `${ms / 1000}s`}
+function fmtSec(ms) { return `${ms / 1000}s` }
 
 
 //  AllowChars are lowercase alphanumeric, good for file name cross-platform
@@ -1411,6 +1485,7 @@ function importCardJSON(jsonDataURI) {
 	let binStringUnicode = Uint8Array.from(jsonStr, (m) => m.codePointAt(0))
 	let jsonStrUnicode = new TextDecoder().decode(binStringUnicode)
 	GlobalCard = JSON.parse(jsonStrUnicode)
+	ensureCardHasAltArtID(GlobalCard)
 
 	// automatically fill cardPassword from cardID in imported card JSON
 	// (if cardID exists in cards database konami_data/konami_db_en.js)
@@ -1489,14 +1564,14 @@ function SearchCardDatabase() {
 			if (card.CardName.toLowerCase().includes(searchQuery.toLowerCase())) {
 				searchResult.push(card)
 			}
-			if (searchResult.length >= limit) {break}
+			if (searchResult.length >= limit) { break }
 		}
 	} else {
 		let indexedResult = matches.slice(offset, offset + limit)
 		for (let v of indexedResult) {
 			// e.g. v = {"ref":"14297","score":7.307,"matchData":{"metadata":{"avramax":{"CardName":{}}}}}
-			if (!v.ref) {continue}
-			if (!MapCardDatabase[v.ref]) {continue}
+			if (!v.ref) { continue }
+			if (!MapCardDatabase[v.ref]) { continue }
 			searchResult.push(MapCardDatabase[v.ref])
 		}
 	}
@@ -1504,12 +1579,14 @@ function SearchCardDatabase() {
 	// clone before processing because displaying DO modify card object
 	let cloneResult = []
 	for (let card of searchResult) {
-		cloneResult.push(JSON.parse(JSON.stringify(card)))
+		let cloned = JSON.parse(JSON.stringify(card))
+		ensureCardHasAltArtID(cloned) // Ensure AltArtID is present (CardDatabase items don't have it)
+		cloneResult.push(cloned)
 	}
 	let resultWrap = document.getElementById("SearchCardResult")
 	resultWrap.innerHTML = ""
 	for (let card of cloneResult) {
-		if (!card) {continue}
+		if (!card) { continue }
 		let row = document.createElement("div")
 		row.className = "searchRow"
 		let cardName = document.createElement("div")
@@ -1546,10 +1623,18 @@ function SearchCardDatabase() {
 				}
 			}
 			// console.log(`mouseEvent searchRow: ${mouseEvent.target}`,)
-			if (!card.MiscCreator) {  // keep "Creator"
+			if (!card.MiscCreator) {  // keep current "Creator" inputted by user
 				card.MiscCreator = byId("Creator").value
 			}
+
+			// prefer to show alt art instead of default art when click on search result
+			if (MapAltArts[card.MiscKonamiCardID] && MapAltArts[card.MiscKonamiCardID].length > 0) {
+				let altArtIDs = MapAltArts[card.MiscKonamiCardID]
+				card.AltArtID = altArtIDs[altArtIDs.length - 1]
+			}
+
 			GlobalCard = card
+			ensureCardHasAltArtID(GlobalCard)
 			loadCardToHTML(GlobalCard)
 			if (card.CardType === CardType.Monster) {
 				byId("MonsterDetail").classList.remove("disabledElement")
@@ -1621,9 +1706,6 @@ function HandleClickArtResolution(pxStr) {
 			break
 	}
 	console.log(`StorageKeyArtResolution: ${localStorage.getItem(StorageKeyArtResolution)}, host: ${getArtHost()}`)
-	if (!GlobalCard.CardArt) {
-		setCardArtSrcWithURL(GlobalCard.MiscKonamiCardID)
-	}
 	renderCard(GlobalCard)
 }
 
@@ -1635,18 +1717,110 @@ function getArtHost() {
 	return "https://mdygo.daominah.uk"
 }
 
-function setCardArtSrcWithURL(cardID) {
+// getSelectedAltArtID returns the altArtID corresponding to the selected radio
+function getSelectedAltArtID() {
+	let selector = byId("AltArtSelector")
+	let radios = selector.querySelectorAll('input[type="radio"][name="AltArt"]')
+	for (let radio of radios) {
+		if (radio.checked) {
+			return radio.value
+		}
+	}
+	return ""
+}
+
+// loadHTMLAltArtSelector inits the alt art selector based on the current cardID,
+// if the cardID is the same as existing radio buttons, this function does nothing
+// @param {string} cardID: the card ID (e.g., "4007")
+// @param {string} preferredArtID: optional preferred alt art ID to select
+function loadHTMLAltArtSelector(cardID, preferredArtID) {
+	let section = byId("AltArtSection")
+	let label = byId("AltArtLabel")
+	let selector = byId("AltArtSelector")
+
+	// check if we need to reload alt arts radios for the input cardID,
+	// if the radio buttons already created from the same cardID, this does nothing
+	if (section.dataset.originalCardId === String(cardID) && selector.children.length > 0) {
+		return
+	}
+
+	selector.innerHTML = "" // Clear existing radios
+
+	// no alt arts data, just hide the label and radios
 	if (!cardID || cardID.length === 0) {
+		// Hide label but keep space (use visibility to maintain height)
+		label.style.visibility = "hidden"
+		return
+	}
+	let altArtIDs = MapAltArts[cardID]
+	if (!altArtIDs || altArtIDs.length === 0) {
+		label.style.visibility = "hidden"
+		return
+	}
+
+	label.style.visibility = "visible"
+	section.dataset.originalCardId = cardID
+
+	// Helper function to create a radio button with common onchange handler
+	function createAltArtRadio(radioID, radioValue, isChecked) {
+		let label = document.createElement("label")
+		let radio = document.createElement("input")
+		radio.type = "radio"
+		radio.name = "AltArt"
+		radio.id = radioID
+		radio.value = radioValue
+		radio.checked = isChecked
+		radio.onchange = function () {
+			updateCardState()
+		}
+		label.appendChild(radio)
+		label.appendChild(document.createTextNode(` ${radioID} `))
+		selector.appendChild(label)
+	}
+
+	// Select DefaultArt by default, unless preferredArtID matches an alt art
+	let defaultArtChecked = true
+	for (let i = 0; i < altArtIDs.length; i++) {
+		let altID = altArtIDs[i]
+		let isChecked = (preferredArtID && preferredArtID === altID)
+		if (isChecked) {
+			defaultArtChecked = false // uncheck default if alt art matches
+		}
+		createAltArtRadio(`AltArt${i + 1}`, altID, isChecked)
+	}
+	createAltArtRadio("DefaultArt", cardID, defaultArtChecked)
+}
+
+
+// renderCardArtImgSrcByCardID automatically set card art URL src based on
+// cardID and selected alt art (if any).
+// Note that "ImgRenderCardArt" elements can be updated by inputting file too,
+// this func should not be called in that case to avoid overwriting user input.
+function renderCardArtImgSrcByCardID(card) {
+	console.log(`begin renderCardArtImgSrcByCardID cardID=${card.MiscKonamiCardID}, altArtID=${card.AltArtID}, lenCartArt=${card.CardArt ? card.CardArt.length : 0}`)
+	if (!card) {
+		return
+	}
+	if (!card.MiscKonamiCardID || card.MiscKonamiCardID.length === 0) {
 		// prevent browser try "daominah.uk/.png" when cardID is empty,
 		// which will show a red 404 error in console
 		byId("ImgRenderCardArtPendulum").src = ""
+		byId("ImgRenderCardArtPendulum").dataset.artSource = "auto"
 		byId("ImgRenderCardArt").src = ""
+		byId("ImgRenderCardArt").dataset.artSource = "auto"
 		return
 	}
-	let daominahArtURL = `${getArtHost()}/${cardID}.png`
+	let artID = card.MiscKonamiCardID
+	if (card.AltArtID && card.AltArtID.length > 0) {
+		artID = card.AltArtID
+	}
+	let daominahArtURL = `${getArtHost()}/${artID}.png`
 	byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
 	byId("ImgRenderCardArtPendulum").src = daominahArtURL
+	byId("ImgRenderCardArtPendulum").dataset.artSource = "auto"
 	byId("ImgRenderCardArt").src = daominahArtURL
+	byId("ImgRenderCardArt").dataset.artSource = "auto"
+	console.log(`end renderCardArtImgSrcByCardID CardArtSrc=${daominahArtURL}, lenCardArt=${card.CardArt ? card.CardArt.length : 0}`)
 }
 
 
@@ -1659,21 +1833,31 @@ window.onload = () => {
 
 	loadCardToHTML(DefaultCard)
 
+	// handling user choosing a file (from their computer) as card art
 	byId("CardArt").addEventListener("change", ev => {
-		if (!ev.target.files || !ev.target.files.length) {return null}
+		if (!ev.target.files || !ev.target.files.length) { return null }
 		const r = new FileReader();
 		r.onload = function (event) {
 			if (window.getComputedStyle(byId("RenderCardArt")).display !== "none") {
-				byId("ImgRenderCardArt").setAttribute("src", event.target.result)
+				let img = byId("ImgRenderCardArt")
+				img.setAttribute("src", event.target.result)
+				img.dataset.artSource = "manual"
 			} else {
-				byId("ImgRenderCardArtPendulum").setAttribute("src", event.target.result)
+				let img = byId("ImgRenderCardArtPendulum")
+				img.setAttribute("src", event.target.result)
+				img.dataset.artSource = "manual"
+			}
+			// set GlobalCard.CardArt consistent with the pattern of
+			// updating "colLeft" updates GlobalCard.
+			if (GlobalCard) {
+				GlobalCard.CardArt = event.target.result
 			}
 			updateCardState()
 		}
 		r.readAsDataURL(ev.target.files[0]);
 	});
 	byId("ImportCardJSONFile").addEventListener("change", ev => {
-		if (!ev.target.files || !ev.target.files.length) {return null}
+		if (!ev.target.files || !ev.target.files.length) { return null }
 		const r = new FileReader();
 		r.onload = function (event) {
 			// console.log(`data ImportCardJSONFile: ${event.target.result}`)
@@ -1683,7 +1867,7 @@ window.onload = () => {
 	});
 
 	for (let v of document.getElementsByName("CardType")) {
-		v.onclick = function () {handleClickCardType(v.id)}
+		v.onclick = function () { handleClickCardType(v.id) }
 	}
 
 	byId("SearchCardQuery").addEventListener("keyup",
@@ -1804,7 +1988,7 @@ window.onload = () => {
 	if (Boolean(window.chrome)) {
 		// workaround Chromium based browsers calculate wrong font width
 		// at the first load
-		setTimeout(function () {renderCard(GlobalCard)}, 500)
+		setTimeout(function () { renderCard(GlobalCard) }, 500)
 	}
 
 
@@ -1814,7 +1998,7 @@ window.onload = () => {
 				CardDatabase = data
 				buildIndexCardDatabase()
 			}
-		).catch(function (err) {console.log(`error cardDatabase: ${err}`)});
+		).catch(function (err) { console.log(`error cardDatabase: ${err}`) });
 	} else { // CardDatabase is declared in file `konami_data/konami_db_en.js`
 		if (typeof CardDatabase === 'undefined' || CardDatabase === null) {
 			console.log(`error CardDatabase is undefined`)
