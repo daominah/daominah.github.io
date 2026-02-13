@@ -1,5 +1,21 @@
 # GitHub Pages for YuGiOh card editor
 
+Result page: https://daominah.github.io/
+
+A Yu-Gi-Oh! card editor with high resolution output,
+using resources extracted from the Konami database and Master Duel.
+
+## Data updates
+
+https://github.com/daominah/yugioh_card_editor
+
+The original repository has a daily workflow that fetches card text data
+and pushes it to daominah.github.io/konami_data/konami_db_en.js.
+
+Card artwork is extracted from Master Duel
+about once per month if I am actively playing the game,
+otherwise every few months.
+
 ## How to host a static website with GitHub Pages
 
 ### Steps
