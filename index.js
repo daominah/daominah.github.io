@@ -1590,7 +1590,7 @@ function SearchCardDatabase() {
 		let row = document.createElement("div")
 		row.className = "searchRow"
 		let cardName = document.createElement("div")
-		cardName.innerHTML = card.CardName
+		cardName.textContent = card.CardName
 		row.appendChild(cardName)
 		for (let language of ["ja", "en"]) {
 			let konamiURL = document.createElement("a")
