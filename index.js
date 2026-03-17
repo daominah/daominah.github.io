@@ -548,7 +548,21 @@ function calcTextWidth(text, styleFont) {
 
 // renderTextFitOneLine clears the input element then fit the text into it,
 // the text width will be scaled automatically if overflowed,
-// magic value scaleFont=1.5 and scaleH=1.15 helps to fit card name
+// magic value scaleFont=1.5 and scaleH=1.15 helps to fit card name.
+//
+// scaleFont: sets fontSize = element.offsetHeight * scaleFont,
+//   affects both character width and height, so changing it will
+//   alter the visual weight/thickness of the text.
+// scaleH: CSS transform scaleY, stretches rendered text vertically
+//   from the transformOrigin without changing character width,
+//   easier to control alignment between elements.
+// scaleW: CSS transform scaleX, auto-shrunk if text overflows the box.
+//
+// For ATK/DEF: label (fontCardName) and value (fontATKValue) use different fonts,
+// so the same scaleFont will NOT produce the same visual size.
+// The original scales were hand-tuned to make label and value appear similar.
+// If the gap between label and value needs adjusting, tweak the CSS left/width of label boxes (e.g.
+// cRenderMonsterATKLabel) so label right edge meets value left edge.
 function fitTextOneLine(text, element, scaleFont = 1.0,
                         scaleH = 1.15, scaleW = 1.0) {
 	if (!element) {
