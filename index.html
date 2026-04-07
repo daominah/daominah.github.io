@@ -199,12 +199,7 @@
               <input type="checkbox" name="MonsterAbilities" id="Spirit" />
               <label for="Spirit">Spirit </label>
               <span class="rushDuelOnly" style="display: none">
-                <input
-                  type="checkbox"
-                  name="MonsterAbilities"
-                  id="Maximum"
-                  onclick="handleClickMaximum.call(this)"
-                />
+                <input type="checkbox" name="MonsterAbilities" id="Maximum" onclick="handleClickMaximum.call(this)" />
                 <label for="Maximum">Maximum</label>
               </span>
               <br />
@@ -376,49 +371,48 @@
               <img id="Rush_LevelStar" class="cRush_LevelStar db" src="icon/Rush_StarLevel.png" />
               <!-- Inline copy of icon/Rush_StarLink.svg.
                    Edit the SVG file first, then paste updated content here. -->
-              <svg id="Rush_LinkBadge" class="cRush_LevelStar db" style="display: none"
-                   viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+              <svg id="Rush_LinkBadge" class="cRush_LevelStar db" style="display: none" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
                 <defs>
                   <linearGradient id="rlbOuterGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#f7ffff"/>
-                    <stop offset="100%" stop-color="#f7ffff"/>
+                    <stop offset="0%" stop-color="#f7ffff" />
+                    <stop offset="100%" stop-color="#f7ffff" />
                   </linearGradient>
                   <radialGradient id="rlbInnerGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#f4ae8e"/>
-                    <stop offset="100%" stop-color="#d81e16"/>
+                    <stop offset="0%" stop-color="#f4ae8e" />
+                    <stop offset="100%" stop-color="#d81e16" />
                   </radialGradient>
                 </defs>
                 <g id="RushArrowUp">
-                  <polygon points="100,8  58,50  142,50" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="100,16  72,44  128,44" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="100,8  58,50  142,50" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="100,16  72,44  128,44" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowDown">
-                  <polygon points="100,192  142,150  58,150" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="100,184  128,156  72,156" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="100,192  142,150  58,150" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="100,184  128,156  72,156" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowLeft">
-                  <polygon points="8,100  50,58  50,142" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="16,100  44,72  44,128" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="8,100  50,58  50,142" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="16,100  44,72  44,128" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowRight">
-                  <polygon points="192,100  150,58  150,142" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="184,100  156,72  156,128" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="192,100  150,58  150,142" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="184,100  156,72  156,128" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowUpLeft">
-                  <polygon points="16,16  16,76  76,16" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="22,22  22,62  62,22" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="16,16  16,76  76,16" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="22,22  22,62  62,22" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowUpRight">
-                  <polygon points="184,16  124,16  184,76" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="178,22  138,22  178,62" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="184,16  124,16  184,76" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="178,22  138,22  178,62" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowDownLeft">
-                  <polygon points="16,184  76,184  16,124" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="22,178  62,178  22,138" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="16,184  76,184  16,124" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="22,178  62,178  22,138" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
                 <g id="RushArrowDownRight">
-                  <polygon points="184,184  184,124  124,184" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
-                  <polygon points="178,178  178,138  138,178" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+                  <polygon points="184,184  184,124  124,184" fill="url(#rlbOuterGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round" />
+                  <polygon points="178,178  178,138  138,178" fill="url(#rlbInnerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round" />
                 </g>
               </svg>
               <div id="Rush_LevelNumber" class="cRush_LevelNumber cRushWhiteNumberRedOutline db"></div>

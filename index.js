@@ -1210,7 +1210,10 @@ function renderRushDuelAtkDef(card) {
 
 function renderRushDuelAbilities(card) {
 	let el = byId("Rush_MonsterAbilities")
-	if (card.CardSubtype === CardSubtype.MonsterXyz || card.CardSubtype === CardSubtype.MonsterLink) {
+	if (
+		card.CardSubtype === CardSubtype.MonsterXyz ||
+		card.CardSubtype === CardSubtype.MonsterLink
+	) {
 		el.style.color = "#E8E8E8"
 	} else {
 		el.style.color = ""
@@ -1257,7 +1260,7 @@ function renderRushDuelAbilities(card) {
 	textNode.textContent = textNode.textContent.slice(0, -1) // remove trailing "]"
 	let img = document.createElement("img")
 	img.src = iconSrc
-	img.style.height = "1.1em"
+	img.style.height = "1.15em" // matches fitTextOneLine default scaleH=1.15
 	img.style.verticalAlign = "text-bottom"
 	let magicBaseline = child.childNodes[1]
 	child.insertBefore(img, magicBaseline)
@@ -1980,7 +1983,7 @@ function SearchCardDatabase() {
 	}
 
 	let searchResult = [] // []Card
-	let limit = 16,
+	let limit = 14,
 		offset = 0 // TODO: paginate search result
 	// search: https://github.com/olivernn/lunr.js
 	let matches,
