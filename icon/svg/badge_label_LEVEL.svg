@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- "LEVEL" label curved along top of Rush Duel level badge.
+     Card size 1180x1720. Star center (160,1142), star r=88.
+
+     Arc point formula (center + R at angle):
+       x = centerX + R * cos(angle)
+       y = centerY + R * sin(angle)
+     where angle is in degrees, measured from 3-o'clock,
+     negative = counter-clockwise (so -90deg = top). -->
+<svg width="1180" height="1720" viewBox="0 0 1180 1720" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+		<!-- Star circle has ry/rx ≈ 0.977 (from SVG transform scale 2.4633/2.5211).
+		     Card star: center (160,1142), rx≈69, ry≈68. Label arcs match this ratio. -->
+		<!-- bgArc: background band, rx=82 ry=80, halfAngle=36deg.
+		     Inner edge at ry-12=68 ≈ star circle ry (closes the gap).
+		     start = (160+82*cos(-126deg), 1142+80*sin(-126deg)) = (112,1078)
+		     end   = (160+82*cos(-54deg),  1142+80*sin(-54deg))  = (208,1078) -->
+		<!-- rx=82, ry=80, halfAngle=36 -->
+		<path id="bgArc" fill="none"
+			  d="M 112,1078
+           A 82,80
+             0 0,1 208,1078"/>
+		<!-- textArc: rx=76 ry=74, halfAngle=40deg for text placement.
+		     start = (160+76*cos(-130deg), 1142+74*sin(-130deg)) = (112,1086)
+		     end   = (160+76*cos(-50deg),  1142+74*sin(-50deg))  = (208,1086) -->
+		<!-- rx=76, ry=74 -->
+		<path id="textArc" fill="none"
+			  d="M 112,1086
+           A 76,74
+             0 0,1 208,1086"/>
+	</defs>
+	<!-- black background band behind the label text -->
+	<use href="#bgArc" stroke="black" stroke-width="38" fill="none"/>
+	<text font-family="'Arial Black', 'Impact', sans-serif" font-size="30" font-weight="900"
+		  fill="white" stroke="#222" stroke-width="3" paint-order="stroke"
+		  text-anchor="middle" letter-spacing="-4">
+		<textPath href="#textArc" startOffset="48%">LEVEL</textPath>
+	</text>
+</svg>

@@ -1,10 +1,12 @@
 :root {
-  --lineHeightCardEffect: 1.00
+  --lineHeightCardEffect: 1;
+  /* colPad determines the padding between colLeft/colRight elements and colMid,
+     as well as the padding between colLeft elements and the left edge of the screen */
+  --colPad: 32px;
 }
 /*--lineHeightCardEffect: 0.92*/
 /*--lineHeightCardEffect: 1.00*/
 /*--lineHeightCardEffect: 1.05*/
-
 
 /* the following fonts are copied from Master Duel */
 @font-face {
@@ -27,6 +29,24 @@
   font-family: fontATKValue;
   src: url(font/MatrixRegular.ttf);
 }
+@font-face {
+  font-family: fontRushAtkDef;
+  src: url(font/RushAtkDef.ttf);
+}
+@font-face {
+  font-family: fontRushAtkDefLinux;
+  src: url(font/RushAtkDef.ttf);
+  /* Font file has mismatched vertical metrics: hhea ascent/descent = 683/341
+     vs OS/2 win = 577/143. macOS uses hhea, Windows uses OS/2 win,
+     causing the baseline to sit higher on macOS.
+     "ascent-override": ↑ increase = pushes text DOWN, ↓ decrease = pushes text UP */
+  ascent-override: 67.4%;
+  descent-override: 13.96%;
+}
+@font-face {
+  font-family: fontRushDuelLogo;
+  src: url(font/Orbitron-Bold.ttf);
+}
 
 /* this app assumes display resolution are 3840x2160 */
 body {
@@ -36,9 +56,16 @@ body {
   background-color: #fdf6e3;
 }
 
-.smallNote {font-size: 24px}
-.mono {font-family: monospace, monospace}
-.monoBig {font-family: monospace, monospace; font-size: 64px}
+.smallNote {
+  font-size: 24px;
+}
+.mono {
+  font-family: monospace, monospace;
+}
+.monoBig {
+  font-family: monospace, monospace;
+  font-size: 64px;
+}
 
 .pageContainerColumns {
   display: flex;
@@ -46,43 +73,323 @@ body {
   height: 1720px;
 }
 /* padding: top right bot left, default 0 */
-.colLeft {flex: 1 0 1180px}
-.colMid {flex: 1 0 1180px}
-.colRight {flex: 1 0 1180px; padding: 0 268px 0 32px}
+.colLeft {
+  flex: 1 0 1180px;
+}
+.colMid {
+  flex: 1 0 1180px;
+}
+.colRight {
+  flex: 1 0 1180px;
+  padding: 0 268px 0 var(--colPad);
+}
 
+hr {
+  margin: 64px;
+}
+.disabledElement {
+  pointer-events: none;
+  opacity: 0.5;
+}
 
-.colLeft {line-height: 46px}
-.CardFieldsCommon {background-color: #eee8d5; padding: 16px 16px 8px 48px}
-.fieldsMonster {padding: 8px 16px 0 48px}
-.CardFieldsCommon > div {margin-bottom: 16px}
-.fieldsMonster > div {margin-bottom: 16px}
-.disabledElement {pointer-events: none; opacity: 0.5}
-.indent {padding-left: 64px}
-h3, h4 {display: inline; font-family: monospace, monospace}
-option {font-size: 20px}
-textarea {font-size: 28px; line-height: 1}
-input {font-size: 32px; text-align: center}
-input[type="checkbox"] {width: 32px; height: 32px}
-input[type="radio"] {width: 32px; height: 32px}
+/* ======================================================== */
+/* colLeft — card input form                                */
+/* ======================================================== */
 
+.colLeft {
+  line-height: 46px;
+}
+.CardFieldsCommon {
+  background-color: #eee8d5;
+  padding: 16px var(--colPad) 8px var(--colPad);
+}
+.CardFieldsCommon > div {
+  margin-bottom: 16px;
+}
+.fieldsMonster {
+  padding: 8px var(--colPad) 0 var(--colPad);
+}
+.fieldsMonster > div {
+  margin-bottom: 16px;
+}
+.indent {
+  padding-left: 64px;
+}
+h3,
+h4 {
+  display: inline;
+  font-family: monospace, monospace;
+  margin: 0;
+}
+option {
+  font-size: 20px;
+}
+textarea {
+  font-size: 28px;
+  line-height: 1;
+}
+input {
+  font-size: 32px;
+  text-align: center;
+}
+input[type="checkbox"] {
+  width: 32px;
+  height: 32px;
+}
+input[type="radio"] {
+  width: 32px;
+  height: 32px;
+}
 
-.colRight {text-align: left}
-.colRight div {margin: 8px 0 8px 0}
-.bigBtn {height: 64px; font-size: 32px; margin-top: 16px}
-.smallBtn {height: 48px; font-size: 32px}
-.sameWidthWrap {display: inline-block; width: 1180px}
-.sameWidthElement {display: block; width: 100%}
-.mainButton {background-color: royalblue; color: white}
-hr {margin: 64px}
-input[readonly] {background-color: lightgray;}
-.colRight input {text-align: left; padding-left: 1ch}
-.colRight a {text-decoration: none}
-.colRight hr {margin: 32px}
-.searchCardResult {font-size: 24px}
-.searchRow div {margin: 0}
+/* keep AltArtSection compact: reduce line-height, radio size, and label font
+   so the section height stays consistent whether alt arts are shown or hidden */
+#InputCardArtWrap {
+  margin-bottom: 4px;
+}
+#AltArtSection {
+  line-height: 1;
+  margin-bottom: 4px;
+}
+#AltArtSection input[type="radio"] {
+  width: 24px;
+  height: 24px;
+}
+#AltArtSection label {
+  font-size: 24px;
+}
 
+/* right-edge alignment: all key inputs/textareas share the same right edge as
+   CardFieldsCommon and fieldsMonster padding-right (48px, same as padding-left) */
+#cardNameWrap {
+  display: flex;
+  align-items: baseline;
+}
+#CardName {
+  flex: 1;
+}
+#CardEffect {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+}
 
-.colMid {text-align: center}
+#SetCreatorGrid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 4px 24px;
+  align-items: baseline;
+}
+#CardIDWrap,
+#CreatorWrap {
+  display: flex;
+  align-items: baseline;
+}
+#CardID,
+#Creator {
+  flex: 1;
+}
+
+#MonsterAttributeWrap {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+#MonsterAttributeWrap .indent {
+  display: grid;
+  grid-template-columns: repeat(4, max-content);
+  gap: 2px 8px;
+}
+#MonsterAttributeWrap .indent label {
+  display: inline-block;
+  min-width: 100px; /* align attribute text by making them use the same width */
+}
+
+#MonsterStatsGrid {
+  display: grid;
+  grid-template-columns: 25% 25% 40%;
+  gap: 4px 5%;
+  align-items: baseline;
+}
+
+#MonsterATKWrap {
+  display: flex;
+  align-items: baseline;
+}
+#MonsterATK {
+  margin-left: 0;
+}
+#MonsterDEFWrap {
+  display: flex;
+  align-items: baseline;
+}
+#MonsterDEFWrap h4 {
+  margin-left: auto;
+}
+
+#MonsterLevelRankLinkWrap {
+  display: flex;
+  align-items: baseline;
+}
+#MonsterLevelRankLink {
+  margin-left: auto;
+}
+
+#MonsterTypeWrap {
+  grid-column: 1 / 3;
+  display: flex;
+  align-items: baseline;
+}
+#MonsterType {
+  font-size: 32px;
+  text-align: center;
+}
+#MonsterTypeWrap select {
+  flex: 1;
+}
+
+#RushMaximumATKWrap {
+  display: flex;
+  align-items: baseline;
+}
+#RushMaximumATKWrap input {
+  margin-left: auto;
+}
+
+#MonsterAbilitiesWrap {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: baseline;
+}
+
+.linkArrowsGrid {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+}
+.linkArrowsGrid div {
+  display: flex;
+  align-items: center;
+}
+
+#PendulumHeaderRow {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+#PendulumHeaderRow label[for="PendulumScale"] {
+  margin-left: auto;
+}
+#PendulumEffectWrap {
+  display: flex;
+  align-items: baseline;
+}
+#PendulumEffect {
+  flex: 1;
+  font-size: 24px;
+}
+
+/* DevTestCards gives a convenient way to test each card type by clicking a button.
+   To show the panel, comment out "display: none" in #DevTestCardsWrapper below. */
+#DevTestCardsWrapper {
+  /*display: none;*/
+  padding-left: var(--colPad);
+  padding-right: var(--colPad);
+}
+#DevTestCards {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background-color: #eee8d5;
+  padding-top: 4px;
+}
+#DevTestCards button {
+  height: 48px;
+  min-width: 120px;
+  font-weight: bold;
+}
+.devTestRow {
+  display: flex;
+  gap: 4px;
+}
+
+/* ======================================================== */
+/* colRight — export, search, settings                      */
+/* ======================================================== */
+
+.colRight {
+  text-align: left;
+}
+.colRight div {
+  margin: 8px 0 8px 0;
+}
+.colRight input {
+  text-align: left;
+  padding-left: 1ch;
+}
+.colRight a {
+  text-decoration: none;
+}
+.colRight hr {
+  margin: 32px;
+}
+#HrBeforeSearch {
+  margin-bottom: 8px;
+}
+
+.fontInput {
+  font-family: monospace, monospace;
+  width: 84px;
+}
+.bigBtn {
+  height: 64px;
+  font-size: 32px;
+  margin-top: 16px;
+}
+.smallBtn {
+  height: 48px;
+  font-size: 32px;
+}
+.sameWidthWrap {
+  display: inline-block;
+  width: 1180px;
+}
+.sameWidthElement {
+  display: block;
+  width: 100%;
+}
+input[readonly] {
+  background-color: lightgray;
+}
+
+.searchCardResult {
+  font-size: 24px;
+}
+/* override .colRight div margin — search rows are list items, not form controls */
+.searchRow {
+  margin: 2px 0;
+  line-height: 0.98;
+}
+.searchRow div {
+  margin: 0;
+}
+/* firstResultBeacon pulses an amber glow on the first search result row at page load
+   to guide new users toward the card database as the starting point */
+@keyframes firstResultBeacon {
+  0% { box-shadow: inset 0 0 0 0 rgba(184, 134, 11, 0), 0 0 0 0 rgba(184, 134, 11, 0); }
+  40% { box-shadow: inset 0 0 20px 0 rgba(184, 134, 11, 0.6), 0 0 0 8px rgba(184, 134, 11, 0.4); }
+  100% { box-shadow: inset 0 0 0 0 rgba(184, 134, 11, 0), 0 0 0 0 rgba(184, 134, 11, 0); }
+}
+.firstResultBeacon {
+  animation: firstResultBeacon 1.6s ease-in-out 3;
+}
+
+/* ======================================================== */
+/* colMid — standard layout card renderer (#RenderCard)     */
+/* ======================================================== */
+
+.colMid {
+  text-align: center;
+}
 .cRenderCard {
   margin: auto; /* combine with parent "text-align: center" */
   text-align: left;
@@ -91,157 +398,852 @@ input[readonly] {background-color: lightgray;}
   z-index: -1;
   position: relative;
   font-family: fontCardEffect;
-}
-
-/* ___________________________________________ */
-/* border inside element for debug card regions*/
-.db {
-  /*border: 2px solid OrangeRed;*/
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  -webkit-box-sizing: border-box;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
 }
 
 /* cTestText fontFamily, fontWeight will be assigned by JS;
-lineHeight will be equal to lineHeight of card effect (CSS var) */
-.cTestText {visibility: hidden;
-  position: absolute; top: 0; left: 0;
-  border: 0; padding: 0; margin: 0;
+lineHeight will be equal to lineHeight of card effect (CSS var).
+visibility:hidden is not needed: JS always clears innerHTML before returning,
+so the browser never paints this element with content. */
+.cTestText {
+  /*visibility: hidden;*/
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 0;
+  padding: 0;
+  margin: 0;
   line-height: var(--lineHeightCardEffect);
 }
 
-/* ___________________________________________ */
+/* ____________________________________________________________ */
 
-.cRenderCardName {position: absolute; white-space: nowrap;
+.cRenderCardName {
+  position: absolute;
+  white-space: nowrap;
   font-family: fontCardName;
-  left: 88px; top: 96px; width: 880px; height: 76px}
-.cRenderCardAttribute {position: absolute;
-  left: 974px; top: 78px; width: 122px; height: 122px}
+  left: 88px;
+  top: 96px;
+  width: 880px;
+  height: 76px;
+}
+.cRenderCardAttribute {
+  position: absolute;
+  right: 88px;
+  top: 82px;
+  width: 112px;
+  height: 112px;
+}
 
-.cRenderCardType {position: absolute; text-align: right;
-  font-size: 54px; font-family: fontCardType;
-  right: 110px; top: 210px; width: 480px; height: 80px}
-.cRenderCardSubtype {position: absolute;
-  right: 136px; top: 210px; width: 72px; height: 72px}
-.cRenderMonsterLevel {position: absolute;
-  left: 100px; top: 210px; width: 988px; height: 80px}
-.cRenderMonsterRank13 {position: absolute; visibility: hidden;
-  left: 60px; top: 210px; width: 1060px; height: 80px}
+.cRenderCardType {
+  position: absolute;
+  text-align: right;
+  font-size: 54px;
+  font-family: fontCardType;
+  right: 118px;
+  top: 210px;
+  width: 480px;
+  height: 80px;
+}
+.cRenderCardSubtype {
+  position: absolute;
+  right: 144px;
+  bottom: 1432px;
+  width: 68px;
+  height: 68px;
+}
+.cRenderMonsterLevel {
+  position: absolute;
+  left: 122px;
+  top: 212px;
+  width: 936px;
+  height: 76px;
+}
+.cRenderMonsterRank13 {
+  position: absolute;
+  visibility: hidden;
+  left: 90px;
+  top: 212px;
+  width: 1002px;
+  height: 76px;
+}
 
-.cRenderLinkArrowUpLeft {position: absolute;
-  left: 106px; top: 278px; width: 80px; height: 80px}
-.cRenderLinkArrowUp {position: absolute;
-  left: 500px; top: 256px; width: 180px; height: 70px}
-.cRenderLinkArrowUpRight {position: absolute;
-  right: 102px; top: 278px; width: 80px; height: 80px}
-.cRenderLinkArrowLeft {position: absolute;
-  left: 80px; top: 672px; width: 70px; height: 180px}
-.cRenderLinkArrowRight {position: absolute;
-  right: 76px; top: 672px; width: 70px; height: 180px}
-.cRenderLinkArrowDownLeft {position: absolute;
-  left: 106px; top: 1168px; width: 80px; height: 80px}
-.cRenderLinkArrowDown {position: absolute;
-  left: 500px; top: 1200px; width: 180px; height: 70px}
-.cRenderLinkArrowDownRight {position: absolute;
-  right: 102px; top: 1168px; width: 80px; height: 80px}
+.cRenderLinkArrowUpLeft {
+  position: absolute;
+  left: 106px;
+  top: 278px;
+  width: 80px;
+  height: 80px;
+}
+.cRenderLinkArrowUp {
+  position: absolute;
+  left: 500px;
+  top: 256px;
+  width: 180px;
+  height: 70px;
+}
+.cRenderLinkArrowUpRight {
+  position: absolute;
+  right: 102px;
+  top: 278px;
+  width: 80px;
+  height: 80px;
+}
+.cRenderLinkArrowLeft {
+  position: absolute;
+  left: 80px;
+  top: 672px;
+  width: 70px;
+  height: 180px;
+}
+.cRenderLinkArrowRight {
+  position: absolute;
+  right: 76px;
+  top: 672px;
+  width: 70px;
+  height: 180px;
+}
+.cRenderLinkArrowDownLeft {
+  position: absolute;
+  left: 106px;
+  top: 1168px;
+  width: 80px;
+  height: 80px;
+}
+.cRenderLinkArrowDown {
+  position: absolute;
+  left: 500px;
+  top: 1200px;
+  width: 180px;
+  height: 70px;
+}
+.cRenderLinkArrowDownRight {
+  position: absolute;
+  right: 102px;
+  top: 1168px;
+  width: 80px;
+  height: 80px;
+}
 
-.cRenderCardArt {position: absolute;
-  left: 146px; top: 318px; width: 890px; height: 890px}
-.cRenderCardArtPendulum {position: absolute; overflow: hidden;
-  left: 82px; top: 310px; width: 1018px; height: 762px}
+.cRenderCardArt {
+  position: absolute;
+  left: 146px;
+  top: 318px;
+  width: 890px;
+  height: 890px;
+}
+.cRenderCardArtPendulum {
+  position: absolute;
+  overflow: hidden;
+  left: 82px;
+  top: 310px;
+  width: 1018px;
+  height: 762px;
+}
 
 /* stretchImg scales image size to CardArt box */
-.stretchImg {width: 100%; height: 100%}
+.stretchImg {
+  width: 100%;
+  height: 100%;
+}
 /* fitImgPendulum maintains W:H ratio and crops overflowed height */
-.fitImgPendulum {width: 100%}
-.fitImgPendulumLong {width: 100%; height: 170%}
+.fitImgPendulum {
+  width: 100%;
+}
+.fitImgPendulumLong {
+  width: 100%;
+  height: 170%;
+}
 
+.cRenderPScaleLeft {
+  position: absolute;
+  text-align: center;
+  font-family: fontATKValue;
+  left: 98px;
+  bottom: 480px;
+  width: 56px;
+  height: 72px;
+}
+.cRenderPScaleRight {
+  position: absolute;
+  text-align: center;
+  font-family: fontATKValue;
+  right: 98px;
+  bottom: 480px;
+  width: 56px;
+  height: 72px;
+}
 
-.cRenderPScaleLeft {position: absolute;
-  text-align: center; font-family: fontATKValue;
-  left: 98px; bottom: 480px; width: 56px; height: 72px}
-.cRenderPScaleRight {position: absolute;
-  text-align: center; font-family: fontATKValue;
-  right: 98px; bottom: 480px; width: 56px; height: 72px}
-
-.cRenderMonsterAbilities {position: absolute;
-  font-weight: bold; white-space: nowrap; font-family: fontCardType;
-  left: 100px; top: 1292px; width: 980px; height: 42px}
-.cRenderMonsterAbilitiesSmall {position: absolute;
-  font-weight: bold; white-space: nowrap; font-family: fontCardType;
-  left: 100px; top: 1292px; width: 980px; height: 32px}
+.cRenderMonsterAbilities {
+  position: absolute;
+  font-weight: bold;
+  white-space: nowrap;
+  font-family: fontCardType;
+  left: 100px;
+  top: 1292px;
+  width: 980px;
+  height: 42px;
+}
+.cRenderMonsterAbilitiesSmall {
+  position: absolute;
+  font-weight: bold;
+  white-space: nowrap;
+  font-family: fontCardType;
+  left: 100px;
+  top: 1292px;
+  width: 980px;
+  height: 32px;
+}
 
 /* sizes of card effect box can be changed depend on card type is
 Spell, Trap, Monster, Pendulum, card effect is long or short */
 
-.cRenderPendulumEffect {position: absolute;
-  font-weight: bold; line-height: var(--lineHeightCardEffect);
-  left: 184px; top: 1086px; width: 816px; height: 188px}
+.cRenderPendulumEffect {
+  position: absolute;
+  font-weight: bold;
+  line-height: var(--lineHeightCardEffect);
+  left: 184px;
+  top: 1086px;
+  width: 816px;
+  height: 188px;
+}
 
-.cRenderSpellTrapEffect {position: absolute;
-  font-weight: bold; line-height: var(--lineHeightCardEffect);
-  left: 92px; bottom: 112px; width: 1000px; height: 310px}
+.cRenderSpellTrapEffect {
+  position: absolute;
+  font-weight: bold;
+  line-height: var(--lineHeightCardEffect);
+  left: 92px;
+  bottom: 112px;
+  width: 1000px;
+  height: 310px;
+}
 
-.cRenderMonsterEffect {position: absolute;
-  font-weight: bold; line-height: var(--lineHeightCardEffect);
-  left: 92px; bottom: 158px; width: 1000px; height: 218px}
-.cRenderMonsterEffectSmall {position: absolute;
-  font-weight: bold; line-height: var(--lineHeightCardEffect);
-  left: 92px; bottom: 154px; width: 1000px; height: 234px}
+.cRenderMonsterEffect {
+  position: absolute;
+  font-weight: bold;
+  line-height: var(--lineHeightCardEffect);
+  left: 92px;
+  bottom: 158px;
+  width: 1000px;
+  height: 218px;
+}
+.cRenderMonsterEffectSmall {
+  position: absolute;
+  font-weight: bold;
+  line-height: var(--lineHeightCardEffect);
+  left: 92px;
+  bottom: 154px;
+  width: 1000px;
+  height: 234px;
+}
 
-.cRenderMonsterSplitLine {position: absolute;
-  border: 2px solid black; box-sizing: border-box; -moz-box-sizing: border-box; -webkit-box-sizing: border-box;
-  left: 92px; bottom: 152px; width: 996px; height: 4px}
+.cRenderMonsterSplitLine {
+  position: absolute;
+  border: 2px solid black;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  left: 92px;
+  bottom: 152px;
+  width: 996px;
+  height: 4px;
+}
 
-.cRenderMonsterATKLabel {position: absolute;
+/* ____________________________________________________________ */
+
+/* font size for ATK/DEF/LINK elements is computed by JS (fitTextOneLine)
+   from the element box height: changing height here changes text size */
+.cRenderMonsterATKLabel {
+  position: absolute;
   font-family: fontCardName;
-  left: 572px; top: 1570px; width: 118px; height: 44px}
-.cRenderMonsterATK {position: absolute;
+  left: 588px;
+  top: 1570px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterATK {
+  position: absolute;
   font-family: fontATKValue;
-  text-align: right; font-weight: normal;
-  right: 364px; top: 1570px; width: 118px; height: 44px}
-.cRenderMonsterDEFLabel {position: absolute;
+  text-align: right;
+  font-weight: normal;
+  right: 364px;
+  top: 1570px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterDEFLabel {
+  position: absolute;
   font-family: fontCardName;
-  left: 840px; top: 1570px; width: 110px; height: 44px}
-.cRenderMonsterDEF {position: absolute;
+  left: 856px;
+  top: 1570px;
+  width: 110px;
+  height: 42px;
+}
+.cRenderMonsterDEF {
+  position: absolute;
   font-family: fontATKValue;
-  text-align: right; font-weight: normal;
-  right: 102px; top: 1570px; width: 118px; height: 44px}
-.cRenderMonsterLinkLabel {position: absolute;
+  text-align: right;
+  font-weight: normal;
+  right: 102px;
+  top: 1570px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterLinkLabel {
+  position: absolute;
   font-family: fontLink;
-  left: 840px; top: 1566px; width: 188px; height: 44px}
-.cRenderMonsterLinkRating {position: absolute;
-  font-family: fontLink; font-weight: bold;
-  right: 102px; top: 1566px; width: 44px; height: 44px}
-
-.cRenderMonsterATKLabelWindows {position: absolute;
-  font-family: fontCardName;
-  left: 572px; top: 1566px; width: 118px; height: 44px}
-.cRenderMonsterATKWindows {position: absolute;
-  font-family: fontATKValue;
-  text-align: right; font-weight: normal;
-  right: 364px; top: 1566px; width: 118px; height: 44px}
-.cRenderMonsterDEFLabelWindows {position: absolute;
-  font-family: fontCardName;
-  left: 840px; top: 1566px; width: 110px; height: 44px}
-.cRenderMonsterDEFWindows {position: absolute;
-  font-family: fontATKValue;
-  text-align: right; font-weight: normal;
-  right: 102px; top: 1566px; width: 118px; height: 44px}
-.cRenderMonsterLinkLabelWindows {position: absolute;
+  left: 852px;
+  top: 1566px;
+  width: 188px;
+  height: 42px;
+}
+.cRenderMonsterLinkRating {
+  position: absolute;
   font-family: fontLink;
-  left: 840px; top: 1562px; width: 188px; height: 44px}
-.cRenderMonsterLinkRatingWindows {position: absolute;
-  font-family: fontLink; font-weight: bold;
-  right: 102px; top: 1566px; width: 44px; height: 44px}
+  font-weight: bold;
+  right: 102px;
+  top: 1566px;
+  width: 44px;
+  height: 42px;
+}
 
-.cRenderKonamiSet {position: absolute; text-align: right;
-  right: 120px; top: 1236px; width: 220px; height: 28px}
-.cRenderKonamiSetLink {position: absolute; text-align: right;
-  right: 210px; top: 1236px; width: 220px; height: 28px}
-.cRenderKonamiSetPendulum {position: absolute; text-align: left;
-  left: 100px; bottom: 110px; width: 220px; height: 28px}
-.cRenderKonamiCardID {position: absolute;
-  left: 70px; top: 1640px; width: 500px; height: 26px}
-.cRenderYearCreator {position: absolute; text-align: right;
-  right: 70px; top: 1640px; width: 500px; height: 26px}
+/* Windows fonts shift ATK/DEF/LINK positions slightly vs Linux/macOS.
+   On load, if the OS is Windows, JS appends "Windows" to the HTML class. */
+.cRenderMonsterATKLabelWindows {
+  position: absolute;
+  font-family: fontCardName;
+  left: 588px;
+  top: 1566px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterATKWindows {
+  position: absolute;
+  font-family: fontATKValue;
+  text-align: right;
+  font-weight: normal;
+  right: 364px;
+  top: 1566px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterDEFLabelWindows {
+  position: absolute;
+  font-family: fontCardName;
+  left: 856px;
+  top: 1566px;
+  width: 110px;
+  height: 42px;
+}
+.cRenderMonsterDEFWindows {
+  position: absolute;
+  font-family: fontATKValue;
+  text-align: right;
+  font-weight: normal;
+  right: 102px;
+  top: 1566px;
+  width: 118px;
+  height: 42px;
+}
+.cRenderMonsterLinkLabelWindows {
+  position: absolute;
+  font-family: fontLink;
+  left: 852px;
+  top: 1562px;
+  width: 188px;
+  height: 42px;
+}
+.cRenderMonsterLinkRatingWindows {
+  position: absolute;
+  font-family: fontLink;
+  font-weight: bold;
+  right: 102px;
+  top: 1566px;
+  width: 44px;
+  height: 42px;
+}
+
+/* ____________________________________________________________ */
+
+.cRenderKonamiSet {
+  position: absolute;
+  text-align: right;
+  right: 122px;
+  top: 1236px;
+  width: 220px;
+  height: 30px;
+}
+.cRenderKonamiSetLink {
+  position: absolute;
+  text-align: right;
+  right: 210px;
+  top: 1236px;
+  width: 220px;
+  height: 30px;
+}
+.cRenderKonamiSetPendulum {
+  position: absolute;
+  text-align: left;
+  left: 100px;
+  bottom: 110px;
+  width: 220px;
+  height: 30px;
+}
+.cRenderKonamiCardID {
+  position: absolute;
+  left: 70px;
+  top: 1640px;
+  width: 500px;
+  height: 26px;
+  white-space: nowrap;
+}
+.cRenderYearCreator {
+  position: absolute;
+  text-align: right;
+  right: 70px;
+  top: 1640px;
+  width: 500px;
+  height: 26px;
+}
+
+/* ======================================================== */
+/* Rush Duel renderer — #RenderCardRushduel child positions */
+/* Card is 1180x1720. Art area is bigger than standard.     */
+/* ======================================================== */
+
+.cRush_InnerBorder {
+  position: absolute;
+  left: 40px;
+  top: 40px;
+  width: 1100px;
+  height: 1640px;
+}
+
+.cRush_CardName {
+  position: absolute;
+  font-family: fontCardName;
+  font-weight: bold;
+  left: 64px;
+  bottom: 1572px;
+  width: 876px;
+  height: 120px;
+  white-space: nowrap;
+}
+
+.cRush_Attribute {
+  position: absolute;
+  right: 64px;
+  top: 64px;
+  width: 152px;
+  height: 152px;
+  border-radius: 50%; /* make the element a circle */
+  outline: 4px solid black;
+  overflow: hidden;
+}
+
+.cRush_Legend {
+  position: absolute;
+  opacity: 0.8;
+  background-color: #aa8d3f;
+  text-align: center;
+  border: 2px solid black;
+  left: 80px;
+  top: 188px;
+  width: 288px;
+  height: 54px;
+  line-height: 54px;
+}
+.cRush_LegendText {
+  display: inline-block;
+  font-family: fontCardName;
+  font-weight: bold;
+  color: black;
+  font-size: 60px;
+  transform: scaleX(1.3);
+}
+
+/* z-index stacking for the art bleed-through effect:
+     z-index -1: cRush_Art      — full-opacity art, bottom layer
+     z-index auto (default): all other elements (Level, ATK, DEF, Attribute, etc.)
+     z-index 2:  cRush_ArtGhost — duplicate art at low opacity, top layer
+   Elements sandwiched between the two art layers remain fully opaque,
+   while the ghost gives the illusion that the art bleeds through them. */
+.cRush_Art {
+  position: absolute;
+  z-index: -1;
+  opacity: 1;
+  left: 62px;
+  top: 176px;
+  width: 1056px;
+  height: 1056px;
+}
+/* cRush_ArtWNotch: same as cRush_Art but clips to the SVG art box polyline shape.
+   Notch mirrors fallback.svg art box: (930,176)→(990,236) diagonal chamfer.
+   Art-box-relative coords: subtract art-left(62) and art-top(176). */
+.cRush_ArtWNotch {
+  position: absolute;
+  z-index: -1;
+  opacity: 1;
+  left: 62px;
+  top: 176px;
+  width: 1056px;
+  height: 1056px;
+  clip-path: polygon(0 0, 868px 0, 928px 60px, 1056px 60px, 1056px 1056px, 0 1056px);
+}
+.cRush_ArtGhost {
+  position: absolute;
+  z-index: 2;
+  opacity: 0.1;
+  left: 62px;
+  top: 176px;
+  width: 1056px;
+  height: 1056px;
+}
+/* SVG viewBox matches the card (0 0 1180 1720), so sizing to the full card
+   places the strip at the correct card-space coordinates. */
+
+.cRush_AtkDefStrip {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1180px;
+  height: 1720px;
+}
+/* mask-image makes the strip fully visible (black) on the left half,
+   then gradually transparent on the right, hiding the empty DEF area */
+.cRush_AtkDefStripLink {
+  mask-image: linear-gradient(to right, black 30%, transparent);
+}
+
+#Rush_ArtOverlay {
+  position: static;
+  opacity: 1;
+}
+
+/* Level badge: star icon + LEVEL label + number, overlaid inside art bottom.
+   Level, ATK, DEF all share the same top so they form one horizontal row. */
+.cRush_Level {
+  position: absolute;
+  left: 64px;
+  bottom: 490px;
+  width: 192px;
+  height: 192px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* stroke on the level star circle is baked into the SVG/PNG */
+.cRush_LevelStar {
+  position: absolute;
+  width: 176px;
+  height: 176px;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* shifts link badge down so the link number sits at vertical center */
+#Rush_LinkBadge {
+  bottom: -8px;
+}
+
+/* card-sized SVG overlay with curved "LEVEL"/"RANK"/"LINK" text */
+.cRush_LevelLabel {
+  position: absolute;
+  opacity: 0.8;
+  left: 0;
+  top: 0;
+  width: 1180px;
+  height: 1720px;
+  pointer-events: none;
+}
+
+.cRush_LevelNumber {
+  position: absolute;
+  width: 160px;
+  height: 80px;
+  top: 42%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+  font-family: fontRushAtkDef;
+  font-size: 120px;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* text color for number on the level star */
+.cRushWhiteNumberRedOutline {
+  color: white;
+  text-shadow: -4px -4px 0 red,
+  4px -4px 0 red,
+  -4px 4px 0 red,
+  4px 4px 0 red;
+}
+/* text color for number on the rank star */
+.cRushWhiteNumberGrayOutline {
+  color: white;
+  text-shadow: -4px -4px 0 #404040,
+  4px -4px 0 #404040,
+  -4px 4px 0 #404040,
+  4px 4px 0 #404040;
+}
+/* text color for number on the link star */
+.cRushWhiteNumberBlueOutline {
+  color: white;
+  text-shadow: -4px -4px 0 darkblue,
+  4px -4px 0 darkblue,
+  -4px 4px 0 darkblue,
+  4px 4px 0 darkblue;
+}
+
+/* text color for ATK DEF */
+.cRushWhiteNumberBlackOutline {
+  color: white;
+  text-shadow: -2px -2px 0 black,
+  2px -2px 0 black,
+  -2px 2px 0 black,
+  2px 2px 0 black;
+}
+
+.cRush_Badge {
+  position: absolute;
+  opacity: 0.7;
+  height: 48px;
+  line-height: 48px;
+  text-align: center;
+  box-sizing: border-box;
+}
+.cRush_BadgeText {
+  font-family: fontCardName;
+  font-weight: bold;
+  color: white;
+  font-size: 60px;
+  transform: scaleX(1.25);
+  vertical-align: -4px;
+  display: inline-block;
+}
+.cRush_BadgeTextMax {
+  font-family: fontCardName;
+  font-weight: bold;
+  color: white;
+  font-size: 60px;
+  transform: scaleX(1.5);
+  vertical-align: -4px;
+  display: inline-block;
+}
+
+.cRush_ATKBadge {
+  background: red;
+  right: 778px;
+  bottom: 508px;
+  width: 132px;
+}
+
+.cRush_ATK {
+  position: absolute;
+  right: 564px;
+  bottom: 500px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDef;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+
+.cRush_DEFBadge {
+  background: blue;
+  right: 414px;
+  bottom: 508px;
+  width: 132px;
+}
+
+.cRush_DEF {
+  position: absolute;
+  right: 200px;
+  bottom: 500px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDef;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Gold MAXIMUM ATK line on the Main card, above normal ATK/DEF row */
+.cRush_MaximumATKBadge {
+  background: goldenrod;
+  right: 414px;
+  bottom: 596px;
+  width: 496px;
+}
+
+.cRush_MaximumATK {
+  position: absolute;
+  right: 200px;
+  bottom: 588px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDef;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* macOS/Linux font baseline differs from Windows.
+   These classes use fontRushAtkDefLinux (with ascent-override) so text
+   renders at the intended position on non-Windows platforms. */
+.cRush_LevelNumberLinux {
+  position: absolute;
+  width: 160px;
+  height: 80px;
+  top: 42%;
+  left: 49%;
+  transform: translate(-50%, -50%);
+  font-family: fontRushAtkDefLinux;
+  font-size: 120px;
+  font-weight: bold;
+  text-align: center;
+}
+.cRush_ATKLinux {
+  position: absolute;
+  right: 564px;
+  bottom: 500px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDefLinux;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+.cRush_DEFLinux {
+  position: absolute;
+  right: 200px;
+  bottom: 500px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDefLinux;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+.cRush_MaximumATKLinux {
+  position: absolute;
+  right: 200px;
+  bottom: 588px;
+  width: 208px;
+  height: 80px;
+  font-family: fontRushAtkDefLinux;
+  font-size: 80px;
+  font-weight: bold;
+  text-align: right;
+}
+
+/* Type line: [Dragon/Normal] */
+.cRush_MonsterAbilities {
+  position: absolute;
+  font-family: fontCardType;
+  font-weight: bold;
+  white-space: nowrap;
+  left: 88px;
+  bottom: 434px;
+  width: 850px;
+  height: 40px;
+}
+
+/* Effect text box: left 78px, right 74px since text rarely reaches the right side. */
+.cRush_Effect {
+  position: absolute;
+  font-weight: bold;
+  line-height: var(--lineHeightCardEffect);
+  left: 78px;
+  bottom: 120px;
+  width: 1028px;
+  height: 290px;
+}
+
+/* Footer left: year+creator
+   Footer center: logo RUSH DUEL
+   Footer right: password+cardID left, set code right */
+.cRush_FooterLeft {
+  position: absolute;
+  left: 66px;
+  bottom: 70px;
+  width: 374px;
+  height: 30px;
+  font-family: monospace;
+  white-space: nowrap;
+  color: gainsboro;
+  display: flex;
+  align-items: center;
+}
+/* when this content is short, JS widens cRush_FooterRight to use the freed space */
+.cRush_PasswordAndID {
+  position: absolute;
+  left: 740px;
+  bottom: 70px;
+  width: 210px;
+  height: 30px;
+  font-family: monospace;
+  white-space: nowrap;
+  color: gainsboro;
+  display: flex;
+  align-items: center;
+}
+/* default width 150px; JS expands this when passwordAndID length < 10 */
+.cRush_FooterRight {
+  position: absolute;
+  right: 66px;
+  bottom: 70px;
+  width: 150px;
+  height: 30px;
+  font-family: monospace;
+  white-space: nowrap;
+  color: gainsboro;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.cRush_FooterCenter {
+  position: absolute;
+  left: 450px;
+  bottom: 40px;
+  width: 280px;
+  height: 46px;
+  font-family: fontRushDuelLogo;
+  font-size: 32px;
+  font-weight: bold;
+  font-style: italic;
+  translate: -4px 0; /* compensates italic rightward lean */
+  scale: 1.1 1; /* widens glyph horizontally */
+  -webkit-text-stroke: 1px silver; /* thickens glyph strokes without changing height */
+  letter-spacing: 2px;
+  white-space: nowrap;
+  color: silver;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* FooterBaseLine is the black footer region only, with no text. */
+.cRush_FooterBaseLine {
+  position: absolute;
+  left: 60px;
+  bottom: 60px;
+  width: 1060px;
+  height: 44px;
+}
+
+/* ======================================================== */
+/* debug card regions while developing; comment out the "outline" when done */
+/* ======================================================== */
+.db {
+  /*outline: 2px solid OrangeRed;*/
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+}

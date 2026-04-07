@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+<!-- 256x256 canvas, circle center=(128,128), circle radius=100px, star radius=120px -->
+<svg id="svg3760" height="256" viewBox="0,0,256,256" width="256" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" sodipodi:docname="STAR.svg" xmlns:cc="http://creativecommons.org/ns#" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.0.dtd">
+ <linearGradient id="linearGradient7459" gradientUnits="userSpaceOnUse" x1="348.9436095" x2="316.09518125" y1="554.7640673" y2="554.3231488" inkscape:collect="always">
+  <stop id="stop5509-1" offset="0" stop-color="#f00"/>
+  <stop id="stop5511-9" offset="1" stop-color="#f60"/>
+ </linearGradient>
+ <radialGradient id="radialGradient3190" cx="305.48" cy="577.65" gradientTransform="matrix(1.54939 -.0163706 .0143546 1.41124 -173.75 -233.68)" gradientUnits="userSpaceOnUse" r="39.67" inkscape:collect="always">
+  <stop id="stop3194" offset="0" stop-color="#f4a406"/>
+  <stop id="stop3204" offset=".198188" stop-color="#f88108"/>
+  <stop id="stop3202" offset=".3075" stop-color="#fe5f0b"/>
+  <stop id="stop3200" offset=".535773" stop-color="#fb1e0b"/>
+  <stop id="stop3196" offset=".765387" stop-color="#9e0e0e"/>
+  <stop id="stop3198" offset="1" stop-color="#29171f"/>
+ </radialGradient>
+ <!-- gradient bounds updated to match star span in drawing coords (outer radius 48px, center 327.8,574.4) -->
+ <linearGradient id="linearGradient3426" gradientUnits="userSpaceOnUse" x1="281" x2="350" y1="614" y2="558" inkscape:collect="always">
+  <stop id="stop3422" offset="0" stop-color="#d7fc08"/>
+  <stop id="stop3430" offset=".649994" stop-color="#d6fc07"/>
+  <stop id="stop3428" offset=".784361" stop-color="#e7d609"/>
+  <stop id="stop3424" offset="1" stop-color="#f5b00a"/>
+ </linearGradient>
+ <linearGradient id="linearGradient3434" gradientUnits="userSpaceOnUse" x1="282" x2="373" y1="574" y2="565" inkscape:collect="always">
+  <stop id="stop4298-3" offset="0" stop-color="#d3fa09"/>
+  <stop id="stop3436" offset=".514678" stop-color="#f1d206"/>
+  <stop id="stop4300-1" offset=".775196" stop-color="#fb420a"/>
+  <stop id="stop4302-4" offset="1" stop-color="#fc1d0b"/>
+ </linearGradient>
+ <sodipodi:namedview bordercolor="#666666" borderopacity="1.0" fit-margin-bottom="0" fit-margin-left="0" fit-margin-right="0" fit-margin-top="0" inkscape:current-layer="g4793" inkscape:cx="139.26372" inkscape:cy="9.1927782" inkscape:document-units="px" inkscape:guide-bbox="true" inkscape:pageopacity="0.0" inkscape:pageshadow="2" inkscape:snap-global="true" inkscape:window-height="780" inkscape:window-maximized="1" inkscape:window-width="1280" inkscape:window-x="-8" inkscape:window-y="-8" inkscape:zoom="3.2096018" pagecolor="#ffffff" showgrid="false" showguides="true"/>
+
+ <!-- layer1 translate adjusted so circle center (327.814,574.355) maps to canvas center (128,128) -->
+ <!-- g4793 matrix scaled so circle radius (drawing:~40px) maps to 100px in output -->
+ <g id="layer1" transform="translate(-724.76 -1361.12)" inkscape:groupmode="layer" inkscape:label="Layer 1">
+  <g id="g4793" transform="matrix(2.5211 0 0 2.4633 26.52 74.64)">
+   <g id="g3021" transform="translate(.01 .03)">
+    <path id="path3048" d="m325.125 533.768c-12.0462.12786-23.8313 6.47825-30.1071 16.8382-9.98334 15.4757-9.2208 37.5796 3.10803 51.5587 7.91058 8.9416 20.1411 13.5262 31.9952 12.6853 12.9687-.25474 25.5791-7.74217 31.6697-19.2577 5.39871-9.43832 6.92244-20.8404 4.7256-31.4583-2.298-13.9914-13.5438-26.2257-27.386-29.4416-4.60618-.8471-9.33291-.96193-14.0054-.92452z" fill="url(#radialGradient3190)" stroke="black" stroke-width="3.18"/>
+    <!-- star: center (327.814,574.355), outer radius 48px, inner radius 18px, top point at -90deg -->
+    <path id="path3206" d="M373.5,559.5 338.4,559.8 327.8,526.4 317.2,559.8 282.2,559.5 310.7,579.9 299.6,613.2 327.8,592.4 356.0,613.2 344.9,579.9Z" fill="url(#linearGradient3434)" sodipodi:nodetypes="ccccccccccc"/>
+    <path id="path3206-6" d="M317.234,559.793 282.163,559.522 310.695,579.917 299.600,613.188 327.814,592.355 335.472,578.014 349.659,566.193 322.098,549.220Z" fill="url(#linearGradient3426)" opacity=".5" sodipodi:nodetypes="ccccccccc"/>
+   </g>
+  </g>
+ </g>
+</svg>

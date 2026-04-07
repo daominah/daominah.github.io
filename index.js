@@ -1,6 +1,7 @@
 // byId is a shorthand for document.getElementById,
-function byId(e) { return document.getElementById(e) }
-
+function byId(e) {
+	return document.getElementById(e)
+}
 
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -10,14 +11,14 @@ function byId(e) { return document.getElementById(e) }
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 
-const CardType = {
+let CardType = {
 	Monster: "Monster",
 	Spell: "Spell",
 	Trap: "Trap",
-	Token: "Token"  // rendered similar to Monster
+	Token: "Token", // rendered similar to Normal Monster
 }
 
-const CardSubtype = {
+let CardSubtype = {
 	MonsterNormal: "MonsterNormal",
 	MonsterEffect: "MonsterEffect",
 	MonsterRitual: "MonsterRitual",
@@ -38,7 +39,7 @@ const CardSubtype = {
 	TrapContinuous: "TrapContinuous",
 }
 
-const MonsterAttribute = {
+let MonsterAttribute = {
 	DARK: "DARK",
 	EARTH: "EARTH",
 	FIRE: "FIRE",
@@ -48,16 +49,17 @@ const MonsterAttribute = {
 	DIVINE: "DIVINE",
 }
 
-const Ability = {
+let Ability = {
 	Flip: "Flip",
 	Gemini: "Gemini",
 	Spirit: "Spirit",
 	Toon: "Toon",
 	Tuner: "Tuner",
 	Union: "Union",
+	RushMaximum: "Maximum", // value matches the HTML element id="Maximum"
 }
 
-const LinkArrow = {
+let LinkArrow = {
 	UpLeft: "UpLeft",
 	Up: "Up",
 	UpRight: "UpRight",
@@ -68,9 +70,9 @@ const LinkArrow = {
 	DownRight: "DownRight",
 }
 
-// MonsterType has 25 types (excluded "Illusion"),
+// MonsterType has 26 types
 // https://yugipedia.com/wiki/Type
-const MonsterType = {
+let MonsterType = {
 	Aqua: "Aqua",
 	Beast: "Beast",
 	BeastWarrior: "Beast-Warrior",
@@ -99,53 +101,7 @@ const MonsterType = {
 	Zombie: "Zombie",
 }
 
-
-const testCNameL03 = "Umi"
-const testCNameL08 = 'Maxx "C"'
-const testCNameL19 = "PSY-Framegear Gamma"
-const testCNameL22 = "Blue-Eyes White Dragon"
-const testCNameL36 = "Divine Arsenal AA-ZEUS - Sky Thunder"
-const testCNameL47 = "Number 38: Hope Harbinger Dragon Titanic Galaxy"
-const testCNameL52 = "Black Luster Soldier - Envoy of the Evening Twilight"
-
-const testCEffectL012ST = `Draw 1 card.`
-const testCEffectL046ST = `① Destroy all monsters your opponent controls.`
-const testCEffectL069ST = `① Add 1 Level 4 or lower Warrior monster from your Deck to your hand.`
-const testCEffectL123ME = `1 Tuner + 1+ non-Tuner monsters
-① Your opponent cannot target this card with card effects, except during your Main Phase 2.`
-const testCEffectL330ST = `If you control no cards, you can activate this card from your hand.
-① Target 1 face-up monster your opponent controls; negate its effects (until the end of this turn), then, if this card was Set before activation and is on the field at resolution, for the rest of this turn all other Spell/Trap effects in this column are negated.`
-const testCEffectL264ME = `1 Level 1 monster, except a Token
-You can only use the effect ① of "Relinquished Anima" once per turn.
-① You can target 1 face-up monster this card points to; equip that face-up monster to this card (max. 1).
-② This card gains ATK equal to that equipped monster's.`
-const testCEffectL276ME = `2 Level 4 monsters
-① While this card has a material attached that was originally WATER, all WATER monsters you control gain 500 ATK.
-② Once per turn (Quick Effect): You can detach 1 material from this card; your opponent cannot activate any card effects in their GY this turn.`
-const testCEffectL508ME = `1 Tuner + 1 or more non-Tuner Synchro Monsters
-① Once per turn, when another monster's effect is activated (Quick Effect): You can negate the activation, and if you do, destroy it, and if you do that, this card gains ATK equal to the destroyed monster's original ATK until the end of this turn.
-② If this card battles an opponent's Level 5 or higher monster, during damage calculation: This card gains ATK equal to the current ATK of the opponent's monster it is battling during that damage calculation only.`
-const testCEffectL514ME = `2 Level 12 monsters
-Once per turn, if an Xyz Monster battled this turn, you can also Xyz Summon "Divine Arsenal AA-ZEUS - Sky Thunder" by using 1 Xyz Monster you control as material. (Transfer its materials to this card.)
-① (Quick Effect): You can detach 2 materials from this card; send all other cards from the field to the GY.
-② Once per turn, if another card(s) you control is destroyed by battle or an opponent's card effect: You can attach 1 card from your hand, Deck, or Extra Deck to this card as material.`
-const testCEffectL571MM = `You can only use each of the following effects ① and ③ of "Blue-Eyes Jet Dragon" once per turn, and can only activate them while "Blue-Eyes White Dragon" is on your field or in your GY.
-① If a card(s) on the field is destroyed by battle or card effect: You can Special Summon this card from the GY (if it was there when the card was destroyed) or hand (even if not).
-② Other cards you control cannot be destroyed by your opponent's card effects.
-③ At the start of the Damage Step, if this card battles: You can target 1 card your opponent controls; return it to the hand.`
-const testCEffectL594ME = `2 Level 6 monsters
-You can also Xyz Summon this card by sending 1 "Burning Abyss" monster from your hand to the GY, then using 1 "Dante" monster you control as material. (Transfer its materials to this card.) If Summoned this way, the following effect ① cannot be activated this turn.
-① Once per turn (Quick Effect): You can detach 1 material from this card; send 1 card from your Deck to the GY.
-② If this card in your possession is destroyed by your opponent's card and sent to your GY: You can Special Summon 1 "Burning Abyss" monster from your Extra Deck, ignoring its Summoning conditions.`
-const testCEffectL630MM = `You can only use 1 "Lord of the Heavenly Prison" effect per turn, and only once that turn.
-① During your Main Phase: You can activate this effect; this card in your hand becomes revealed until the end of your opponent's turn. While this card is revealed by this effect, Set cards on the field cannot be destroyed by card effects.
-② If a Set Spell/Trap Card is activated (except during the Damage Step): You can Special Summon this card from your hand, then, if you activated this effect while this card was revealed, you can reveal and Set 1 Spell/Trap directly from your Deck, but banish it during the End Phase of the next turn.`
-const testCEffectL579PM = `① Once per turn, when a Spell/Trap Card or effect is activated (Quick Effect): You can return 1 card you control with a Spell Counter to the hand, and if you do, negate the activation, and if you do that, destroy it. Then, you can place the same number of Spell Counters on this card that the returned card had.
-② While this card has a Spell Counter, your opponent cannot target it with card effects, also it cannot be destroyed by your opponent's card effects.
-③ When this card with a Spell Counter is destroyed by battle: You can add 1 Normal Spell from your Deck to your hand.`
-const testCEffectL400PP = `You can only use the Pendulum Effect of "Endymion, the Mighty Master of Magic" once per turn.
-① You can remove 6 Spell Counters from your field; Special Summon this card from the Pendulum Zone, then count the number of cards you control that can have a Spell Counter, destroy up to that many cards on the field, and if you do, place Spell Counters on this card equal to the number of cards destroyed.`
-
+let DefaultCreator = "daominah.github.io"
 
 let DefaultCard = {
 	CardName: "",
@@ -158,15 +114,18 @@ let DefaultCard = {
 	MonsterType: MonsterType.Warrior,
 	MonsterLevelRankLink: 0,
 	MonsterATK: 0,
-	MonsterATKStr: "",  // sometimes ATK can be "?" instead of 0
+	MonsterATKStr: "", // sometimes ATK can be "?" instead of 0
 	MonsterDEF: 0,
-	MonsterDEFStr: "-",  // sometimes DEF can be "?" instead of 0
-	MonsterAbilities: [],  // Ability.Tuner, Ability.Flip, ...
-	MonsterLinkArrows: [],  // LinkArrow.Up, LinkArrow.UpRight, ...
+	MonsterDEFStr: "-", // sometimes DEF can be "?" instead of 0
+	MonsterAbilities: [], // Ability.Tuner, Ability.Flip, ...
+	MonsterLinkArrows: [], // LinkArrow.Up, LinkArrow.UpRight, ...
 
 	IsPendulum: false,
 	PendulumScale: 0,
 	PendulumEffect: "",
+
+	RushIsLegend: false,
+	RushMaximumATK: "", // MAXIMUM ATK value on the Main card (e.g. "3400"), empty if unused
 
 	MiscKonamiSet: "",
 	// e.g. "4007", "4960 errata>2017"
@@ -175,15 +134,14 @@ let DefaultCard = {
 	MiscCardPassword: "",
 	// e.g. "89631139 #4007", depends on Password and CardID
 	DisplayPasswordAndCardID: "",
-	MiscYear: (new Date()).getFullYear(),
-	MiscCreator: "daominah.github.io",
+	MiscYear: new Date().getFullYear(),
+	MiscCreator: DefaultCreator,
 	// AltArtID: selected alt art ID (example "3801" for Blue-Eyes White Dragon),
 	// this is an empty string "" if no alt art or default art selected
 	AltArtID: "",
 }
 
-
-const MapImg = {
+let MapImg = {
 	Spell: "icon/attr_SPELL.png",
 	Trap: "icon/attr_TRAP.png",
 
@@ -205,10 +163,17 @@ const MapImg = {
 
 	// Level: "icon/GUI_T_Icon1_Other_Level.png",
 	Level: "icon/GUI_T_Icon1_Other_Level_Yugipedia64.png",
-	Rank: "icon/GUI_T_Icon1_Other_Rank.png",
+	// Rank: "icon/GUI_T_Icon1_Other_Rank.png",
+	Rank: "icon/GUI_T_Icon1_Other_Rank_Yugipedia64.png",
+
+	RushStarLevel: "icon/Rush_StarLevel.png",
+	RushStarRank: "icon/Rush_StarRank.png",
+	RushBadgeLabelLevel: "icon/svg/badge_label_LEVEL.svg",
+	RushBadgeLabelRank: "icon/svg/badge_label_RANK.svg",
+	RushBadgeLabelLink: "icon/svg/badge_label_LINK.svg",
 }
 
-const MapCardSubtypeText = {
+let MapCardSubtypeText = {
 	SpellNormal: "Normal Spell",
 	SpellQuickPlay: "Quick-Play Spell",
 	SpellRitual: "Ritual Spell",
@@ -220,7 +185,7 @@ const MapCardSubtypeText = {
 	TrapContinuous: "Continuous Trap",
 }
 
-const MapLinkMarker = {
+let MapLinkMarker = {
 	[LinkArrow.UpLeft]: "RenderLinkArrowUpLeft",
 	[LinkArrow.Up]: "RenderLinkArrowUp",
 	[LinkArrow.UpRight]: "RenderLinkArrowUpRight",
@@ -231,10 +196,33 @@ const MapLinkMarker = {
 	[LinkArrow.DownRight]: "RenderLinkArrowDownRight",
 }
 
+// Rush Duel link arrows: maps LinkArrow values to inline SVG <g> element IDs
+let MapRushLinkArrow = {
+	[LinkArrow.UpLeft]: "RushArrowUpLeft",
+	[LinkArrow.Up]: "RushArrowUp",
+	[LinkArrow.UpRight]: "RushArrowUpRight",
+	[LinkArrow.Left]: "RushArrowLeft",
+	[LinkArrow.Right]: "RushArrowRight",
+	[LinkArrow.DownLeft]: "RushArrowDownLeft",
+	[LinkArrow.Down]: "RushArrowDown",
+	[LinkArrow.DownRight]: "RushArrowDownRight",
+}
 
-const StorageKeyScale = "StorageKeyScale"
-const StorageKeyArtResolution = "StorageKeyArtResolution"
+// ArtSource tracks whether the card art was set by the user (file upload) or auto-fetched
+// from the remote server. Only "manual" art is saved in card.CardArt / exported to JSON.
+let ArtSource = {
+	Manual: "manual",
+	Auto: "auto",
+}
 
+// the following localStorage keys are for user preferences that persist across page reloads:
+
+let StorageKeyScale = "StorageKeyScale"
+let StorageKeyArtResolution = "StorageKeyArtResolution"
+let StorageKeyCardLayout = "StorageKeyCardLayout"
+
+// in-memory cache for optimizing read localStorage (write still needs to set localStorage)
+let GlobalCardLayout = "standard" // "standard" | "rushduel"
 
 function toDisplayPasswordAndCardID(cardPassword, cardID) {
 	if (!cardID || cardID === "") {
@@ -264,7 +252,7 @@ function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
 			// card password has exactly 8 digits, but can be mistaken missing prefix zeroes
 			cardPassword = tmp.padStart(8, "0")
 		} else {
-			cardID = tmp  // fallback for this repo old code, only cardID was displayed and exported
+			cardID = tmp // fallback for this repo old code, only cardID was displayed and exported
 		}
 	}
 	if (parts.length >= 2) {
@@ -274,22 +262,24 @@ function fromDisplayPasswordAndCardID(displayPasswordAndCardID) {
 	return [cardPassword, cardID]
 }
 
-
 // declared in file `konami_data/konami_db_en.js`
 // const CardDatabase = []
 console.log(`len CardDatabase: ${CardDatabase.length}`)
 
 // MapCardDatabase helps to access CardDatabase by cardID
-const MapCardDatabase = {}
+let MapCardDatabase = {}
 for (let card of CardDatabase) {
-	card.DisplayPasswordAndCardID = toDisplayPasswordAndCardID(card.MiscCardPassword, card.MiscKonamiCardID)
+	card.DisplayPasswordAndCardID = toDisplayPasswordAndCardID(
+		card.MiscCardPassword,
+		card.MiscKonamiCardID,
+	)
 	MapCardDatabase[card.MiscKonamiCardID] = card
 }
 
 // MapAltArts maps OriginalCardID to AltArtIDs array
 // declared in file `konami_data/alt_arts.js`
-const MapAltArts = {}
-if (typeof AltArts !== 'undefined' && AltArts) {
+let MapAltArts = {}
+if (typeof AltArts !== "undefined" && AltArts) {
 	for (let entry of AltArts) {
 		if (entry.OriginalCardID && entry.AltArtIDs && entry.AltArtIDs.length > 0) {
 			MapAltArts[entry.OriginalCardID] = entry.AltArtIDs
@@ -297,7 +287,6 @@ if (typeof AltArts !== 'undefined' && AltArts) {
 	}
 }
 console.log(`len MapAltArts: ${Object.keys(MapAltArts).length}`)
-
 
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -307,23 +296,19 @@ console.log(`len MapAltArts: ${Object.keys(MapAltArts).length}`)
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 
-
 // GlobalCard's value will be updated by `colLeft` inputs,
 // colMid will use the GlobalCard to render the card image,
-let GlobalCard = NewCard();
-
+let GlobalCard = NewCard()
 
 // LastUpdateCardState throttles func `updateCardState`
 let LastUpdateCardState = new Date(0)
 // LastCardName helps to only send log in renderCard when CardName changed
 let LastCardName = ""
 
-
 // IndexCardDatabase will be initialized in func `buildIndexCardDatabase`,
 // this is result of indexing MapCardDatabase by CardName using library
 // "https://github.com/olivernn/lunr.js"
 let IndexCardDatabase
-
 
 // PerfNav is metrics associated with navigating duration,
 // https://developer.mozilla.org/en-US/docs/Web/API/Performance_API/Navigation_timing,
@@ -339,7 +324,6 @@ let IsNotLinuxOS = false
 // IsWindowsOS is calculated once from OperatingSystem in func "window.onload"
 let IsWindowsOS = false
 
-
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
@@ -347,7 +331,6 @@ let IsWindowsOS = false
 // _____________________________________________________________________________
 // _____________________________________________________________________________
 // _____________________________________________________________________________
-
 
 // updateCardState reads "colLeft" then draws to "colMid",
 // this function will be called when anything on "colLeft" changed, multiple
@@ -362,15 +345,13 @@ function updateCardState() {
 	LastUpdateCardState = now
 	// console.log(`${now.toISOString()} updateCardState, sinceLast: ${sinceLast} ms`)
 
-
 	// init alt art selector elements based on "CardID" element which has value "password #cardID",
 	// OR if the alt art radios already here, do nothing (so respect selected alt art)
 	let [_, cardID] = fromDisplayPasswordAndCardID(byId("CardID").value)
 	loadHTMLAltArtSelector(cardID)
 
-
 	// collect user inputs from "colLeft" into GlobalCard then render to "colMid"
-	GlobalCard = readCardFromHTML();
+	GlobalCard = readCardFromHTML()
 	renderCard(GlobalCard)
 
 	// console.log(`updateCardState dur: ${fmtSec(new Date() - now)}`)
@@ -384,7 +365,7 @@ function handleClickCardType(cardType) {
 	let et = byId("CardSubtypeTrap")
 	let show = em
 	switch (cardType) {
-		case CardType.Token:  // JS switch case will fallthrough (if no "break")
+		case CardType.Token: // JS switch case will fallthrough (if no "break")
 		case CardType.Monster:
 			em.style.display = ""
 			es.style.display = "none"
@@ -422,6 +403,14 @@ function handleClick() {
 	updateCardState()
 }
 
+function handleClickMaximum() {
+	if (this.checked) {
+		byId("RushMaximumATKWrap").classList.remove("disabledElement")
+	} else {
+		byId("RushMaximumATKWrap").classList.add("disabledElement")
+	}
+	updateCardState()
+}
 
 function loadMonsterTypeElements() {
 	let select = byId("MonsterType")
@@ -435,7 +424,6 @@ function loadMonsterTypeElements() {
 	}
 }
 
-
 // loadMonsterLevelRankElements inits all the stars elements for monster level display
 // (but hidden by default, will be shown depending on the card level)
 function loadMonsterLevelRankElements() {
@@ -446,7 +434,8 @@ function loadMonsterLevelRankElements() {
 	let levelsRanksWidth = Math.max(levelsElement.clientWidth, ranksElement.clientWidth)
 	let starWidth = Math.floor(levelsRanksWidth / 12 - 2) + "px"
 	console.log(`levelsRanksWidth: ${levelsRanksWidth}, starWidth: ${starWidth}`)
-	{ // red star elements to represent monster level
+	{
+		// red star elements to represent monster level
 		let wrapStarStyle = function (style) {
 			style.visibility = "hidden"
 			style.display = "inline-block"
@@ -463,12 +452,13 @@ function loadMonsterLevelRankElements() {
 			let star = document.createElement("img")
 			star.src = MapImg.Level
 			star.style.width = "100%"
-			starWrap.innerHTML = ''
+			starWrap.innerHTML = ""
 			starWrap.appendChild(star)
 			levelsElement.appendChild(starWrap)
 		}
 	}
-	{ // black star elements to represent monster rank (upto rank 12)
+	{
+		// black star elements to represent monster rank (upto rank 12)
 		ranksElement.style.visibility = "visible"
 		let wrapStarStyle = function (style) {
 			style.visibility = "hidden"
@@ -486,12 +476,13 @@ function loadMonsterLevelRankElements() {
 			let star = document.createElement("img")
 			star.src = MapImg.Rank
 			star.style.width = "100%"
-			starWrap.innerHTML = ''
+			starWrap.innerHTML = ""
 			starWrap.appendChild(star)
 			ranksElement.appendChild(starWrap)
 		}
 	}
-	{ // now YuGiOh only has 2 monsters that have rank 13:
+	{
+		// now YuGiOh only has 2 monsters that have rank 13:
 		// * Raidraptor - Rising Rebellion Falcon
 		// * Number iC1000: Numerounius Numerounia
 		let mainElem = byId("RenderMonsterRank13")
@@ -508,13 +499,12 @@ function loadMonsterLevelRankElements() {
 			let staticStar = document.createElement("img")
 			staticStar.src = MapImg.Rank
 			staticStar.style.width = "100%"
-			starWrap.innerHTML = ''
+			starWrap.innerHTML = ""
 			starWrap.appendChild(staticStar)
 			mainElem.appendChild(starWrap)
 		}
 	}
 }
-
 
 function hideMonsterDetailElements() {
 	byId("RenderMonsterAbilities").style.display = "none"
@@ -536,17 +526,23 @@ function hideMonsterDetailElements() {
 // things seem right (is being used in fitTextOneLine to render CardName,
 // MonsterAbilities, MonsterAtkDefLink)
 function calcTextWidth(text, styleFont) {
-	let test = byId("testTextWidth")
+	// use the test element inside the active renderer — testTextWidth is inside #RenderCard
+	// which is display:none in Rush Duel mode, making clientWidth always 0
+	let testId = "testTextWidth"
+	if (GlobalCardLayout === "rushduel") {
+		testId = "testRushTextWidth"
+	}
+	let test = byId(testId)
 	test.innerHTML = text
 	test.style.whiteSpace = "nowrap"
 	test.style.font = styleFont
 	let width = test.clientWidth
 	test.innerHTML = ""
 	// console.log(`calcTextWidth "${text}" ${styleFont} result: ${width}`)
-	return width;
+	return width
 }
 
-// renderTextFitOneLine clears the input element then fit the text into it,
+// fitTextOneLine clears the input element then fit the text into it,
 // the text width will be scaled automatically if overflowed,
 // magic value scaleFont=1.5 and scaleH=1.15 helps to fit card name.
 //
@@ -563,8 +559,7 @@ function calcTextWidth(text, styleFont) {
 // The original scales were hand-tuned to make label and value appear similar.
 // If the gap between label and value needs adjusting, tweak the CSS left/width of label boxes (e.g.
 // cRenderMonsterATKLabel) so label right edge meets value left edge.
-function fitTextOneLine(text, element, scaleFont = 1.0,
-                        scaleH = 1.15, scaleW = 1.0) {
+function fitTextOneLine(text, element, scaleFont = 1.0, scaleH = 1.15, scaleW = 1.0) {
 	if (!element) {
 		console.log(`error fitTextOneLine element: ${element}, should be unreachable`)
 		return
@@ -587,8 +582,7 @@ function fitTextOneLine(text, element, scaleFont = 1.0,
 
 	// How to position text that its baseline is aligned with the bottom of its CSS box?
 	// https://stackoverflow.com/a/26304590/4097963 (method using an extra .strut element).
-	// The following method does not work on Windows:
-
+	// the magicBaseline here uses the same concept as the stackoverflow answer.
 	let magicBaseline = document.createElement("div")
 	magicBaseline.style.height = element.offsetHeight.toString() + "px"
 	magicBaseline.style.display = "inline-block"
@@ -597,7 +591,7 @@ function fitTextOneLine(text, element, scaleFont = 1.0,
 	element.appendChild(child)
 }
 
-// chooseFont renders the text on a SHARED hidden element then measures
+// chooseFontSize renders the text on a SHARED hidden element then measures
 // the clientHeight, if overflowed, repeat with a smaller fontSize,
 // this function return an integer (need to add "px" to set fontSize)
 function chooseFontSize(textHTML, width, height, fontFamily, fontWeight) {
@@ -607,7 +601,7 @@ function chooseFontSize(textHTML, width, height, fontFamily, fontWeight) {
 	test.style.fontWeight = fontWeight
 
 	let chosenSize = 42
-	let log = "";
+	let log = ""
 	for (let i = 0; i < 60; i++) {
 		test.innerHTML = textHTML
 		test.style.fontSize = `${chosenSize}px`
@@ -622,7 +616,6 @@ function chooseFontSize(textHTML, width, height, fontFamily, fontWeight) {
 	test.innerHTML = ""
 	return chosenSize
 }
-
 
 // NewCard returns a card obj with default fields value
 function NewCard() {
@@ -641,7 +634,6 @@ function ensureCardHasAltArtID(card) {
 	}
 	return card
 }
-
 
 // readCardFromHTML returns a card object with all fields value read from
 // current page HTML "colLeft", if a field is undefined or null, this function
@@ -671,8 +663,7 @@ function readCardFromHTML() {
 		c.CardEffect = DefaultCard.CardEffect
 	}
 
-	let radiosMonsterAttribute = document.querySelector(
-		'input[name="MonsterAttribute"]:checked')
+	let radiosMonsterAttribute = document.querySelector('input[name="MonsterAttribute"]:checked')
 	if (radiosMonsterAttribute) {
 		c.MonsterAttribute = radiosMonsterAttribute.id
 	}
@@ -696,7 +687,7 @@ function readCardFromHTML() {
 	c.MonsterAbilities = []
 	let abilitiesInputs = document.getElementsByName("MonsterAbilities")
 	for (let i = 0; i < abilitiesInputs.length; i++) {
-		let e = abilitiesInputs[i];
+		let e = abilitiesInputs[i]
 		if (e.checked) {
 			c.MonsterAbilities.push(e.id)
 		}
@@ -706,13 +697,15 @@ function readCardFromHTML() {
 	c.MonsterLinkArrows = []
 	let linkArrowInputs = document.getElementsByName("MonsterLinkArrows")
 	for (let i = 0; i < linkArrowInputs.length; i++) {
-		let e = linkArrowInputs[i];
+		let e = linkArrowInputs[i]
 		if (e.checked) {
 			c.MonsterLinkArrows.push(e.id)
 		}
 	}
 
 	c.IsPendulum = byId("IsPendulum").checked
+	c.RushIsLegend = byId("RushIsLegend").checked
+	c.RushMaximumATK = byId("RushMaximumATK").value.trim()
 	if (c.IsPendulum) {
 		c.PendulumScale = byId("PendulumScale").value
 		if (c.PendulumScale) {
@@ -730,14 +723,14 @@ function readCardFromHTML() {
 	// Only set CardArt if it was manually set (file upload), not auto-generated
 	if (c.IsPendulum) {
 		let img = byId("ImgRenderCardArtPendulum")
-		if (img.dataset.artSource === "manual") {
+		if (img.dataset.artSource === ArtSource.Manual) {
 			c.CardArt = img.src
 		} else {
 			c.CardArt = ""
 		}
 	} else {
 		let img = byId("ImgRenderCardArt")
-		if (img.dataset.artSource === "manual") {
+		if (img.dataset.artSource === ArtSource.Manual) {
 			c.CardArt = img.src
 		} else {
 			c.CardArt = ""
@@ -771,6 +764,63 @@ function readCardFromHTML() {
 	c.MiscCreator = byId("Creator").value
 
 	return c
+}
+
+// loadDevTestCardByID loads a card from MapCardDatabase by its Konami card ID
+// and renders it. Used by the DevTestCards buttons.
+function loadDevTestCardByID(cardID) {
+	if (!cardID) {
+		console.log("loadDevTestCardByID: no cardID specified")
+		return
+	}
+	let card = MapCardDatabase[cardID]
+	if (!card) {
+		if (cardID === "3922") {
+			card = {
+				CardName: "Emissary of Darkness Token",
+				CardType: CardType.Token,
+				CardSubtype: CardSubtype.MonsterNormal,
+				CardEffect: `This card can be used as an "Emissary of Darkness Token" summoned by the effect of "Gorz the Emissary of Darkness"`,
+				MonsterAttribute: MonsterAttribute.LIGHT,
+				MonsterType: MonsterType.Fairy,
+				MonsterLevelRankLink: 7,
+				MonsterATKStr: "?",
+				MonsterDEFStr: "?",
+				MiscKonamiSet: "17TP-JP215",
+				MiscKonamiCardID: "3922",
+				MiscCardPassword: "This card cannot be in a Deck.",
+				MiscYear: "2017",
+			}
+		} else if (cardID === "19097") {
+			card = {
+				CardName: "ハーピィ三姉妹", // Harpy Lady Sisters (center Maximum Monster)
+				CardType: CardType.Monster,
+				CardSubtype: CardSubtype.MonsterEffect,
+				CardEffect:
+					"「ハーピィ三姉妹[L]」「ハーピィ三姉妹[R]」と揃えてマキシマム召喚できる。\n        【条件】自分の墓地のモンスター(風属性/鳥獣族)2体をデッキに戻して発動できる。\n        【効果】自分フィールドの表側表示モンスター1体を選び、その攻撃力をターン終了時まで500アップする。このカードがマキシマムモードの場合、さらに相手に500ダメージを与える。",
+				MonsterAttribute: MonsterAttribute.WIND,
+				MonsterType: MonsterType.WingedBeast,
+				MonsterLevelRankLink: 5,
+				MonsterATK: 2100,
+				MonsterDEF: 0,
+				MonsterAbilities: [Ability.RushMaximum],
+				RushIsLegend: false,
+				RushMaximumATK: "3400",
+				MiscKonamiSet: "RD/TB01-JP002",
+				MiscKonamiCardID: "19097",
+				MiscYear: "2023",
+			}
+		} else {
+			console.log(`loadDevTestCardByID: card not found for ID "${cardID}"`)
+			return
+		}
+	}
+	card.MiscCreator = DefaultCreator
+
+	GlobalCard = card
+	ensureCardHasAltArtID(GlobalCard)
+	loadCardToHTML(GlobalCard)
+	renderCard(GlobalCard)
 }
 
 // loadCardToHTML uses the input card object to fill HTML elements on "colLeft",
@@ -823,7 +873,7 @@ function loadCardToHTML(c) {
 	}
 
 	for (let k in Ability) {
-		let checkbox = byId(k)
+		let checkbox = byId(Ability[k])
 		if (checkbox) {
 			checkbox.checked = false
 		}
@@ -852,7 +902,13 @@ function loadCardToHTML(c) {
 		}
 	}
 
-	byId("IsPendulum").checked = !!c.IsPendulum;
+	byId("IsPendulum").checked = !!c.IsPendulum
+	byId("RushIsLegend").checked = Boolean(c.RushIsLegend)
+	byId("RushMaximumATK").value = c.RushMaximumATK || ""
+	byId("RushMaximumATKWrap").classList.toggle(
+		"disabledElement",
+		!(c.MonsterAbilities && c.MonsterAbilities.includes(Ability.RushMaximum)),
+	)
 	if (c.PendulumScale) {
 		byId("PendulumScale").value = c.PendulumScale
 	}
@@ -867,25 +923,42 @@ function loadCardToHTML(c) {
 		byId("CardID").value = toDisplayPasswordAndCardID(c.MiscCardPassword, c.MiscKonamiCardID)
 	}
 	byId("Year").value = c.MiscYear
-	if (c.MiscCreator) {  // keep "Creator"
+	if (c.MiscCreator) {
+		// keep "Creator"
 		byId("Creator").value = c.MiscCreator
 	}
 
 	return c
 }
 
+function sendLog(urlQuery) {
+	if (location.protocol === "file:") {
+		return
+	}
+	fetch(`https://log.daominah.uk/log${urlQuery}`, {method: "GET"})
+		.then((response) => console.log("log sent successfully"))
+		.catch((error) => console.error("error sending log:", error))
+}
 
 // renderCard draw the card image by updating HTML "colMid"
 function renderCard(card) {
 	if (card.CardName !== LastCardName && card.CardName !== "") {
-		let cardNameNoSpace = card.CardName.replace(/ /g, "_");
-		logURLQuery = `?func=renderCard&cardName=${cardNameNoSpace}`;
-		console.log(logURLQuery);
-		fetch(`https://log.daominah.uk/log${logURLQuery}`, {method: 'GET'})
-			.then(response => console.log('log sent successfully'))
-			.catch(error => console.error('error sending log:', error));
+		let cardNameNoSpace = card.CardName.replace(/ /g, "_")
+		let logURLQuery = `?func=renderCard&cardName=${cardNameNoSpace}`
+		console.log(logURLQuery)
+		sendLog(logURLQuery)
 	}
 	LastCardName = card.CardName
+
+	// Load art into ImgRenderCardArt — shared by both standard and Rush Duel paths
+	if (!card.CardArt) {
+		renderCardArtImgSrcByCardID(card)
+	}
+
+	if (GlobalCardLayout === "rushduel") {
+		renderRushDuelCard(card)
+		return
+	}
 
 	renderCardFrame(card)
 	renderCardName(card)
@@ -899,9 +972,9 @@ function renderCard(card) {
 	if (card.CardArt) {
 		byId("ImgRenderCardArtPendulum").className = "fitImgPendulum"
 		byId("ImgRenderCardArtPendulum").src = card.CardArt
-		byId("ImgRenderCardArtPendulum").dataset.artSource = "manual"
+		byId("ImgRenderCardArtPendulum").dataset.artSource = ArtSource.Manual
 		byId("ImgRenderCardArt").src = card.CardArt
-		byId("ImgRenderCardArt").dataset.artSource = "manual"
+		byId("ImgRenderCardArt").dataset.artSource = ArtSource.Manual
 	} else {
 		renderCardArtImgSrcByCardID(card)
 	}
@@ -911,16 +984,343 @@ function renderCard(card) {
 	byId("ChosenEffectElementID").value = chosenEffectElement.id
 
 	if (card.CardName !== "" || card.MiscKonamiCardID !== "") {
-		let cardID = card.MiscKonamiCardID  // example "4095 errata<2014"
+		let cardID = card.MiscKonamiCardID // example "4095 errata<2014"
 		cardID = cardID.replace("<", "_before_")
 		cardID = cardID.replace(">", "_after_")
-		let normalizedName = normalizeFileName(`${(card.CardName)}_${cardID}`)
+		let normalizedName = normalizeFileName(`${card.CardName}_${cardID}`)
 		if (normalizedName !== "") {
 			document.getElementById("ExportCardJSONName").textContent = normalizedName
 		} else {
 			document.getElementById("ExportCardJSONName").textContent = " "
 		}
 	}
+}
+
+function renderRushDuelCard(card) {
+	renderRushDuelFrame(card)
+	renderRushDuelName(card)
+	renderRushDuelAttribute(card)
+	renderRushDuelLegend(card)
+	renderRushDuelArt(card)
+	renderRushDuelLevel(card)
+	renderRushDuelLinkArrow(card)
+	renderRushDuelAtkDef(card)
+	renderRushDuelAbilities(card)
+	renderRushDuelEffect(card)
+	renderRushDuelFooter(card)
+}
+
+function renderRushDuelFrame(card) {
+	let frameMap = {
+		[CardType.Token]: "card_frame_rushduel/fallback.svg",
+		[CardType.Spell]: "card_frame_rushduel/spell.png",
+		[CardType.Trap]: "card_frame_rushduel/trap.png",
+		[CardSubtype.MonsterNormal]: "card_frame_rushduel/monster_normal.png",
+		[CardSubtype.MonsterEffect]: "card_frame_rushduel/monster_effect.png",
+		[CardSubtype.MonsterFusion]: "card_frame_rushduel/monster_fusion.png",
+		[CardSubtype.MonsterRitual]: "card_frame_rushduel/monster_ritual.png",
+		[CardSubtype.MonsterSynchro]: "card_frame_rushduel/monster_synchro.png",
+		[CardSubtype.MonsterXyz]: "card_frame_rushduel/monster_xyz.png",
+		[CardSubtype.MonsterLink]: "card_frame_rushduel/monster_link.png",
+	}
+	let fallback = "card_frame_rushduel/fallback.svg"
+	let key = card.CardType
+	if (card.CardType === CardType.Monster) {
+		key = card.CardSubtype
+	}
+	byId("RenderCardRushduel").style.backgroundImage = `url(${frameMap[key] || fallback})`
+}
+
+function renderRushDuelName(card) {
+	let e = byId("Rush_CardName")
+	e.style.color = "black"
+	if (card.CardType === CardType.Spell || card.CardType === CardType.Trap) {
+		e.style.color = "white"
+	} else if (
+		card.CardSubtype === CardSubtype.MonsterXyz ||
+		card.CardSubtype === CardSubtype.MonsterLink
+	) {
+		e.style.color = "white"
+	}
+	fitTextOneLine(card.CardName, e, 1.0)
+}
+
+function renderRushDuelAttribute(card) {
+	let img = byId("ImgRush_Attribute")
+	if (card.CardType === CardType.Spell) {
+		img.src = MapImg.Spell
+	} else if (card.CardType === CardType.Trap) {
+		img.src = MapImg.Trap
+	} else {
+		img.src = MapImg[card.MonsterAttribute] || ""
+	}
+}
+
+function renderRushDuelLegend(card) {
+	if (!card.RushIsLegend) {
+		byId("Rush_Legend").style.display = "none"
+	} else {
+		byId("Rush_Legend").style.display = ""
+	}
+}
+
+function renderRushDuelArt(card) {
+	let img = byId("ImgRush_Art")
+	// ghost shares the same src as the main art; cRush_ArtGhost positions it at z-index:2
+	// with low opacity so it bleeds through overlapping elements (Level, ATK, DEF, Attribute)
+	let ghost = byId("ImgRush_ArtGhost")
+	// card.CardArt is only set when artSource === ArtSource.Manual (user file upload);
+	// otherwise mirror ImgRenderCardArt which holds the auto-fetched URL
+	if (card.CardArt) {
+		img.src = card.CardArt
+		ghost.src = card.CardArt
+		img.dataset.artSource = ArtSource.Manual
+	} else {
+		let stdImg = byId("ImgRenderCardArt")
+		img.src = stdImg.src
+		ghost.src = stdImg.src
+		img.dataset.artSource = ArtSource.Auto
+		stdImg.onload = () => {
+			img.src = stdImg.src
+			ghost.src = stdImg.src
+		}
+	}
+}
+
+function renderRushDuelLevel(card) {
+	let e = byId("Rush_Level")
+	let labelEl = byId("Rush_LevelLabel")
+	if (card.CardType !== CardType.Monster && card.CardType !== CardType.Token) {
+		e.style.display = "none"
+		labelEl.style.display = "none"
+		return
+	}
+	e.style.display = ""
+	labelEl.style.display = ""
+	let level = card.MonsterLevelRankLink || 0
+	let levelNumEl = byId("Rush_LevelNumber")
+	levelNumEl.textContent = level
+	levelNumEl.classList.toggle(
+		"cRushWhiteNumberRedOutline",
+		card.CardSubtype !== CardSubtype.MonsterXyz && card.CardSubtype !== CardSubtype.MonsterLink,
+	)
+	levelNumEl.classList.toggle(
+		"cRushWhiteNumberGrayOutline",
+		card.CardSubtype === CardSubtype.MonsterXyz,
+	)
+	levelNumEl.classList.toggle(
+		"cRushWhiteNumberBlueOutline",
+		card.CardSubtype === CardSubtype.MonsterLink,
+	)
+	let isLink = card.CardSubtype === CardSubtype.MonsterLink
+	if (isLink) {
+		byId("Rush_LevelStar").style.display = "none"
+		byId("Rush_LinkBadge").style.display = ""
+	} else {
+		byId("Rush_LevelStar").style.display = ""
+		byId("Rush_LinkBadge").style.display = "none"
+	}
+	if (card.CardSubtype === CardSubtype.MonsterXyz) {
+		byId("Rush_LevelStar").src = MapImg.RushStarRank
+		byId("Rush_LevelLabel").src = MapImg.RushBadgeLabelRank
+	} else if (isLink) {
+		byId("Rush_LevelLabel").src = MapImg.RushBadgeLabelLink
+	} else {
+		byId("Rush_LevelStar").src = MapImg.RushStarLevel
+		byId("Rush_LevelLabel").src = MapImg.RushBadgeLabelLevel
+	}
+}
+
+// toggles Rush Duel link badge arrows based on card.MonsterLinkArrows
+function renderRushDuelLinkArrow(card) {
+	for (let k in MapRushLinkArrow) {
+		let el = document.getElementById(MapRushLinkArrow[k])
+		if (el) {
+			el.style.visibility = "hidden"
+		}
+	}
+	if (card.CardSubtype !== CardSubtype.MonsterLink) {
+		return
+	}
+	for (let v of card.MonsterLinkArrows) {
+		let el = document.getElementById(MapRushLinkArrow[v])
+		if (el) {
+			el.style.visibility = "visible"
+		}
+	}
+}
+
+function renderRushDuelAtkDef(card) {
+	let atkBadgeEl = byId("Rush_ATKBadge")
+	let atkEl = byId("Rush_ATK")
+	let defBadgeEl = byId("Rush_DEFBadge")
+	let defEl = byId("Rush_DEF")
+	let maxBadgeEl = byId("Rush_MaximumATKBadge")
+	let maxEl = byId("Rush_MaximumATK")
+	if (card.CardType !== CardType.Monster && card.CardType !== CardType.Token) {
+		atkBadgeEl.style.display = "none"
+		atkEl.style.display = "none"
+		defBadgeEl.style.display = "none"
+		defEl.style.display = "none"
+		maxBadgeEl.style.display = "none"
+		maxEl.style.display = "none"
+		byId("Rush_AtkDefStrip").style.display = "none"
+		return
+	}
+	let stripEl = byId("Rush_AtkDefStrip")
+	stripEl.style.display = ""
+	stripEl.classList.toggle("cRush_AtkDefStripLink", card.CardSubtype === CardSubtype.MonsterLink)
+	let isMaximum = card.MonsterAbilities && card.MonsterAbilities.includes(Ability.RushMaximum)
+	if (isMaximum && card.RushMaximumATK) {
+		maxBadgeEl.style.display = ""
+		maxEl.style.display = ""
+		maxEl.textContent = card.RushMaximumATK
+	} else {
+		maxBadgeEl.style.display = "none"
+		maxEl.style.display = "none"
+	}
+	atkBadgeEl.style.display = ""
+	atkEl.style.display = ""
+	if (card.CardSubtype === CardSubtype.MonsterLink) {
+		defBadgeEl.style.display = "none"
+		defEl.style.display = "none"
+	} else {
+		defBadgeEl.style.display = ""
+		defEl.style.display = ""
+	}
+	let atkVal = String(card.MonsterATK)
+	if (
+		card.hasOwnProperty("MonsterATKStr") &&
+		card.MonsterATKStr !== "" &&
+		card.MonsterATKStr !== "-"
+	) {
+		atkVal = card.MonsterATKStr
+	}
+	let defVal = String(card.MonsterDEF)
+	if (
+		card.hasOwnProperty("MonsterDEFStr") &&
+		card.MonsterDEFStr !== "" &&
+		card.MonsterDEFStr !== "-"
+	) {
+		defVal = card.MonsterDEFStr
+	}
+	atkEl.textContent = atkVal
+	defEl.textContent = defVal
+}
+
+function renderRushDuelAbilities(card) {
+	let el = byId("Rush_MonsterAbilities")
+	if (card.CardSubtype === CardSubtype.MonsterXyz || card.CardSubtype === CardSubtype.MonsterLink) {
+		el.style.color = "#E8E8E8"
+	} else {
+		el.style.color = ""
+	}
+	if (card.CardType === CardType.Monster) {
+		fitTextOneLine(textMonsterAbilities(card), el, 1.0)
+		return
+	}
+
+	let text = ""
+	let iconSrc = ""
+	if (card.CardType === CardType.Spell) {
+		if (card.CardSubtype === CardSubtype.SpellNormal) {
+			text = "[ Spell Card ]"
+		} else {
+			let subtypeName = MapCardSubtypeText[card.CardSubtype].replaceAll("Spell", "")
+			text = `[ Spell Card / ${subtypeName} ]`
+			iconSrc = MapImg[card.CardSubtype] || ""
+		}
+	} else if (card.CardType === CardType.Trap) {
+		if (card.CardSubtype === CardSubtype.TrapNormal) {
+			text = "[ Trap Card ]"
+		} else {
+			let subtypeName = MapCardSubtypeText[card.CardSubtype].replaceAll("Trap", "")
+			text = `[ Trap Card / ${subtypeName} ]`
+			iconSrc = MapImg[card.CardSubtype] || ""
+		}
+	}
+	fitTextOneLine(text, el, 1.0)
+
+	if (!iconSrc) {
+		return
+	}
+	// fitTextOneLine creates: el > child(div) > [textNode, magicBaseline(div)]
+	// Inject Spell/Trap subtype icon before the closing "]" character in the text node
+	let child = el.firstChild
+	if (!child || !child.firstChild) {
+		return
+	}
+	let textNode = child.firstChild
+	if (textNode.nodeType !== Node.TEXT_NODE) {
+		return
+	}
+	textNode.textContent = textNode.textContent.slice(0, -1) // remove trailing "]"
+	let img = document.createElement("img")
+	img.src = iconSrc
+	img.style.height = "1.1em"
+	img.style.verticalAlign = "text-bottom"
+	let magicBaseline = child.childNodes[1]
+	child.insertBefore(img, magicBaseline)
+	child.insertBefore(document.createTextNode(" ]"), magicBaseline)
+}
+
+function renderRushDuelEffect(card) {
+	let e = byId("Rush_Effect")
+	let effectHTML = ""
+	if (card.CardEffect) {
+		effectHTML = escapeHTML(card.CardEffect)
+	}
+	e.innerHTML = effectHTML
+
+	if (card.CardSubtype === CardSubtype.MonsterNormal) {
+		e.style.fontStyle = "italic"
+	} else {
+		e.style.fontStyle = ""
+	}
+
+	let twitchFont = parseFloat(byId("TwitchFont").value)
+	let twitchScaleY = parseFloat(byId("TwitchFontScaleY").value)
+	if (twitchFont > 0) {
+		e.style.fontSize = twitchFont + "px"
+		e.style.transform = `scale(1.0, ${twitchScaleY})`
+		e.style.transformOrigin = "top left"
+	} else {
+		let fontSize = 42
+		e.style.fontSize = fontSize + "px"
+		e.style.transform = ""
+		while (e.scrollHeight > e.clientHeight && fontSize > 18) {
+			fontSize -= 0.5
+			e.style.fontSize = fontSize + "px"
+		}
+		byId("AutoFont").value = fontSize
+	}
+
+	byId("ChosenEffectElementID").value = e.id
+}
+
+function renderRushDuelFooter(card) {
+	let copyleft = `🄯`
+	if (IsNotLinuxOS) {
+		copyleft = `Ⓨ`
+	}
+	let footLeft = ""
+	if (card.MiscYear || card.MiscCreator) {
+		footLeft = `${copyleft}${card.MiscYear} ${card.MiscCreator}`
+	}
+	fitTextOneLine(footLeft, byId("Rush_FooterLeft"), 1.0, 1.0, 1.0)
+	let passwordAndID =
+		card.DisplayPasswordAndCardID ||
+		toDisplayPasswordAndCardID(card.MiscCardPassword, card.MiscKonamiCardID)
+	fitTextOneLine(passwordAndID, byId("Rush_PasswordAndID"), 1.0, 1.0, 1.0)
+	let footerRightEl = byId("Rush_FooterRight")
+	if (passwordAndID.length < 10) {
+		// expand right up to the left edge of cRush_PasswordAndID (740px),
+		// right edge is fixed at 1180-66=1114px, so max width = 374px
+		footerRightEl.style.width = "374px"
+	} else {
+		footerRightEl.style.width = ""
+	}
+	fitTextOneLine(card.MiscKonamiSet || "", footerRightEl, 1.0, 1.0, 1.0)
 }
 
 function renderCardFrame(card) {
@@ -931,7 +1331,8 @@ function renderCardFrame(card) {
 		s.backgroundImage = "url(card_frame/trap.png)"
 	} else if (card.CardType === CardType.Token) {
 		s.backgroundImage = "url(card_frame/monster_token.png)"
-	} else {  // CardType.Monster
+	} else {
+		// CardType.Monster
 		if (!card.IsPendulum) {
 			switch (card.CardSubtype) {
 				case CardSubtype.MonsterNormal:
@@ -987,12 +1388,13 @@ function renderCardFrame(card) {
 function renderCardName(card) {
 	let e = byId("RenderCardName")
 	e.style.color = "black"
-	if (card.CardType === CardType.Spell ||
-		card.CardType === CardType.Trap) {
+	if (card.CardType === CardType.Spell || card.CardType === CardType.Trap) {
 		e.style.color = "white"
 	} else if (card.CardType === CardType.Monster) {
-		if (card.CardSubtype === CardSubtype.MonsterXyz ||
-			card.CardSubtype === CardSubtype.MonsterLink) {
+		if (
+			card.CardSubtype === CardSubtype.MonsterXyz ||
+			card.CardSubtype === CardSubtype.MonsterLink
+		) {
 			e.style.color = "white"
 		}
 	}
@@ -1025,7 +1427,7 @@ function renderCardTypeLevelRank(card) {
 		}
 		if (card.CardSubtype !== CardSubtype.MonsterXyz) {
 			level.style.display = ""
-			level.style.visibility = "visible";
+			level.style.visibility = "visible"
 			for (let i = 1; i <= 12; i++) {
 				let e = byId(`StarWrap${i}`)
 				if (!e) {
@@ -1039,7 +1441,7 @@ function renderCardTypeLevelRank(card) {
 			}
 		} else if (card.MonsterLevelRankLink <= 12) {
 			rank.style.display = ""
-			rank.style.visibility = "visible";
+			rank.style.visibility = "visible"
 			for (let i = 1; i <= 12; i++) {
 				if (i <= card.MonsterLevelRankLink) {
 					byId(`BlackStarWrap${i}`).style.visibility = "visible"
@@ -1049,12 +1451,13 @@ function renderCardTypeLevelRank(card) {
 			}
 		} else {
 			rank13.style.display = ""
-			rank13.style.visibility = "visible";
+			rank13.style.visibility = "visible"
 		}
-	} else { // Spell or Trap
+	} else {
+		// Spell or Trap
 		cardType.style.display = ""
 		let textContent = ""
-		const spaceImg = " ".repeat(5)  // depend on `fontCardType` in CSS
+		let spaceImg = " ".repeat(5) // depend on `fontCardType` in CSS
 		if (card.CardType === CardType.Spell) {
 			if (card.CardSubtype === CardSubtype.SpellNormal) {
 				textContent = "[Spell Card]"
@@ -1085,7 +1488,9 @@ function renderLinkArrow(card) {
 	}
 	for (let v of card.MonsterLinkArrows) {
 		let tmp = byId(MapLinkMarker[v])
-		if (tmp) { tmp.style.visibility = "visible" }
+		if (tmp) {
+			tmp.style.visibility = "visible"
+		}
 	}
 }
 
@@ -1097,11 +1502,16 @@ function renderCardEffect(card) {
 		let e = byId("RenderSpellTrapEffect")
 		e.style.display = ""
 		hideMonsterDetailElements()
-		let innerHTML = card.CardEffect.replaceAll("\n", "<br>")
+		let innerHTML = escapeHTML(card.CardEffect)
 		e.innerHTML = innerHTML
 		let s = window.getComputedStyle(e)
-		let fontSizePx = chooseFontSize(innerHTML,
-			e.clientWidth, e.clientHeight, s.fontFamily, s.fontWeight)
+		let fontSizePx = chooseFontSize(
+			innerHTML,
+			e.clientWidth,
+			e.clientHeight,
+			s.fontFamily,
+			s.fontWeight,
+		)
 		e.style.fontSize = fontSizePx + "px"
 		// console.log(`chooseFontSize RenderSpellTrapEffect: ${fontSizePx}`)
 		return [e, fontSizePx]
@@ -1122,7 +1532,7 @@ function renderCardEffect(card) {
 	let a2 = byId("RenderMonsterAbilitiesSmall")
 	let s2 = window.getComputedStyle(e2)
 
-	let effectHTML = card.CardEffect.replaceAll("\n", "<br>")
+	let effectHTML = escapeHTML(card.CardEffect)
 	if (card.CardSubtype === CardSubtype.MonsterNormal) {
 		e1.style.fontStyle = "italic"
 		e2.style.fontStyle = "italic"
@@ -1135,8 +1545,13 @@ function renderCardEffect(card) {
 	a1.style.display = ""
 	e2.style.display = "none"
 	a2.style.display = "none"
-	let fontSizePx = chooseFontSize(effectHTML,
-		e1.clientWidth, e1.clientHeight, s1.fontFamily, s1.fontWeight)
+	let fontSizePx = chooseFontSize(
+		effectHTML,
+		e1.clientWidth,
+		e1.clientHeight,
+		s1.fontFamily,
+		s1.fontWeight,
+	)
 	// console.log(`chooseFontSize RenderMonsterEffect: ${fontSizePx}`)
 	if (fontSizePx >= 32) {
 		e1.style.fontSize = fontSizePx + "px"
@@ -1148,8 +1563,13 @@ function renderCardEffect(card) {
 		a1.style.display = "none"
 		e2.style.display = ""
 		a2.style.display = ""
-		let reFontSizePx = chooseFontSize(effectHTML,
-			e2.clientWidth, e2.clientHeight, s2.fontFamily, s2.fontWeight)
+		let reFontSizePx = chooseFontSize(
+			effectHTML,
+			e2.clientWidth,
+			e2.clientHeight,
+			s2.fontFamily,
+			s2.fontWeight,
+		)
 		// console.log(`chooseFontSize RenderMonsterEffectSmall: ${reFontSizePx}`)
 		e2.style.fontSize = reFontSizePx + "px"
 		e2.innerHTML = effectHTML
@@ -1159,7 +1579,7 @@ function renderCardEffect(card) {
 }
 
 function textMonsterAbilities(card) {
-	const separator = " / "
+	let separator = " / "
 	let s = card.MonsterType
 
 	if (card.CardSubtype === CardSubtype.MonsterRitual) {
@@ -1219,13 +1639,17 @@ function renderMonsterAtkDefLink(card) {
 	valueATK.style.display = ""
 	fitTextOneLine("ATK/", labelATK, 1.5, 1.15, 1.15)
 	let displayStrATK = ""
-	if (card.hasOwnProperty("MonsterATKStr") && card.MonsterATKStr !== "" && card.MonsterATKStr !== "-") {
+	if (
+		card.hasOwnProperty("MonsterATKStr") &&
+		card.MonsterATKStr !== "" &&
+		card.MonsterATKStr !== "-"
+	) {
 		displayStrATK = card.MonsterATKStr
 	} else {
 		displayStrATK = card.MonsterATK.toString()
 	}
 
-	const scaleStrQuestionMark = 1.2
+	let scaleStrQuestionMark = 1.2
 	if (!IsWindowsOS) {
 		let scaleH = 1.15
 		if (displayStrATK === "?") {
@@ -1245,7 +1669,11 @@ function renderMonsterAtkDefLink(card) {
 	labelLINK.style.display = "none"
 	valueLINK.style.display = "none"
 	let displayStrDEF = ""
-	if (card.hasOwnProperty("MonsterDEFStr") && card.MonsterDEFStr !== "" && card.MonsterDEFStr !== "-") {
+	if (
+		card.hasOwnProperty("MonsterDEFStr") &&
+		card.MonsterDEFStr !== "" &&
+		card.MonsterDEFStr !== "-"
+	) {
 		displayStrDEF = card.MonsterDEFStr
 	} else {
 		displayStrDEF = card.MonsterDEF.toString()
@@ -1297,16 +1725,24 @@ function renderMiscFooter(card) {
 		kSetP.style.display = "none"
 	}
 	if (card.IsPendulum) {
-		for (let v of all) { v.style.color = "black" }
+		for (let v of all) {
+			v.style.color = "black"
+		}
 	} else {
 		if (card.CardSubtype === CardSubtype.MonsterXyz) {
-			for (let v of all) { v.style.color = "rgb(224,224,224)" }
+			for (let v of all) {
+				v.style.color = "rgb(224,224,224)"
+			}
 		} else {
-			for (let v of all) { v.style.color = "black" }
+			for (let v of all) {
+				v.style.color = "black"
+			}
 		}
 	}
 
-	let scaleFont = 1.0, scaleH = 1.15, scaleW = 1.0
+	let scaleFont = 1.0,
+		scaleH = 1.15,
+		scaleW = 1.0
 	fitTextOneLine(card.MiscKonamiSet, kSet, scaleFont, scaleH, 1.1)
 	fitTextOneLine(card.MiscKonamiSet, kSetL, scaleFont, scaleH, 1.1)
 	fitTextOneLine(card.MiscKonamiSet, kSetP, scaleFont, scaleH, 1.1)
@@ -1345,14 +1781,18 @@ function renderPendulum(card) {
 	pEffect.style.display = ""
 	fitTextOneLine(card.PendulumScale, pScaleL, 1.25)
 	fitTextOneLine(card.PendulumScale, pScaleR, 1.25)
-	let pEffectHTML = card.PendulumEffect.replaceAll("\n", "<br>")
+	let pEffectHTML = escapeHTML(card.PendulumEffect)
 	let s = window.getComputedStyle(pEffect)
-	let fontSizePx = chooseFontSize(pEffectHTML,
-		pEffect.clientWidth, pEffect.clientHeight, s.fontFamily, s.fontWeight)
+	let fontSizePx = chooseFontSize(
+		pEffectHTML,
+		pEffect.clientWidth,
+		pEffect.clientHeight,
+		s.fontFamily,
+		s.fontWeight,
+	)
 	pEffect.style.fontSize = fontSizePx + "px"
 	pEffect.innerHTML = pEffectHTML
 }
-
 
 function twitchFontCopyAuto() {
 	byId("TwitchFont").value = byId("AutoFont").value
@@ -1374,12 +1814,23 @@ function twitchFontCardEffect() {
 	cardEffectElement.style.transformOrigin = `top left`
 }
 
+// escapeHTML sanitizes a card text string for safe innerHTML assignment:
+// escapes HTML special chars then converts newlines to <br> tags.
+function escapeHTML(str) {
+	return str
+		.replace(/&/g, "&amp;")
+		.replace(/</g, "&lt;")
+		.replace(/>/g, "&gt;")
+		.replace(/\n/g, "<br>")
+}
+
 // getText gets all text from an HTML element
 function getText(node) {
 	let resultArray = []
 
 	function getTextRecur(node) {
-		if (node.nodeType === 3) {// "3" is text node
+		if (node.nodeType === 3) {
+			// "3" is text node
 			resultArray.push(node.nodeValue.trim())
 		} else {
 			for (let child of node.childNodes) {
@@ -1392,68 +1843,37 @@ function getText(node) {
 	return resultArray.join(" ")
 }
 
-
-// exportCardPNG downloads the rendered card HTML as a PNG image;
-// https://stackoverflow.com/a/32776834/4097963:
-// tried html2canvas, domtoimage,rasterizeHTML
+// exportCardPNG downloads the rendered card as a PNG image.
+// TODO: implement — html2canvas, dom-to-image, and rasterizeHTML all had issues.
 function exportCardPNG() {
-	let cardElem = byId("RenderCard")
-	if (true) {
-		html2canvas(cardElem).then(
-			function (canvas) {
-				downloadAsImage(canvas.toDataURL())
-			})
-	}
-
-	if (true) {
-		{
-			let canvas = document.createElement("canvas");
-			canvas.height = cardElem.clientHeight;
-			canvas.width = cardElem.clientWidth;
-			rasterizeHTML.drawHTML(cardElem.outerHTML, canvas)
-				.then(function (renderResult) {
-					downloadAsImage(canvas.toDataURL())
-				});
-		}
-	}
-
-	if (true) {
-		domtoimage.toPng(cardElem, null).then(
-			function (dataUrl) {
-				downloadAsImage(dataUrl)
-			})
-			.catch(function (err) {
-				window.debug = err
-				console.error(`error domtoimage: ${err}`);
-			});
-	}
+	alert("Export PNG is not yet implemented.")
 }
 
 // downloadAsImage makes browser download dataURL as a PNG image,
 // output name based on current time
 function downloadAsImage(dataURL) {
-	let now = (new Date()).toISOString()
-	now = now.replace(/[^A-Za-z0-9]/g, "");
+	let now = new Date().toISOString()
+	now = now.replace(/[^A-Za-z0-9]/g, "")
 	let outputFileName = `${now}.png`
-	let link = document.createElement("a");
+	let link = document.createElement("a")
 	link.id = "downloadAsImage"
 	if (typeof link.download === "string") {
-		link.href = dataURL;
-		link.download = outputFileName;
-		document.body.appendChild(link);
-		link.click();
-		document.body.removeChild(link);
+		link.href = dataURL
+		link.download = outputFileName
+		document.body.appendChild(link)
+		link.click()
+		document.body.removeChild(link)
 	} else {
-		window.open(dataURL);
+		window.open(dataURL)
 	}
 }
 
-
-function fmtSec(ms) { return `${ms / 1000}s` }
-
+function fmtSec(ms) {
+	return `${ms / 1000}s`
+}
 
 //  AllowChars are lowercase alphanumeric, good for file name cross-platform
-const AllowChars = {}
+let AllowChars = {}
 for (let char of "abcdefghijklmnopqrstuvwxyz_.0123456789".split("")) {
 	AllowChars[char] = true
 }
@@ -1462,7 +1882,7 @@ function normalizeFileName(str) {
 	let ret = []
 	for (let char of str.toLowerCase().split("")) {
 		if (!AllowChars[char]) {
-			ret.push('_')
+			ret.push("_")
 		} else {
 			ret.push(char)
 		}
@@ -1470,32 +1890,31 @@ function normalizeFileName(str) {
 	return ret.join("")
 }
 
-
 function exportCardJSON(isKeepCardArt = false) {
 	if (!GlobalCard || !GlobalCard.CardName) {
 		return
 	}
 	let card = CloneCard(GlobalCard)
 	if (!isKeepCardArt) {
-		card.CardArt = ""  // art file size is very big
+		card.CardArt = "" // art file size is very big
 	}
-	let link = document.createElement("a");
+	let link = document.createElement("a")
 	let beauty = JSON.stringify(card, null, "\t")
 	link.href = `data:text/json;charset=utf-8,${encodeURIComponent(beauty)}`
-	let cardID = card.MiscKonamiCardID  // example "4095 errata<2014"
+	let cardID = card.MiscKonamiCardID // example "4095 errata<2014"
 	cardID = cardID.replace("<", "_before_")
 	cardID = cardID.replace(">", "_after_")
-	link.download = normalizeFileName(`${(card.CardName)}_${cardID}.json`)
-	document.body.appendChild(link);
-	link.click();
-	document.body.removeChild(link);
+	link.download = normalizeFileName(`${card.CardName}_${cardID}.json`)
+	document.body.appendChild(link)
+	link.click()
+	document.body.removeChild(link)
 }
 
 function importCardJSON(jsonDataURI) {
 	// console.log(`importCardJSON jsonDataURI: ${jsonDataURI}`)
 	// https://developer.mozilla.org/en-US/docs/Glossary/Base64#the_unicode_problem
 	let prefixLen = "data:application/json;base64,".length
-	let jsonStr = atob(jsonDataURI.substring(prefixLen))  // bad Unicode char
+	let jsonStr = atob(jsonDataURI.substring(prefixLen)) // bad Unicode char
 	let binStringUnicode = Uint8Array.from(jsonStr, (m) => m.codePointAt(0))
 	let jsonStrUnicode = new TextDecoder().decode(binStringUnicode)
 	GlobalCard = JSON.parse(jsonStrUnicode)
@@ -1513,19 +1932,18 @@ function importCardJSON(jsonDataURI) {
 		}
 	}
 	if (GlobalCard.MiscCardPassword && GlobalCard.MiscCardPassword.length < 8) {
-		GlobalCard.MiscCardPassword = GlobalCard.MiscCardPassword.padStart(8, "0");
+		GlobalCard.MiscCardPassword = GlobalCard.MiscCardPassword.padStart(8, "0")
 	}
 
 	// automatically change Creator "daominah" to "daominah.github.io"
 	// so people know where to find this card editor
 	if (GlobalCard.MiscCreator === "daominah") {
-		GlobalCard.MiscCreator = "daominah.github.io"
+		GlobalCard.MiscCreator = DefaultCreator
 	}
 
 	loadCardToHTML(GlobalCard)
 	renderCard(GlobalCard)
 }
-
 
 function buildIndexCardDatabase() {
 	let beginT = new Date()
@@ -1535,41 +1953,45 @@ function buildIndexCardDatabase() {
 		for (let i = 0; i < CardDatabase.length; i++) {
 			let c = CardDatabase[i]
 			this.add({
-				"CardName": c.CardName,
+				CardName: c.CardName,
 				// "CardEffect": [c.CardEffect, c.PendulumEffect].join(" "),
-				"id": c.MiscKonamiCardID,
+				id: c.MiscKonamiCardID,
 			})
 		}
-		let duration = (new Date()) - beginT
+		let duration = new Date() - beginT
 		console.log(`indexed card database, dur: ${fmtSec(duration)}`)
 	})
 }
 
 function konamiDatabaseURL(cardID, language = "ja") {
-	return `https://www.db.yugioh-card.com/yugiohdb/card_search.action` +
+	return (
+		`https://www.db.yugioh-card.com/yugiohdb/card_search.action` +
 		`?ope=2&request_locale=${language}&cid=${cardID}`
+	)
 }
 
 function SearchCardDatabase() {
 	let searchQuery = document.getElementById("SearchCardQuery").value
 
 	if (searchQuery) {
-		logURLQuery = `?func=SearchCardDatabase&searchQuery=${searchQuery}`;
-		console.log(logURLQuery);
-		fetch(`https://log.daominah.uk/log${logURLQuery}`, {method: 'GET'})
-			.then(response => console.log('log sent successfully'))
-			.catch(error => console.error('error sending log:', error));
+		let logURLQuery = `?func=SearchCardDatabase&searchQuery=${searchQuery}`
+		console.log(logURLQuery)
+		sendLog(logURLQuery)
 	}
 
 	let searchResult = [] // []Card
-	let limit = 16, offset = 0  // TODO: paginate search result
+	let limit = 16,
+		offset = 0 // TODO: paginate search result
 	// search: https://github.com/olivernn/lunr.js
-	let matches, err = null
+	let matches,
+		err = null
 	try {
 		matches = IndexCardDatabase.search(searchQuery)
 	} catch (exception) {
 		err = exception
-		console.log(`debug searchQuery ${searchQuery} causes exception IndexCardDatabase.search: ${err}, ${err === null}`)
+		console.log(
+			`debug searchQuery ${searchQuery} causes exception IndexCardDatabase.search: ${err}, ${err === null}`,
+		)
 	}
 	if (matches === undefined || matches === null || matches.length === 0) {
 		// slow search string contain
@@ -1578,14 +2000,20 @@ function SearchCardDatabase() {
 			if (card.CardName.toLowerCase().includes(searchQuery.toLowerCase())) {
 				searchResult.push(card)
 			}
-			if (searchResult.length >= limit) { break }
+			if (searchResult.length >= limit) {
+				break
+			}
 		}
 	} else {
 		let indexedResult = matches.slice(offset, offset + limit)
 		for (let v of indexedResult) {
 			// e.g. v = {"ref":"14297","score":7.307,"matchData":{"metadata":{"avramax":{"CardName":{}}}}}
-			if (!v.ref) { continue }
-			if (!MapCardDatabase[v.ref]) { continue }
+			if (!v.ref) {
+				continue
+			}
+			if (!MapCardDatabase[v.ref]) {
+				continue
+			}
 			searchResult.push(MapCardDatabase[v.ref])
 		}
 	}
@@ -1600,7 +2028,9 @@ function SearchCardDatabase() {
 	let resultWrap = document.getElementById("SearchCardResult")
 	resultWrap.innerHTML = ""
 	for (let card of cloneResult) {
-		if (!card) { continue }
+		if (!card) {
+			continue
+		}
 		let row = document.createElement("div")
 		row.className = "searchRow"
 		let cardName = document.createElement("div")
@@ -1630,14 +2060,16 @@ function SearchCardDatabase() {
 		}
 		row.appendChild(summary)
 		row.onclick = function (mouseEvent) {
-			if (mouseEvent.target !== this) { // click on a descendant
+			if (mouseEvent.target !== this) {
+				// click on a descendant
 				if (mouseEvent.target.tagName === "A") {
 					// open Konami link, do not refresh GlobalCard
 					return
 				}
 			}
 			// console.log(`mouseEvent searchRow: ${mouseEvent.target}`,)
-			if (!card.MiscCreator) {  // keep current "Creator" inputted by user
+			if (!card.MiscCreator) {
+				// keep current "Creator" inputted by user
 				card.MiscCreator = byId("Creator").value
 			}
 
@@ -1661,13 +2093,14 @@ function SearchCardDatabase() {
 	}
 }
 
-
 function HandleClickScalePage(scaleStr) {
 	let viewWidth = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0)
 	let vpH = Math.max(document.documentElement.clientHeight || 0, window.innerHeight || 0)
-	let documentWidth = document.body.scrollWidth;
-	let docH = document.body.scrollHeight;
-	console.log(`${(new Date()).toISOString()} document: ${documentWidth}x${docH}, view: ${viewWidth}x${vpH}`)
+	let documentWidth = document.body.scrollWidth
+	let docH = document.body.scrollHeight
+	console.log(
+		`${new Date().toISOString()} document: ${documentWidth}x${docH}, view: ${viewWidth}x${vpH}`,
+	)
 
 	if (!scaleStr) {
 		if (documentWidth / viewWidth >= 1.5) {
@@ -1698,14 +2131,51 @@ function HandleClickScalePage(scaleStr) {
 	}
 	localStorage.setItem(StorageKeyScale, scaleStr)
 	console.log(`StorageKeyScale: ${localStorage.getItem(StorageKeyScale)}`)
-	if (Number(scaleStr) !== "1") {
+	let scale = Number(scaleStr)
+	if (scale !== 1) {
 		document.body.style.transform = `scale(${scaleStr})`
 		document.body.style.transformOrigin = "top left"
+		// scale() is visual only: the layout box keeps its original size,
+		// so we shrink html to hide the phantom scroll space
+		document.documentElement.style.height = "100vh"
+		document.documentElement.style.overflow = "hidden"
+		document.body.style.width = 100 / scale + "%"
+		document.body.style.height = 100 / scale + "vh"
+		document.body.style.overflow = "auto"
 	} else {
 		document.body.style.transform = ""
+		document.documentElement.style.height = ""
+		document.documentElement.style.overflow = ""
+		document.body.style.width = ""
+		document.body.style.height = ""
+		document.body.style.overflow = ""
 	}
 }
 
+function handleClickCardLayout(layout) {
+	GlobalCardLayout = layout
+	localStorage.setItem(StorageKeyCardLayout, layout)
+	if (layout === "standard") {
+		byId("RenderCard").style.display = ""
+	} else {
+		byId("RenderCard").style.display = "none"
+	}
+	if (layout === "rushduel") {
+		byId("RenderCardRushduel").style.display = ""
+	} else {
+		byId("RenderCardRushduel").style.display = "none"
+	}
+	let rushElements = document.querySelectorAll(".rushDuelOnly")
+	for (let i = 0; i < rushElements.length; i++) {
+		if (layout === "rushduel") {
+			rushElements[i].style.display = ""
+		} else {
+			rushElements[i].style.display = "none"
+		}
+	}
+	byId("RushMaximumATKWrap").classList.toggle("disabledElement", !byId("Maximum").checked)
+	updateCardState()
+}
 
 function HandleClickArtResolution(pxStr) {
 	switch (pxStr) {
@@ -1719,7 +2189,9 @@ function HandleClickArtResolution(pxStr) {
 			document.getElementById("ArtResolution512").checked = true
 			break
 	}
-	console.log(`StorageKeyArtResolution: ${localStorage.getItem(StorageKeyArtResolution)}, host: ${getArtHost()}`)
+	console.log(
+		`StorageKeyArtResolution: ${localStorage.getItem(StorageKeyArtResolution)}, host: ${getArtHost()}`,
+	)
 	renderCard(GlobalCard)
 }
 
@@ -1796,7 +2268,7 @@ function loadHTMLAltArtSelector(cardID, preferredArtID) {
 	let defaultArtChecked = true
 	for (let i = 0; i < altArtIDs.length; i++) {
 		let altID = altArtIDs[i]
-		let isChecked = (preferredArtID && preferredArtID === altID)
+		let isChecked = preferredArtID && preferredArtID === altID
 		if (isChecked) {
 			defaultArtChecked = false // uncheck default if alt art matches
 		}
@@ -1805,13 +2277,18 @@ function loadHTMLAltArtSelector(cardID, preferredArtID) {
 	createAltArtRadio("DefaultArt", cardID, defaultArtChecked)
 }
 
-
 // renderCardArtImgSrcByCardID automatically set card art URL src based on
 // cardID and selected alt art (if any).
 // Note that "ImgRenderCardArt" elements can be updated by inputting file too,
 // this func should not be called in that case to avoid overwriting user input.
 function renderCardArtImgSrcByCardID(card) {
-	console.log(`begin renderCardArtImgSrcByCardID cardID=${card.MiscKonamiCardID}, altArtID=${card.AltArtID}, lenCartArt=${card.CardArt ? card.CardArt.length : 0}`)
+	let lenCardArtBegin = 0
+	if (card.CardArt) {
+		lenCardArtBegin = card.CardArt.length
+	}
+	console.log(
+		`begin renderCardArtImgSrcByCardID cardID=${card.MiscKonamiCardID}, altArtID=${card.AltArtID}, lenCartArt=${lenCardArtBegin}`,
+	)
 	if (!card) {
 		return
 	}
@@ -1819,9 +2296,9 @@ function renderCardArtImgSrcByCardID(card) {
 		// prevent browser try "daominah.uk/.png" when cardID is empty,
 		// which will show a red 404 error in console
 		byId("ImgRenderCardArtPendulum").src = ""
-		byId("ImgRenderCardArtPendulum").dataset.artSource = "auto"
+		byId("ImgRenderCardArtPendulum").dataset.artSource = ArtSource.Auto
 		byId("ImgRenderCardArt").src = ""
-		byId("ImgRenderCardArt").dataset.artSource = "auto"
+		byId("ImgRenderCardArt").dataset.artSource = ArtSource.Auto
 		return
 	}
 	let artID = card.MiscKonamiCardID
@@ -1831,12 +2308,17 @@ function renderCardArtImgSrcByCardID(card) {
 	let daominahArtURL = `${getArtHost()}/${artID}.png`
 	byId("ImgRenderCardArtPendulum").className = "fitImgPendulumLong"
 	byId("ImgRenderCardArtPendulum").src = daominahArtURL
-	byId("ImgRenderCardArtPendulum").dataset.artSource = "auto"
+	byId("ImgRenderCardArtPendulum").dataset.artSource = ArtSource.Auto
 	byId("ImgRenderCardArt").src = daominahArtURL
-	byId("ImgRenderCardArt").dataset.artSource = "auto"
-	console.log(`end renderCardArtImgSrcByCardID CardArtSrc=${daominahArtURL}, lenCardArt=${card.CardArt ? card.CardArt.length : 0}`)
+	byId("ImgRenderCardArt").dataset.artSource = ArtSource.Auto
+	let lenCardArtEnd = 0
+	if (card.CardArt) {
+		lenCardArtEnd = card.CardArt.length
+	}
+	console.log(
+		`end renderCardArtImgSrcByCardID CardArtSrc=${daominahArtURL}, lenCardArt=${lenCardArtEnd}`,
+	)
 }
-
 
 window.onload = () => {
 	HandleClickScalePage(localStorage.getItem(StorageKeyScale))
@@ -1845,21 +2327,31 @@ window.onload = () => {
 	loadMonsterTypeElements()
 	loadMonsterLevelRankElements()
 
+	let savedLayout = localStorage.getItem(StorageKeyCardLayout) || "standard"
+	handleClickCardLayout(savedLayout)
+	if (savedLayout === "standard") {
+		byId("LayoutStandard").checked = true
+	} else {
+		byId("LayoutRushduel").checked = true
+	}
+
 	loadCardToHTML(DefaultCard)
 
 	// handling user choosing a file (from their computer) as card art
-	byId("CardArt").addEventListener("change", ev => {
-		if (!ev.target.files || !ev.target.files.length) { return null }
-		const r = new FileReader();
+	byId("CardArt").addEventListener("change", (ev) => {
+		if (!ev.target.files || !ev.target.files.length) {
+			return null
+		}
+		let r = new FileReader()
 		r.onload = function (event) {
 			if (window.getComputedStyle(byId("RenderCardArt")).display !== "none") {
 				let img = byId("ImgRenderCardArt")
 				img.setAttribute("src", event.target.result)
-				img.dataset.artSource = "manual"
+				img.dataset.artSource = ArtSource.Manual
 			} else {
 				let img = byId("ImgRenderCardArtPendulum")
 				img.setAttribute("src", event.target.result)
-				img.dataset.artSource = "manual"
+				img.dataset.artSource = ArtSource.Manual
 			}
 			// set GlobalCard.CardArt consistent with the pattern of
 			// updating "colLeft" updates GlobalCard.
@@ -1868,28 +2360,72 @@ window.onload = () => {
 			}
 			updateCardState()
 		}
-		r.readAsDataURL(ev.target.files[0]);
-	});
-	byId("ImportCardJSONFile").addEventListener("change", ev => {
-		if (!ev.target.files || !ev.target.files.length) { return null }
-		const r = new FileReader();
+		r.readAsDataURL(ev.target.files[0])
+	})
+	byId("ImportCardJSONFile").addEventListener("change", (ev) => {
+		if (!ev.target.files || !ev.target.files.length) {
+			return null
+		}
+		let r = new FileReader()
 		r.onload = function (event) {
 			// console.log(`data ImportCardJSONFile: ${event.target.result}`)
 			importCardJSON(event.target.result)
 		}
-		r.readAsDataURL(ev.target.files[0]);
-	});
+		r.readAsDataURL(ev.target.files[0])
+	})
 
 	for (let v of document.getElementsByName("CardType")) {
-		v.onclick = function () { handleClickCardType(v.id) }
+		v.onclick = function () {
+			handleClickCardType(v.id)
+		}
 	}
 
-	byId("SearchCardQuery").addEventListener("keyup",
-		function (event) {
-			if (event.key === "Enter") {
-				byId("SearchCardDatabase").click()
-			}
-		});
+	byId("SearchCardQuery").addEventListener("keyup", function (event) {
+		if (event.key === "Enter") {
+			byId("SearchCardDatabase").click()
+		}
+	})
+
+	// Tab cycles through radio buttons within the same group
+	// instead of jumping to the next form element
+	for (let groupName of ["ArtResolution", "CardLayout"]) {
+		let radios = document.getElementsByName(groupName)
+		for (let radio of radios) {
+			radio.addEventListener("keydown", function (event) {
+				if (event.key !== "Tab") {
+					return
+				}
+				event.preventDefault()
+				let list = Array.from(radios)
+				let idx = list.indexOf(this)
+				let next = list[(idx + 1) % list.length]
+				next.focus()
+				next.click()
+			})
+		}
+	}
+
+	// Tab/Shift+Tab cycles through DevTestCards buttons, clicking each one
+	{
+		let buttons = byId("DevTestCards").querySelectorAll("button")
+		for (let btn of buttons) {
+			btn.addEventListener("keydown", function (event) {
+				if (event.key !== "Tab") {
+					return
+				}
+				event.preventDefault()
+				let list = Array.from(buttons)
+				let idx = list.indexOf(this)
+				let step = 1
+				if (event.shiftKey) {
+					step = -1
+				}
+				let next = list[(idx + step + list.length) % list.length]
+				next.focus()
+				next.click()
+			})
+		}
+	}
 
 	// almost all elements on "colLeft"
 	let inputs = [
@@ -1962,8 +2498,10 @@ window.onload = () => {
 		// https://stackoverflow.com/a/70361732/4097963
 		OperatingSystem = navigator.userAgentData.platform
 	}
-	if (OperatingSystem.toLowerCase().includes("mac") ||
-		OperatingSystem.toLowerCase().includes("win")) {
+	if (
+		OperatingSystem.toLowerCase().includes("mac") ||
+		OperatingSystem.toLowerCase().includes("win")
+	) {
 		IsNotLinuxOS = true
 		if (OperatingSystem.toLowerCase().includes("win")) {
 			IsWindowsOS = true
@@ -1980,11 +2518,12 @@ window.onload = () => {
 			document.getElementById("RenderMonsterLinkLabel"),
 			document.getElementById("RenderMonsterLinkRating"),
 		]
-		let replaceClasses = []  // to avoid changing the array while looping
+		let replaceClasses = [] // to avoid changing the array while looping
 		for (let i = 0; i < needCSSWindows.length; i++) {
 			for (let k = 0; k < needCSSWindows[i].classList.length; k++) {
 				let oldClass = needCSSWindows[i].classList[k]
-				if (oldClass !== "db") {  // "db" means debug
+				if (oldClass !== "db") {
+					// "db" means debug
 					replaceClasses.push(oldClass)
 				}
 			}
@@ -1997,36 +2536,60 @@ window.onload = () => {
 			// console.log(`replace class ${oldClass} with ${newClass}`)
 		}
 	}
+	if (!IsWindowsOS) {
+		let needCSSLinux = [
+			document.getElementById("Rush_LevelNumber"),
+			document.getElementById("Rush_ATK"),
+			document.getElementById("Rush_DEF"),
+			document.getElementById("Rush_MaximumATK"),
+		]
+		let replaceClasses = []
+		for (let i = 0; i < needCSSLinux.length; i++) {
+			for (let k = 0; k < needCSSLinux[i].classList.length; k++) {
+				let oldClass = needCSSLinux[i].classList[k]
+				if (oldClass !== "db" && !oldClass.startsWith("cRushWhiteNumber")) {
+					replaceClasses.push(oldClass)
+				}
+			}
+		}
+		for (let i = 0; i < replaceClasses.length; i++) {
+			let oldClass = replaceClasses[i]
+			let newClass = oldClass + "Linux"
+			needCSSLinux[i].classList.remove(oldClass)
+			needCSSLinux[i].classList.add(newClass)
+		}
+	}
 
 	updateCardState()
 	if (Boolean(window.chrome)) {
 		// workaround Chromium based browsers calculate wrong font width
 		// at the first load
-		setTimeout(function () { renderCard(GlobalCard) }, 500)
+		setTimeout(function () {
+			renderCard(GlobalCard)
+		}, 500)
 	}
 
-
-	if (!true) {  // DEPRECATED, this will get CORS error if run as a local file
-		fetch('konami_data/konami_db_en.json').then(response => response.json()).then(
-			function (data) {
-				CardDatabase = data
-				buildIndexCardDatabase()
-			}
-		).catch(function (err) { console.log(`error cardDatabase: ${err}`) });
-	} else { // CardDatabase is declared in file `konami_data/konami_db_en.js`
-		if (typeof CardDatabase === 'undefined' || CardDatabase === null) {
-			console.log(`error CardDatabase is undefined`)
-		} else {
-			buildIndexCardDatabase()
-		}
+	// CardDatabase is declared in file `konami_data/konami_db_en.js`
+	if (typeof CardDatabase === "undefined" || CardDatabase === null) {
+		console.log(`error CardDatabase is undefined`)
+	} else {
+		buildIndexCardDatabase()
 	}
 	byId("SearchCardDatabase").click()
-
+	// pulse the first result row to draw attention to the card database on first load
+	setTimeout(function () {
+		let firstRow = byId("SearchCardResult").querySelector(".searchRow")
+		if (firstRow) {
+			firstRow.classList.add("firstResultBeacon")
+		}
+	}, 0)
 
 	setTimeout(function () {
 		PerfNav = performance.getEntriesByType("navigation")[0]
 		let durPageDownloaded = PerfNav.domInteractive
 		let durOnload = PerfNav.loadEventEnd - PerfNav.loadEventStart
-		console.log(`duration downloading page: ${fmtSec(durPageDownloaded)}, onload func: ${fmtSec(durOnload)}`)
-	}, 0);  // setTimeout 0 is similar to defer
+		console.log(
+			`duration downloading page: ${fmtSec(durPageDownloaded)}, onload func: ${fmtSec(durOnload)}`,
+		)
+	}, 0) // setTimeout 0 is similar to defer
 }

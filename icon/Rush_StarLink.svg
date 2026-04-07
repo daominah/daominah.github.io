@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Rush Duel LINK badge: miniature of standard layout link arrows.
+     All 8 arrows are same-size 90-45-45 right isosceles triangles (right angle at tip).
+     Each arrow = outer triangle + inner triangle with uniform inset. -->
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="outerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#f7ffff"/>
+      <stop offset="100%" stop-color="#f7ffff"/>
+    </linearGradient>
+    <!-- Inner fill: light at center, dark red near edges -->
+    <radialGradient id="innerGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#f4ae8e"/>
+      <stop offset="100%" stop-color="#d81e16"/>
+    </radialGradient>
+  </defs>
+
+  <!-- EDGE ARROWS: height=42, half-base=42, inset=6 (leg=42*sqrt2≈59.4≈corner leg 60) -->
+
+  <g id="RushArrowUp">
+    <polygon points="100,8  58,50  142,50" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="100,16  72,44  128,44" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowDown">
+    <polygon points="100,192  142,150  58,150" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="100,184  128,156  72,156" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowLeft">
+    <polygon points="8,100  50,58  50,142" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="16,100  44,72  44,128" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowRight">
+    <polygon points="192,100  150,58  150,142" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="184,100  156,72  156,128" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <!-- CORNER ARROWS: leg=60, inset=6.
+       Right-angle legs form a virtual square (16,16)-(184,184).
+       Edge arrow tips extend 8px outside this square. -->
+
+  <g id="RushArrowUpLeft">
+    <polygon points="16,16  16,76  76,16" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="22,22  22,62  62,22" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowUpRight">
+    <polygon points="184,16  124,16  184,76" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="178,22  138,22  178,62" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowDownLeft">
+    <polygon points="16,184  76,184  16,124" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="22,178  62,178  22,138" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+  <g id="RushArrowDownRight">
+    <polygon points="184,184  184,124  124,184" fill="url(#outerGrad)" stroke="#004687" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="178,178  178,138  138,178" fill="url(#innerGrad)" stroke="#7b0000" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+
+</svg>
