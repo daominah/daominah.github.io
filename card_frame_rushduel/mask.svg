@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 1720" width="1180" height="1720">
+	<title>Rush Duel Card Frame</title>
+	<desc>Skeleton structure. Canvas: 1180 x 1720 px, SVG top-left origin.</desc>
+
+	<rect x="0" y="0" width="1180" height="1720"
+		  fill="none" stroke="black" stroke-width="4">
+		<title>Outer card boundary</title>
+		<desc>L=0 T=0 R=1180 B=1720</desc>
+	</rect>
+
+	<rect x="40" y="40" width="1100" height="1640"
+		  fill="none" stroke="black" stroke-width="2">
+		<title>Inner card boundary</title>
+		<desc>L=40 T=40 R=1140 B=1680</desc>
+	</rect>
+
+	<!-- Border strip: grey only between outer and inner boundary -->
+	<path fill-rule="evenodd" fill="#00ff00"
+		  d="M0,0 H1180 V1720 H0 Z M40,40 H1140 V1680 H40 Z"/>
+
+
+	<polyline points="
+		  62,176
+		 930,176
+		 990,236
+		1118,236
+		1118,1232
+		  62,1232
+		  62,176"
+			  fill="#00ff00" stroke="black" stroke-width="2">
+		<title>Art box</title>
+		<desc>Top-right notched for attribute circle.
+			Square L=62 T=176 R=1118 B=1232 W=1056 H=1056 without right-top corner.
+			Distance from art box square edges to inner card boundary: 22px.
+			Path: left-top → right-top (pre notch) ↘ notch inward point → right-top
+			↓ right-bot ← left-bot ↑ left-top
+		</desc>
+	</polyline>
+
+
+	<rect x="62" y="1232" width="1056" height="382"
+		  fill="none" stroke="black" stroke-width="2">
+		<title>Effect box outer</title>
+		<desc>Aligned to art. L=62 T=1232 R=1118 B=1614</desc>
+	</rect>
+
+	<!-- Lime zone between Effect box outer and Effect box inner -->
+	<path fill-rule="evenodd" fill="#00ff00"
+		  d="M62,1232 H1118 V1614 H62 Z M70,1300 V1606 H1110 V1240 H990 L930,1300 Z"/>
+
+	<polyline points="
+		  70,1300
+		  70,1606
+		1110,1606
+		1110,1240
+		 990,1240
+		 930,1300
+		  70,1300"
+			  fill="none" stroke="black" stroke-width="2">
+		<title>Effect box inner</title>
+		<desc>Distance of 8px from the outer box on all sides.
+			The pre notch point mirrors the art notch inward point horizontally.
+			left-top ↓ left-bot → right-bot ↑ right-top ← pre notch
+			↙ notch inward point ← left-top
+		</desc>
+	</polyline>
+
+	<polyline points="
+		  62,1614
+		1118,1614
+		1118,1658
+		 740,1658
+		 712,1630
+		 468,1630
+		 440,1658
+		  62,1658
+		  62,1614"
+			  fill="black" stroke="black" stroke-width="2">
+		<title>Footer</title>
+		<desc>Place for Creator (left) and set code (right).
+			Footer top edge = bottom of effect box outer.
+			Distance from edges to inner card boundary: 22px, matching the art box.
+			left-top → right-top ↓ right-bot ← notch-right ↖ notch-up ← notch-up ↙ notch-left ← left-bot ↑ left-top
+		</desc>
+	</polyline>
+
+	<polyline points="
+		426,1680
+		754,1680
+		710,1636
+		470,1636
+		426,1680"
+			  fill="none" stroke="black" stroke-width="2">
+		<title>Bottom logo (RUSH DUEL)</title>
+		<desc>left-bot → right-bot ↖ right-top ← left-top ↙ left-bot</desc>
+	</polyline>
+
+</svg>

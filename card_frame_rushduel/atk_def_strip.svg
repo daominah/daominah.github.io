@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1180 1720" width="1180" height="1720">
+	<title>ATK/DEF dark strip</title>
+	<desc>Semi-transparent dark band behind ATK/DEF stats, clipped to the art box shape.</desc>
+
+	<!--
+	<polyline points="
+		  62,176
+		 930,176
+		 990,236
+		1118,236
+		1118,1232
+		  62,1232
+		  62,176"
+			  fill="none" stroke="black" stroke-width="4">
+		<title>Art box for debug</title>
+	</polyline>
+
+	<circle cx="160" cy="1148" r="76"
+			fill="none" stroke="black" stroke-width="4">
+		<title>Level Badge for debug</title>
+		<desc>bottom-left of art</desc>
+	</circle>
+	 -->
+
+	<!-- Strip shape: trapezoid with left edge curving around Level Badge.
+	     Bottom edge is a tangent of Level Badge, parallel to Art Box bottom.
+	     Top edge same level as Level Badge center.
+	     Right edge at 45 degrees. Bottom-right touches the art box right wall.
+
+	     (236,1150)─────────────────────(1042,1150)
+	 arc /                                        \ 45°
+	    /                                          \
+	(160,1226)───────────────────────────────(1118,1226)
+
+	Path commands (uppercase = absolute coordinates):
+	     M (moveto): start at bottom-left, contact point of bottom edge and Level Badge
+	     H (horizontal lineto): bottom edge straight right to the art box right wall
+	     L (lineto): 45-degree angled cut up-left to the top-right corner
+	     H (horizontal lineto): top edge straight left to the Level Badge arc start
+	     A (elliptical arc): short clockwise arc around the Level Badge right side
+	     Z (closepath): straight line back to the M starting point -->
+	<path d="M 160,1226
+	         H 1118
+	         L 1042,1150
+	         H 236
+	         A 76,76,0,0,1,
+	           160,1226
+	         Z"
+		  fill="black" opacity="0.6">
+		<title>ATK/DEF dark strip</title>
+	</path>
+</svg>
