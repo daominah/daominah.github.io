@@ -957,8 +957,13 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
 }
 
 /* shifts link badge down so the link number sits at vertical center */
+#Rush_LinkBadge_Off,
 #Rush_LinkBadge {
   bottom: -8px;
+}
+
+#Rush_LinkBadge_Off {
+  opacity: 0.75;
 }
 
 /* card-sized SVG overlay with curved "LEVEL"/"RANK"/"LINK" text */
@@ -998,19 +1003,19 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
 .cRushWhiteNumberGrayOutline {
   color: white;
   text-shadow:
-    -4px -4px 0 #404040,
-    4px -4px 0 #404040,
-    -4px 4px 0 #404040,
-    4px 4px 0 #404040;
+    -4px -4px 0 #202020,
+    4px -4px 0 #202020,
+    -4px 4px 0 #202020,
+    4px 4px 0 #202020;
 }
 /* text color for number on the link star */
 .cRushWhiteNumberBlueOutline {
   color: white;
   text-shadow:
-    -4px -4px 0 darkblue,
-    4px -4px 0 darkblue,
-    -4px 4px 0 darkblue,
-    4px 4px 0 darkblue;
+    -4px -4px 0 #004687,
+    4px -4px 0 #004687,
+    -4px 4px 0 #004687,
+    4px 4px 0 #004687;
 }
 
 /* text color for ATK DEF */

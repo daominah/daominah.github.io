@@ -2,19 +2,19 @@
 <!-- "LINK" label on Rush Duel link badge.
      Card size 1180x1720. Star center (160,1142). -->
 <svg width="1180" height="1720" viewBox="0 0 1180 1720" xmlns="http://www.w3.org/2000/svg">
-	<defs>
-		<!-- bgArc: flat horizontal band -->
-		<path id="bgArc" fill="none"
-			  d="M 120,1062 L 200,1062"/>
-		<!-- textArc: flat horizontal line -->
-		<path id="textArc" fill="none"
-			  d="M 112,1072 L 208,1072"/>
-	</defs>
-	<!-- black background band behind the label text -->
-	<use href="#bgArc" stroke="black" stroke-width="26" fill="none"/>
-	<text font-family="'Arial Black', 'Impact', sans-serif" font-size="30" font-weight="900"
-		  fill="white" stroke="#222" stroke-width="3" paint-order="stroke"
-		  text-anchor="middle" letter-spacing="-1">
-		<textPath href="#textArc" startOffset="48%">LINK</textPath>
-	</text>
+  <defs>
+    <!-- bgArc: flat horizontal band -->
+    <path id="bgArc" fill="none"
+          d="M 120,1060 L 200,1060"/>
+    <!-- textArc: flat horizontal line -->
+    <path id="textArc" fill="none"
+          d="M 112,1070 L 208,1070"/>
+  </defs>
+  <!-- black background band behind the label text -->
+  <use href="#bgArc" stroke="black" stroke-width="26" fill="none"/>
+  <text font-family="'Arial Black', 'Impact', sans-serif" font-size="30" font-weight="900"
+        fill="white" stroke="#222" stroke-width="3" paint-order="stroke"
+        text-anchor="middle" letter-spacing="-1">
+    <textPath href="#textArc" startOffset="48%">LINK</textPath>
+  </text>
 </svg>

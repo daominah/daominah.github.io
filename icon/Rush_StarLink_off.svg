@@ -1,0 +1,42 @@
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- RushArrowUp -->
+  <g>
+    <polygon points="100,8  58,50  142,50" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="100,16  72,44  128,44" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowDown -->
+  <g>
+    <polygon points="100,192  142,150  58,150" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="100,184  128,156  72,156" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowLeft -->
+  <g>
+    <polygon points="8,100  50,58  50,142" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="16,100  44,72  44,128" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowRight -->
+  <g>
+    <polygon points="192,100  150,58  150,142" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="184,100  156,72  156,128" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowUpLeft -->
+  <g>
+    <polygon points="16,16  16,76  76,16" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="22,22  22,62  62,22" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowUpRight -->
+  <g>
+    <polygon points="184,16  124,16  184,76" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="178,22  138,22  178,62" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowDownLeft -->
+  <g>
+    <polygon points="16,184  76,184  16,124" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="22,178  62,178  22,138" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+  <!-- RushArrowDownRight -->
+  <g>
+    <polygon points="184,184  184,124  124,184" fill="#999999" stroke="#555555" stroke-width="4" stroke-linejoin="round"/>
+    <polygon points="178,178  178,138  138,178" fill="#bbbbbb" stroke="#777777" stroke-width="2" stroke-linejoin="round"/>
+  </g>
+</svg>

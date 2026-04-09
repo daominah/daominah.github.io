@@ -1115,9 +1115,11 @@ function renderRushDuelLevel(card) {
 	let isLink = card.CardSubtype === CardSubtype.MonsterLink
 	if (isLink) {
 		byId("Rush_LevelStar").style.display = "none"
+		byId("Rush_LinkBadge_Off").style.display = ""
 		byId("Rush_LinkBadge").style.display = ""
 	} else {
 		byId("Rush_LevelStar").style.display = ""
+		byId("Rush_LinkBadge_Off").style.display = "none"
 		byId("Rush_LinkBadge").style.display = "none"
 	}
 	if (card.CardSubtype === CardSubtype.MonsterXyz) {
