@@ -983,16 +983,22 @@ function renderCard(card) {
 	byId("AutoFont").value = autoFontSize
 	byId("ChosenEffectElementID").value = chosenEffectElement.id
 
-	if (card.CardName !== "" || card.MiscKonamiCardID !== "") {
-		let cardID = card.MiscKonamiCardID // example "4095 errata<2014"
-		cardID = cardID.replace("<", "_before_")
-		cardID = cardID.replace(">", "_after_")
-		let normalizedName = normalizeFileName(`${card.CardName}_${cardID}`)
-		if (normalizedName !== "") {
-			document.getElementById("ExportCardJSONName").textContent = normalizedName
-		} else {
-			document.getElementById("ExportCardJSONName").textContent = " "
-		}
+	updateExportCardJSONName(card)
+}
+
+function updateExportCardJSONName(card) {
+	if (card.CardName === "" && card.MiscKonamiCardID === "") {
+		document.getElementById("ExportCardJSONName").textContent = " "
+		return
+	}
+	let cardID = card.MiscKonamiCardID // example "4095 errata<2014"
+	cardID = cardID.replace("<", "_before_")
+	cardID = cardID.replace(">", "_after_")
+	let normalizedName = normalizeFileName(`${card.CardName}_${cardID}`)
+	if (normalizedName !== "") {
+		document.getElementById("ExportCardJSONName").textContent = normalizedName
+	} else {
+		document.getElementById("ExportCardJSONName").textContent = " "
 	}
 }
 
@@ -1008,6 +1014,7 @@ function renderRushDuelCard(card) {
 	renderRushDuelAbilities(card)
 	renderRushDuelEffect(card)
 	renderRushDuelFooter(card)
+	updateExportCardJSONName(card)
 }
 
 function renderRushDuelFrame(card) {
