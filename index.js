@@ -983,10 +983,10 @@ function renderCard(card) {
 	byId("AutoFont").value = autoFontSize
 	byId("ChosenEffectElementID").value = chosenEffectElement.id
 
-	updateExportCardJSONName(card)
+	updateExportCardJSONName(card, false)
 }
 
-function updateExportCardJSONName(card) {
+function updateExportCardJSONName(card, isRushDuel) {
 	if (card.CardName === "" && card.MiscKonamiCardID === "") {
 		document.getElementById("ExportCardJSONName").textContent = " "
 		return
@@ -994,7 +994,8 @@ function updateExportCardJSONName(card) {
 	let cardID = card.MiscKonamiCardID // example "4095 errata<2014"
 	cardID = cardID.replace("<", "_before_")
 	cardID = cardID.replace(">", "_after_")
-	let normalizedName = normalizeFileName(`${card.CardName}_${cardID}`)
+	let suffix = isRushDuel ? "_rush" : ""
+	let normalizedName = normalizeFileName(`${card.CardName}_${cardID}${suffix}`)
 	if (normalizedName !== "") {
 		document.getElementById("ExportCardJSONName").textContent = normalizedName
 	} else {
@@ -1014,7 +1015,7 @@ function renderRushDuelCard(card) {
 	renderRushDuelAbilities(card)
 	renderRushDuelEffect(card)
 	renderRushDuelFooter(card)
-	updateExportCardJSONName(card)
+	updateExportCardJSONName(card, true)
 }
 
 function renderRushDuelFrame(card) {
