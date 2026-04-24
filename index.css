@@ -993,39 +993,27 @@ Spell, Trap, Monster, Pendulum, card effect is long or short */
 /* text color for number on the level star */
 .cRushWhiteNumberRedOutline {
   color: white;
-  text-shadow:
-    -4px -4px 0 red,
-    4px -4px 0 red,
-    -4px 4px 0 red,
-    4px 4px 0 red;
+  -webkit-text-stroke: 8px red;
+  paint-order: stroke fill;
 }
 /* text color for number on the rank star */
 .cRushWhiteNumberGrayOutline {
   color: white;
-  text-shadow:
-    -4px -4px 0 #202020,
-    4px -4px 0 #202020,
-    -4px 4px 0 #202020,
-    4px 4px 0 #202020;
+  -webkit-text-stroke: 8px #202020;
+  paint-order: stroke fill;
 }
 /* text color for number on the link star */
 .cRushWhiteNumberBlueOutline {
   color: white;
-  text-shadow:
-    -4px -4px 0 #004687,
-    4px -4px 0 #004687,
-    -4px 4px 0 #004687,
-    4px 4px 0 #004687;
+  -webkit-text-stroke: 8px #004687;
+  paint-order: stroke fill;
 }
 
 /* text color for ATK DEF */
 .cRushWhiteNumberBlackOutline {
   color: white;
-  text-shadow:
-    -2px -2px 0 black,
-    2px -2px 0 black,
-    -2px 2px 0 black,
-    2px 2px 0 black;
+  -webkit-text-stroke: 4px black;
+  paint-order: stroke fill;
 }
 
 .cRush_Badge {
