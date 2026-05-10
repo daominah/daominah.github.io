@@ -547,7 +547,7 @@
           </div>
           <hr id="HrBeforeSearch" />
 
-          <div class="sameWidthElement">
+          <div class="sameWidthElement" id="SearchRegion">
             <h3><label for="SearchCardQuery">Card database</label></h3>
             <br />
 
@@ -555,7 +555,17 @@
               <input id="SearchCardQuery" style="width: 80%; box-sizing: border-box" />
               <button id="SearchCardDatabase" onclick="SearchCardDatabase()" class="smallBtn" style="flex-grow: 1">Search</button>
             </div>
-            <div class="smallNote">(search full word in card name)</div>
+            <div style="display: flex; justify-content: space-between; align-items: center">
+              <!-- tabindex="-1": focusable by click so arrow keys stay active in SearchRegion -->
+              <div class="smallNote" tabindex="-1">(search full word in card name)</div>
+              <div id="SearchPagination" style="display: flex; align-items: center; gap: 8px; font-size: 24px">
+                <button id="SearchPrev" class="smallBtn" style="font-size: 24px" onclick="SearchCardPrev()"> ← </button>
+                <!-- tabindex="-1": focusable via JS .focus() but skipped in tab order,
+                     so arrow keys keep working after Prev/Next re-renders the result list -->
+                <span id="SearchPageInfo" tabindex="-1"></span>
+                <button id="SearchNext" class="smallBtn" style="font-size: 24px" onclick="SearchCardNext()"> → </button>
+              </div>
+            </div>
             <div id="SearchCardResult" class="searchCardResult"></div>
           </div>
         </div>

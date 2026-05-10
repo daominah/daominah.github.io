@@ -305,6 +305,11 @@ let LastUpdateCardState = new Date(0)
 // LastCardName helps to only send log in renderCard when CardName changed
 let LastCardName = ""
 
+// searchLimit, searchOffset, searchTotalCount track pagination state for SearchCardDatabase
+let searchLimit = 10
+let searchOffset = 0
+let searchTotalCount = 0
+
 // IndexCardDatabase will be initialized in func `buildIndexCardDatabase`,
 // this is result of indexing MapCardDatabase by CardName using library
 // "https://github.com/olivernn/lunr.js"
@@ -1983,7 +1988,11 @@ function konamiDatabaseURL(cardID, language = "ja") {
 	)
 }
 
-function SearchCardDatabase() {
+function SearchCardDatabase(resetOffset = true) {
+	if (resetOffset) {
+		searchOffset = 0
+	}
+
 	let searchQuery = document.getElementById("SearchCardQuery").value
 
 	if (searchQuery) {
@@ -1993,8 +2002,7 @@ function SearchCardDatabase() {
 	}
 
 	let searchResult = [] // []Card
-	let limit = 14,
-		offset = 0 // TODO: paginate search result
+	let limit = searchLimit
 	// search: https://github.com/olivernn/lunr.js
 	let matches,
 		err = null
@@ -2007,18 +2015,19 @@ function SearchCardDatabase() {
 		)
 	}
 	if (matches === undefined || matches === null || matches.length === 0) {
-		// slow search string contain
+		// slow search string contain — collect all matches first, then slice for pagination
+		let allMatches = []
 		for (let card of CardDatabase) {
 			// console.log(`debug SearchCardDatabase: ${card.CardName}`)
 			if (card.CardName.toLowerCase().includes(searchQuery.toLowerCase())) {
-				searchResult.push(card)
-			}
-			if (searchResult.length >= limit) {
-				break
+				allMatches.push(card)
 			}
 		}
+		searchTotalCount = allMatches.length
+		searchResult = allMatches.slice(searchOffset, searchOffset + limit)
 	} else {
-		let indexedResult = matches.slice(offset, offset + limit)
+		searchTotalCount = matches.length
+		let indexedResult = matches.slice(searchOffset, searchOffset + limit)
 		for (let v of indexedResult) {
 			// e.g. v = {"ref":"14297","score":7.307,"matchData":{"metadata":{"avramax":{"CardName":{}}}}}
 			if (!v.ref) {
@@ -2046,6 +2055,7 @@ function SearchCardDatabase() {
 		}
 		let row = document.createElement("div")
 		row.className = "searchRow"
+		row.tabIndex = 0
 		let cardName = document.createElement("div")
 		cardName.textContent = card.CardName
 		row.appendChild(cardName)
@@ -2104,6 +2114,32 @@ function SearchCardDatabase() {
 		}
 		resultWrap.appendChild(row)
 	}
+
+	let pageInfo = document.getElementById("SearchPageInfo")
+	let prevBtn = document.getElementById("SearchPrev")
+	let nextBtn = document.getElementById("SearchNext")
+	let from = 0
+	if (searchTotalCount > 0) {
+		from = searchOffset + 1
+	}
+	let to = Math.min(searchOffset + limit, searchTotalCount)
+	pageInfo.textContent = `${from}-${to} / ${searchTotalCount}`
+	prevBtn.disabled = searchOffset === 0
+	nextBtn.disabled = searchOffset + limit >= searchTotalCount
+
+	if (!resetOffset) {
+		pageInfo.focus()
+	}
+}
+
+function SearchCardPrev() {
+	searchOffset = Math.max(0, searchOffset - searchLimit)
+	SearchCardDatabase(false)
+}
+
+function SearchCardNext() {
+	searchOffset = searchOffset + searchLimit
+	SearchCardDatabase(false)
 }
 
 function HandleClickScalePage(scaleStr) {
@@ -2396,6 +2432,20 @@ window.onload = () => {
 	byId("SearchCardQuery").addEventListener("keyup", function (event) {
 		if (event.key === "Enter") {
 			byId("SearchCardDatabase").click()
+		}
+	})
+
+	byId("SearchRegion").addEventListener("keydown", function (event) {
+		if (event.target.tagName === "INPUT") {
+			return
+		}
+		if (event.key === "ArrowLeft") {
+			event.preventDefault()
+			byId("SearchPrev").click()
+		}
+		if (event.key === "ArrowRight") {
+			event.preventDefault()
+			byId("SearchNext").click()
 		}
 	})
 
