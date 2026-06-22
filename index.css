@@ -13,6 +13,13 @@
   font-family: fontCardName;
   src: url(font/YGOSmallCaps.ttf);
 }
+/* YGOSmallCaps.ttf's "numbersign" glyph is drawn as a cent sign instead of a
+   hash crosshatch, so this is a clone of it with just that glyph redrawn,
+   used only for "#" so the original font file stays untouched. */
+@font-face {
+  font-family: fontCardNameHashFix;
+  src: url(font/YGOSmallCapsHashFix.ttf);
+}
 @font-face {
   font-family: fontCardEffect;
   src: url(font/YGO_Card_NA.ttf);

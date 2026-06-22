@@ -564,6 +564,27 @@ function calcTextWidth(text, styleFont) {
 // The original scales were hand-tuned to make label and value appear similar.
 // If the gap between label and value needs adjusting, tweak the CSS left/width of label boxes (e.g.
 // cRenderMonsterATKLabel) so label right edge meets value left edge.
+// fontCardName (web/font/YGOSmallCaps.ttf, copied from Master Duel) has a
+// "numbersign" glyph that is drawn as a cent sign instead of a hash crosshatch,
+// so "#" is rendered through fontCardNameHashFix (a clone of fontCardName with
+// just that glyph redrawn) instead.
+function appendTextFixingHash(parent, text, fontFamily) {
+	if (fontFamily !== "fontCardName" || !text.includes("#")) {
+		parent.appendChild(document.createTextNode(text))
+		return
+	}
+	for (let part of text.split(/(#)/)) {
+		if (part === "#") {
+			let hashSpan = document.createElement("span")
+			hashSpan.style.fontFamily = "fontCardNameHashFix"
+			hashSpan.textContent = "#"
+			parent.appendChild(hashSpan)
+		} else if (part !== "") {
+			parent.appendChild(document.createTextNode(part))
+		}
+	}
+}
+
 function fitTextOneLine(text, element, scaleFont = 1.0, scaleH = 1.15, scaleW = 1.0) {
 	if (!element) {
 		console.log(`error fitTextOneLine element: ${element}, should be unreachable`)
@@ -578,7 +599,7 @@ function fitTextOneLine(text, element, scaleFont = 1.0, scaleH = 1.15, scaleW = 
 	}
 	// console.log(`fitTextOneLine ${element.id} scaleW: ${scaleW}`)
 	let child = document.createElement("div")
-	child.textContent = text
+	appendTextFixingHash(child, text, window.getComputedStyle(element).fontFamily)
 	child.style.transform = `scale(${scaleW}, ${scaleH})`
 	child.style.transformOrigin = "bottom left"
 	if (window.getComputedStyle(element).textAlign === "right") {
