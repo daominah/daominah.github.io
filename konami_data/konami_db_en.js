@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-08-28T23:45:09+07:00
+// CardDatabase was updated at 2026-08-29T18:10:25+07:00
 // by github.com/daominah/yugioh_card_editor/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -305081,7 +305081,7 @@ const CardDatabase = [
 		"CardNameEN": "Exosister Elis",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterEffect",
-		"CardEffect": "If you control an \"Exosister\" monster: You can Special Summon this card from your hand, then if you control \"Exosister Stella\", you gain 800 LP. If your opponent moves a card(s) out of either GY (except during the Damage Step): You can Special Summon from your Extra Deck, 1 \"Exosister\" Xyz Monster using this face-up card you control as material. (This is treated as an Xyz Summon.) You can only use each effect of \"Exosister Elis\" once per turn.",
+		"CardEffect": "If you control an \"Exosister\" monster: You can Special Summon this card from your hand, then if you control \"Exosister Stella\", you gain 800 LP. If your opponent moves a card(s) out of either GY (except during the Damage Step): You can Special Summon from your Extra Deck, 1 \"Exosister\" Xyz Monster using this face-up card you control as material (this is treated as an Xyz Summon). You can only use each effect of \"Exosister Elis\" once per turn.",
 		"CardArt": "",
 		"MonsterAttribute": "LIGHT",
 		"MonsterType": "Spellcaster",
@@ -351961,7 +351961,7 @@ const CardDatabase = [
 		"CardNameEN": "Ryzeal Duo Drive",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterXyz",
-		"CardEffect": "2+ Level 4 monsters\nFor each material this card has, monsters you control gain 100 ATK and monsters your opponent controls lose 100 ATK. You can only use each of the following effects of \"Ryzeal Duo Drive\" once per turn. If this card is Special Summoned: You can attach 1 \"Ryzeal\" monster from your GY to this card as material. During your Main Phase: You can detach 2 materials from a monster(s) you control, and if you do, add 2 \"Ryzeal\" cards with different names from your Deck to your hand.",
+		"CardEffect": "2+ Level 4 monsters\nFor each material this card has, monsters you control gain 100 ATK and monsters your opponent controls lose 100 ATK. You can only use each of the following effects of \"Ryzeal Duo Drive\" once per turn. If this card is Special Summoned: You can attach 1 \"Ryzeal\" monster from your GY to this card. During your Main Phase: You can detach 2 materials from a monster(s) you control, and if you do, add 2 \"Ryzeal\" cards with different names from your Deck to your hand.",
 		"CardArt": "",
 		"MonsterAttribute": "FIRE",
 		"MonsterType": "Thunder",
