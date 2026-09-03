@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-09-02T15:50:11+07:00
+// CardDatabase was updated at 2026-09-03T15:58:37+07:00
 // by github.com/daominah/yugioh_card_editor/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -34124,7 +34124,7 @@ const CardDatabase = [
 		"CardNameEN": "Soul Rope",
 		"CardType": "Trap",
 		"CardSubtype": "TrapNormal",
-		"CardEffect": "When a monster you control is destroyed by a card effect and sent to the Graveyard (except during the Damage Step): Pay 1000 LP; Special Summon 1 Level 4 monster from your Deck.",
+		"CardEffect": "When a monster you control is destroyed by a card effect and sent to the GY (except during the Damage Step): Pay 1000 LP; Special Summon 1 Level 4 monster from your Deck.",
 		"CardArt": "",
 		"MonsterAttribute": "",
 		"MonsterType": "",
@@ -42374,7 +42374,7 @@ const CardDatabase = [
 		"CardNameEN": "Smashing Ground",
 		"CardType": "Spell",
 		"CardSubtype": "SpellNormal",
-		"CardEffect": "Destroy the 1 face-up monster your opponent controls that has the highest DEF (your choice, if tied).",
+		"CardEffect": "Destroy the 1 face-up monster your opponent controls with the highest DEF (your choice, if tied).",
 		"CardArt": "",
 		"MonsterAttribute": "",
 		"MonsterType": "",
@@ -144605,7 +144605,7 @@ const CardDatabase = [
 		"CardNameEN": "Mini-Guts",
 		"CardType": "Spell",
 		"CardSubtype": "SpellNormal",
-		"CardEffect": "Tribute 1 monster, then target 1 face-up monster your opponent controls; its ATK becomes 0 until the End Phase. This turn, when it is destroyed by battle and sent to their Graveyard: Inflict damage to your opponent equal to its original ATK in the Graveyard.",
+		"CardEffect": "Tribute 1 monster, then target 1 face-up monster your opponent controls; its ATK becomes 0 until the End Phase. This turn, when it is destroyed by battle and sent to their GY: Inflict damage to your opponent equal to its original ATK in the GY.",
 		"CardArt": "",
 		"MonsterAttribute": "",
 		"MonsterType": "",
@@ -159946,7 +159946,7 @@ const CardDatabase = [
 		"CardNameEN": "Underworld Fighter Balmung",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterSynchro",
-		"CardEffect": "1 Tuner + 1 or more non-Tuner monsters\u003cbr\u003eWhen this card is destroyed by a card effect and sent to the Graveyard: You can target 1 Level 4 or lower monster in your Graveyard, except this card; Special Summon that target.",
+		"CardEffect": "1 Tuner + 1+ non-Tuner monsters\u003cbr\u003eWhen this card is destroyed by card effect and sent to the GY: You can target 1 Level 4 or lower monster in your GY, except this card; Special Summon that target.",
 		"CardArt": "",
 		"MonsterAttribute": "DARK",
 		"MonsterType": "Warrior",
@@ -176163,7 +176163,7 @@ const CardDatabase = [
 		"CardNameEN": "Samsara, Dragon of Rebirth",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterSynchro",
-		"CardEffect": "1 Tuner + 1 or more non-Tuner monsters\u003cbr\u003eIf this card is destroyed by battle and sent to the Graveyard, or if this card you control is sent to your Graveyard by an opponent's card effect: You can target 1 monster in either player's Graveyard, except \"Samsara, Dragon of Rebirth\"; Special Summon it. You can only use this effect of \"Samsara, Dragon of Rebirth\" once per turn.",
+		"CardEffect": "1 Tuner + 1+ non-Tuners\u003cbr\u003eIf this card is destroyed by battle and sent to the GY, or if this card you control is sent to your GY by an opponent's card effect: You can target 1 monster in either GY, except \"Samsara, Dragon of Rebirth\"; Special Summon it. You can only use this effect of \"Samsara, Dragon of Rebirth\" once per turn.",
 		"CardArt": "",
 		"MonsterAttribute": "DARK",
 		"MonsterType": "Dragon",
