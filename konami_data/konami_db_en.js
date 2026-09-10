@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-09-09T16:03:29+07:00
+// CardDatabase was updated at 2026-09-10T16:00:48+07:00
 // by github.com/daominah/yugioh_card_editor/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -379290,6 +379290,33 @@ const CardDatabase = [
 		"MiscKonamiSet": "LAVD-ENL13",
 		"MiscKonamiCardID": "23421",
 		"MiscCardPassword": "11876803",
+		"MiscYear": "2026",
+		"MiscCreator": ""
+	},
+	{
+		"CardName": "Crocodile",
+		"CardNameEN": "",
+		"CardType": "Monster",
+		"CardSubtype": "MonsterNormal",
+		"CardEffect": "Thirteen stripes on its belly. Thirteen holes on its feet. Wherever people express themselves without hesitation, the crocodile is said to appear with a quiet grin.",
+		"CardArt": "",
+		"MonsterAttribute": "LIGHT",
+		"MonsterType": "Reptile",
+		"MonsterLevelRankLink": 3,
+		"MonsterATK": 1300,
+		"MonsterATKStr": "1300",
+		"MonsterDEF": 1300,
+		"MonsterDEFStr": "1300",
+		"MonsterAbilities": null,
+		"MonsterLinkArrows": null,
+		"IsNonEffectMonster": true,
+		"IsSpecialSummonOnly": false,
+		"IsPendulum": false,
+		"PendulumScale": 0,
+		"PendulumEffect": "",
+		"MiscKonamiSet": "CRC1-EN001",
+		"MiscKonamiCardID": "23432",
+		"MiscCardPassword": "",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	}
