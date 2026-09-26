@@ -7,7 +7,7 @@ using resources extracted from the Konami database and Master Duel.
 
 ## Data updates
 
-https://github.com/daominah/yugioh_card_editor
+https://github.com/daominah/yugioh_card_editor_database
 
 The original repository has a daily workflow that fetches card text data
 and pushes it to daominah.github.io/konami_data/konami_db_en.js.
@@ -23,7 +23,7 @@ otherwise every few months.
 * Create a repository, must be named "${your_username}.github.io".  
   Example [daominah.github.io](https://github.com/daominah/daominah.github.io).
 * Copy the web assets and code to the repository.  
-  Example this repo is copied from <https://github.com/daominah/yugioh_card_editor/tree/master/web>.
+  Example this repo is copied from <https://github.com/daominah/yugioh_card_editor_database/tree/main/web>.
 * On the repository GitHub, go to `Settings: Pages` to config,
   if success, the repo will be served to public on
   [https://${your_username}.github.io/](https://daominah.github.io/).
