@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-09-24T16:22:46+07:00
+// CardDatabase was updated at 2026-09-18T16:09:51+07:00
 // by github.com/daominah/yugioh_card_editor/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -379316,7 +379316,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "CRC1-EN001",
 		"MiscKonamiCardID": "23432",
-		"MiscCardPassword": "77699839",
+		"MiscCardPassword": "",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	}
