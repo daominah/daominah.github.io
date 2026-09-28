@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-09-27T16:56:33+07:00
+// CardDatabase was updated at 2026-09-28T17:45:14+07:00
 // by github.com/daominah/yugioh_card_editor_database/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -85946,7 +85946,7 @@ const CardDatabase = [
 		"CardNameEN": "Mind Master",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterEffect",
-		"CardEffect": "You can pay 800 Life Points and Tribute 1 Psychic-Type monster, except \"Mind Master\", to Special Summon 1 Level 4 or lower Psychic-Type monster from your Deck in face-up Attack Position.",
+		"CardEffect": "You can pay 800 LP and Tribute 1 Psychic monster; Special Summon 1 Level 4 or lower Psychic monster from your Deck in Attack Position. You can only use this effect of \"Mind Master\" once per turn.",
 		"CardArt": "",
 		"MonsterAttribute": "LIGHT",
 		"MonsterType": "Psychic",
@@ -174686,7 +174686,7 @@ const CardDatabase = [
 		"CardNameEN": "Elder Entity Norden",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterFusion",
-		"CardEffect": "1 Synchro or Xyz Monster + 1 Synchro or Xyz Monster\nWhen this card is Special Summoned: You can target 1 Level 4 or lower monster in your GY; Special Summon it, but its effects are negated, also banish it when this card leaves the field.",
+		"CardEffect": "2 monsters (Synchro and/or Xyz)\nWhen this card is Special Summoned from the Extra Deck: You can target 1 Level 4 or lower monster in your GY; Special Summon it, but its effects are negated, also banish it when this card leaves the field. You can only use this effect of \"Elder Entity Norden\" once per turn.",
 		"CardArt": "",
 		"MonsterAttribute": "WATER",
 		"MonsterType": "Fairy",
