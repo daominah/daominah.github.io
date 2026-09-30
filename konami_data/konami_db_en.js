@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-09-29T17:36:55+07:00
+// CardDatabase was updated at 2026-09-30T17:28:15+07:00
 // by github.com/daominah/yugioh_card_editor_database/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -379149,6 +379149,33 @@ const CardDatabase = [
 		"MiscKonamiSet": "CORI-EN096",
 		"MiscKonamiCardID": "23311",
 		"MiscCardPassword": "80565021",
+		"MiscYear": "2026",
+		"MiscCreator": ""
+	},
+	{
+		"CardName": "Dark Time Wizard",
+		"CardNameEN": "",
+		"CardType": "Spell",
+		"CardSubtype": "SpellQuickPlay",
+		"CardEffect": "Activate 1 of these effects (but you can only use each effect of \"Dark Time Wizard\" once per turn);\n● Add 1 card that mentions \"Dark Time Wizard\" from your Deck to your hand, except \"Dark Time Wizard\", also during the End Phase of this turn, add 1 \"Dark Time Wizard\" from your GY to your hand.\n● Toss a coin and call it. If you call it right, destroy as many monsters your opponent controls as possible, and if you do, inflict damage to your opponent equal to half the combined original ATK of those destroyed monsters. If you call it wrong, destroy all monsters you control.",
+		"CardArt": "",
+		"MonsterAttribute": "",
+		"MonsterType": "",
+		"MonsterLevelRankLink": 0,
+		"MonsterATK": 0,
+		"MonsterATKStr": "",
+		"MonsterDEF": 0,
+		"MonsterDEFStr": "",
+		"MonsterAbilities": null,
+		"MonsterLinkArrows": null,
+		"IsNonEffectMonster": false,
+		"IsSpecialSummonOnly": false,
+		"IsPendulum": false,
+		"PendulumScale": 0,
+		"PendulumEffect": "",
+		"MiscKonamiSet": "BETB-ENSP1",
+		"MiscKonamiCardID": "23374",
+		"MiscCardPassword": "40235813",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
