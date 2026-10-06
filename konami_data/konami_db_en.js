@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-10-05T18:20:32+07:00
+// CardDatabase was updated at 2026-10-06T18:13:38+07:00
 // by github.com/daominah/yugioh_card_editor_database/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -381637,7 +381637,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN081",
 		"MiscKonamiCardID": "23513",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306281",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381664,7 +381664,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN082",
 		"MiscKonamiCardID": "23514",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306082",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381691,7 +381691,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN083",
 		"MiscKonamiCardID": "23515",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306083",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381718,7 +381718,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN084",
 		"MiscKonamiCardID": "23516",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306084",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381747,7 +381747,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN085",
 		"MiscKonamiCardID": "23517",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306085",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381777,7 +381777,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN086",
 		"MiscKonamiCardID": "23518",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306086",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381804,7 +381804,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN087",
 		"MiscKonamiCardID": "23519",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306087",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381831,7 +381831,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN088",
 		"MiscKonamiCardID": "23520",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306088",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381860,7 +381860,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN089",
 		"MiscKonamiCardID": "23521",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306089",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381887,7 +381887,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN090",
 		"MiscKonamiCardID": "23522",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306090",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381914,7 +381914,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN091",
 		"MiscKonamiCardID": "23523",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306091",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381941,7 +381941,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN092",
 		"MiscKonamiCardID": "23524",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306092",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381968,7 +381968,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN093",
 		"MiscKonamiCardID": "23525",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306093",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -381995,7 +381995,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN094",
 		"MiscKonamiCardID": "23526",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306094",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -382022,7 +382022,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN095",
 		"MiscKonamiCardID": "23527",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306095",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
@@ -382049,7 +382049,7 @@ const CardDatabase = [
 		"PendulumEffect": "",
 		"MiscKonamiSet": "BETB-EN096",
 		"MiscKonamiCardID": "23528",
-		"MiscCardPassword": "",
+		"MiscCardPassword": "101306096",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	}
