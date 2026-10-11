@@ -2173,8 +2173,15 @@ function HandleClickScalePage(scaleStr) {
 	)
 
 	if (!scaleStr) {
-		if (documentWidth / viewWidth >= 1.5) {
-			scaleStr = "0.5"
+		// first visit: pick the largest zoom whose page width still fits the window,
+		// or the smallest zoom when none fits
+		let scales = ["1", "0.8", "0.5", "0.3125"]
+		scaleStr = scales[scales.length - 1]
+		for (let i = 0; i < scales.length; i++) {
+			if (documentWidth * Number(scales[i]) <= viewWidth) {
+				scaleStr = scales[i]
+				break
+			}
 		}
 	}
 

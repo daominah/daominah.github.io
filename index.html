@@ -503,7 +503,7 @@
               </div>
               <hr />
 
-              <h3>Scale page width</h3>
+              <h3>Page zoom</h3>
               <br />
               <!-- Python helper
           import math
@@ -512,22 +512,22 @@
           def Z(s): return math.sqrt((1.0/t) /s)
           def W(z): return 3840.0 / z
           -->
-              <label class="smallNote">choose your monitor width<br />(work best with a 4K monitor,<br />output card will be 1180x1720)</label><br />
+              <label class="smallNote">pick largest that fits screen<br />(200% fits a 4K monitor,<br />output card will be 1180x1720)</label><br />
               <!--          <input type="radio" id="ScalePage02" name="PageScale" onclick="HandleClickScalePage('0.2')">-->
               <!--          <label for="ScalePage02"> 768px</label><br>        &lt;!&ndash; t=1.25 z=2.0 &ndash;&gt;-->
               <!--          <input type="radio" id="ScalePage025" name="PageScale" onclick="HandleClickScalePage('0.25')">-->
               <!--          <label for="ScalePage025"> 960px</label><br>      &lt;!&ndash; t=1.00 z=2.0 &ndash;&gt;-->
               <input type="radio" id="ScalePage03125" name="PageScale" onclick="HandleClickScalePage('0.3125')" />
-              <label for="ScalePage03125">1200px</label><br />
+              <label for="ScalePage03125">62%</label><br />
               <!-- t=1.25 z=1.6 -->
               <input type="radio" id="ScalePage05" name="PageScale" onclick="HandleClickScalePage('0.5')" />
-              <label for="ScalePage05">1920px</label><br />
+              <label for="ScalePage05">100%</label><br />
               <!-- t=2.00 z=1.0 -->
               <input type="radio" id="ScalePage08" name="PageScale" onclick="HandleClickScalePage('0.8')" />
-              <label for="ScalePage08">3072px</label><br />
+              <label for="ScalePage08">160%</label><br />
               <!-- t=1.25 z=1.0 -->
               <input type="radio" id="ScalePage1" name="PageScale" onclick="HandleClickScalePage('1')" />
-              <label for="ScalePage1">3840px</label><br />
+              <label for="ScalePage1">200%</label><br />
 
               <hr />
               <h3>Card art resolution</h3>
@@ -552,12 +552,10 @@
             <br />
 
             <div style="display: flex">
-              <input id="SearchCardQuery" style="width: 80%; box-sizing: border-box" />
+              <input id="SearchCardQuery" placeholder="search full word in card name" style="width: 80%; box-sizing: border-box" />
               <button id="SearchCardDatabase" onclick="SearchCardDatabase()" class="smallBtn" style="flex-grow: 1">Search</button>
             </div>
-            <div style="display: flex; justify-content: space-between; align-items: center">
-              <!-- tabindex="-1": focusable by click so arrow keys stay active in SearchRegion -->
-              <div class="smallNote" tabindex="-1">(search full word in card name)</div>
+            <div style="display: flex; justify-content: flex-start; align-items: center">
               <div id="SearchPagination" style="display: flex; align-items: center; gap: 8px; font-size: 24px">
                 <button id="SearchPrev" class="smallBtn" style="font-size: 24px" onclick="SearchCardPrev()"> ← </button>
                 <!-- tabindex="-1": focusable via JS .focus() but skipped in tab order,

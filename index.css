@@ -76,19 +76,23 @@ body {
 
 .pageContainerColumns {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   height: 1720px;
 }
 /* padding: top right bot left, default 0 */
+/* total content width: 1110 + 1180 + 1110 = 3400px,
+   colMid stays 1180px because the card renders at exactly 1180px wide */
 .colLeft {
-  flex: 1 0 1180px;
+  flex: 0 0 1110px;
 }
 .colMid {
-  flex: 1 0 1180px;
+  flex: 0 0 1180px;
 }
+/* border-box: the colPad gap next to colMid is counted inside the 1110px */
 .colRight {
-  flex: 1 0 1180px;
-  padding: 0 268px 0 var(--colPad);
+  flex: 0 0 1110px;
+  box-sizing: border-box;
+  padding: 0 0 0 var(--colPad);
 }
 
 hr {
@@ -138,6 +142,11 @@ textarea {
 input {
   font-size: 32px;
   text-align: center;
+}
+/* browser default placeholder grey is #757575, this is halfway to white */
+input::placeholder {
+  font-size: 24px;
+  color: #bababa;
 }
 input[type="checkbox"] {
   width: 32px;
@@ -213,7 +222,9 @@ input[type="radio"] {
 
 #MonsterStatsGrid {
   display: grid;
-  grid-template-columns: 25% 25% 40%;
+  /* max-content: "Level/Rank/Link:" and its input always stay on one line,
+     ATK and DEF share the remaining width */
+  grid-template-columns: 1fr 1fr max-content;
   gap: 4px 5%;
   align-items: baseline;
 }
@@ -236,6 +247,7 @@ input[type="radio"] {
 #MonsterLevelRankLinkWrap {
   display: flex;
   align-items: baseline;
+  gap: 16px;
 }
 #MonsterLevelRankLink {
   margin-left: auto;
@@ -311,7 +323,12 @@ input[type="radio"] {
 }
 #DevTestCards button {
   height: 48px;
-  min-width: 120px;
+  /* 9 buttons per row must fit in colLeft (1110px):
+     9 * 112 + 8 gaps * 4 + wrapper padding 64 = 1104 */
+  min-width: 112px;
+  /* the longest label "MonsterNormal" fits in 112px only with 2px side padding */
+  padding-left: 2px;
+  padding-right: 2px;
   font-weight: bold;
 }
 .devTestRow {
@@ -362,7 +379,7 @@ input[type="radio"] {
 .sameWidthWrap {
   display: flex;
   flex-direction: column;
-  width: 1180px;
+  width: 100%;
   flex: 1;
   min-height: 0;
 }
