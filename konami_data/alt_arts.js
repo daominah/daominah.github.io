@@ -94,6 +94,62 @@ const AltArts = [
 		]
 	},
 	{
+		"OriginalCardID": "6335",
+		"CardName": "Aussa the Earth Charmer",
+		"AltArtIDs": [
+			"20263"
+		]
+	},
+	{
+		"OriginalCardID": "6336",
+		"CardName": "Eria the Water Charmer",
+		"AltArtIDs": [
+			"20264"
+		]
+	},
+	{
+		"OriginalCardID": "6337",
+		"CardName": "Hiita the Fire Charmer",
+		"AltArtIDs": [
+			"20265"
+		]
+	},
+	{
+		"OriginalCardID": "6338",
+		"CardName": "Wynn the Wind Charmer",
+		"AltArtIDs": [
+			"20266"
+		]
+	},
+	{
+		"OriginalCardID": "6507",
+		"CardName": "Familiar-Possessed - Aussa",
+		"AltArtIDs": [
+			"3403"
+		]
+	},
+	{
+		"OriginalCardID": "6508",
+		"CardName": "Familiar-Possessed - Eria",
+		"AltArtIDs": [
+			"3404"
+		]
+	},
+	{
+		"OriginalCardID": "6509",
+		"CardName": "Familiar-Possessed - Hiita",
+		"AltArtIDs": [
+			"3405"
+		]
+	},
+	{
+		"OriginalCardID": "6510",
+		"CardName": "Familiar-Possessed - Wynn",
+		"AltArtIDs": [
+			"3406"
+		]
+	},
+	{
 		"OriginalCardID": "6653",
 		"CardName": "Elemental HERO Neos",
 		"AltArtIDs": [
@@ -210,6 +266,13 @@ const AltArts = [
 		"CardName": "Cyber Dragon Infinity",
 		"AltArtIDs": [
 			"3898"
+		]
+	},
+	{
+		"OriginalCardID": "12205",
+		"CardName": "Phantom Knights' Fog Blade",
+		"AltArtIDs": [
+			"23138"
 		]
 	},
 	{
@@ -400,6 +463,13 @@ const AltArts = [
 		"CardName": "Fallen of Albaz",
 		"AltArtIDs": [
 			"20567"
+		]
+	},
+	{
+		"OriginalCardID": "15619",
+		"CardName": "Artemis, the Magistus Moon Maiden",
+		"AltArtIDs": [
+			"23137"
 		]
 	},
 	{
