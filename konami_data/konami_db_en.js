@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-11-17T19:55:33+07:00
+// CardDatabase was updated at 2026-11-18T19:57:25+07:00
 // by github.com/daominah/yugioh_card_editor_database/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -375877,36 +375877,6 @@ const CardDatabase = [
 		"MiscKonamiSet": "MAMO-EN017",
 		"MiscKonamiCardID": "22706",
 		"MiscCardPassword": "00064865",
-		"MiscYear": "2026",
-		"MiscCreator": ""
-	},
-	{
-		"CardName": "Cyberse Contract Witch",
-		"CardNameEN": "Cyberse Contract Witch",
-		"CardType": "Monster",
-		"CardSubtype": "MonsterLink",
-		"CardEffect": "2 monsters with the same Type\nIf this card is Link Summoned, or a monster(s) is Special Summoned to a zone(s) this card points to: You can send 1 Spell from your hand or face-up field to the GY; add 1 Ritual Monster from your Deck to your hand. You can target 1 Ritual, Fusion, Synchro, or Xyz Monster this card points to; Special Summon 1 monster from your GY with the same Type but a different card type (Ritual, Fusion, Synchro, or Xyz). You can only use each effect of \"Cyberse Contract Witch\" once per turn.",
-		"CardArt": "",
-		"MonsterAttribute": "DARK",
-		"MonsterType": "Cyberse",
-		"MonsterLevelRankLink": 2,
-		"MonsterATK": 800,
-		"MonsterATKStr": "800",
-		"MonsterDEF": 0,
-		"MonsterDEFStr": "-",
-		"MonsterAbilities": null,
-		"MonsterLinkArrows": [
-			"DownLeft",
-			"Down"
-		],
-		"IsNonEffectMonster": false,
-		"IsSpecialSummonOnly": false,
-		"IsPendulum": false,
-		"PendulumScale": 0,
-		"PendulumEffect": "",
-		"MiscKonamiSet": "MAMO-EN018",
-		"MiscKonamiCardID": "22707",
-		"MiscCardPassword": "37458564",
 		"MiscYear": "2026",
 		"MiscCreator": ""
 	},
