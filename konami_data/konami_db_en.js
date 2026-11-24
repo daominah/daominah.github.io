@@ -1,4 +1,4 @@
-// CardDatabase was updated at 2026-11-23T21:15:06+07:00
+// CardDatabase was updated at 2026-11-24T21:42:04+07:00
 // by github.com/daominah/yugioh_card_editor_database/cmd/add-card-password
 const CardDatabase = [
 	{
@@ -141629,7 +141629,7 @@ const CardDatabase = [
 		"CardNameEN": "Number 7: Lucky Straight",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterXyz",
-		"CardEffect": "3 Level 7 monsters\nYou can detach 1 Xyz Material from this card; roll a six-sided die twice and this card's ATK becomes the larger number rolled x 700 until your opponent's next End Phase, then if the total roll was exactly 7, apply 1 of these effects.\n● Send all other cards on the field to the Graveyard.\n● Special Summon 1 monster from your hand or from either Graveyard.\n● Draw 3 cards, then discard 2 cards.",
+		"CardEffect": "3 Level 7 monsters\nYou can detach 1 material from this card; roll a six-sided die twice and this card's ATK becomes the larger number rolled x 700 until your opponent's next End Phase, then if the total roll was exactly 7, apply 1 of these effects.\n● Send all other cards on the field to the GY.\n● Special Summon 1 monster from your hand or either GY.\n● Draw 3 cards, then discard 2 cards.",
 		"CardArt": "",
 		"MonsterAttribute": "LIGHT",
 		"MonsterType": "Fairy",
@@ -169673,7 +169673,7 @@ const CardDatabase = [
 		"CardNameEN": "Number C6: Chronomaly Chaos Atlandis",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterXyz",
-		"CardEffect": "3 Level 7 monsters\nIf you activate any of this card's effects, your opponent takes no further damage this turn. Once per turn: You can target 1 monster your opponent controls; equip that target to this card as an Equip Spell Card whose effect makes this monster gain 1000 ATK. If this card has \"Number 6: Chronomaly Atlandis\" as an Xyz Material, it gains this effect.\n● You can detach 3 Xyz Materials from this card and send all \"Number\" monsters equipped by this card's effect to the Graveyard (min. 1); make your opponent's Life Points 100.",
+		"CardEffect": "3 Level 7 monsters\nIf you activate either of this card's effects, your opponent takes no further damage this turn (this is not an effect). Once per turn: You can target 1 monster your opponent controls; equip that target to this card as an Equip Spell that gives it 1000 ATK. If this card has \"Number 6: Chronomaly Atlandis\" as material: You can detach 3 materials from this card, and send all face-up \"Number\" Monster Cards you control equipped to this card by its effect to the GY (min. 1); make your opponent's LP 100.",
 		"CardArt": "",
 		"MonsterAttribute": "LIGHT",
 		"MonsterType": "Machine",
@@ -243786,7 +243786,7 @@ const CardDatabase = [
 		"CardNameEN": "Golden Castle of Stromberg",
 		"CardType": "Spell",
 		"CardSubtype": "SpellField",
-		"CardEffect": "Once per turn, during your Standby Phase, you must banish 10 cards from the top of your Deck face-down (this is not optional), or this card is destroyed. During your Main Phase: You can Special Summon 1 monster from your Deck that specifically lists the card \"Golden Castle of Stromberg\" in its text. You cannot Normal Summon/Set the turn you activate this effect (even if this card leaves the field). You can only use this effect of \"Golden Castle of Stromberg\" once per turn. When an opponent's monster declares an attack: Destroy the attacking monster, and if you do, inflict damage to your opponent equal to half the ATK that monster had on the field.",
+		"CardEffect": "Once per turn, during your Standby Phase, you must banish 10 cards from the top of your Deck face-down (this is not optional), or this card is destroyed. During your Main Phase: You can Special Summon 1 monster that mentions \"Golden Castle of Stromberg\" from your Deck. You cannot Normal Summon/Set the turn you activate this effect (even if this card leaves the field). You can only use this effect of \"Golden Castle of Stromberg\" once per turn. When an opponent's monster declares an attack: Destroy the attacking monster, and if you do, inflict damage to your opponent equal to half the ATK that monster had on the field.",
 		"CardArt": "",
 		"MonsterAttribute": "",
 		"MonsterType": "",
@@ -263805,7 +263805,7 @@ const CardDatabase = [
 		"CardNameEN": "Number 76: Harmonizer Gradielle",
 		"CardType": "Monster",
 		"CardSubtype": "MonsterXyz",
-		"CardEffect": "2 Level 7 monsters\nThis card's Attribute is also treated as each of its attached materials' Attributes. Cannot be destroyed by battle with a monster of the same Attribute, also cannot be destroyed by the activated effects of your opponent's monsters with the same Attribute. (Quick Effect): You can target 1 monster in your opponent's GY; detach 1 material from this card, and if you do, attach that target to this card as material. You can only use this effect of \"Number 76: Harmonizer Gradielle\" once per turn.",
+		"CardEffect": "2 Level 7 monsters\nThis card's Attribute is also treated as each of its attached materials' Attributes. Cannot be destroyed by battle with a monster with the same Attribute, also cannot be destroyed by the activated effects of your opponent's monsters with the same Attribute. (Quick Effect): You can target 1 monster in your opponent's GY; detach 1 material from this card, and if you do, attach that target to this card. You can only use this effect of \"Number 76: Harmonizer Gradielle\" once per turn.",
 		"CardArt": "",
 		"MonsterAttribute": "LIGHT",
 		"MonsterType": "Fairy",
